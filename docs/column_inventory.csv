@@ -1,0 +1,131 @@
+column,duckdb_type,null_count,null_percent,column_group,v1_decision,reason
+league,VARCHAR,0,0.0,competition metadata,exclude_scope,"Mostly available before the match, but not necessary for the smallest useful draft-only baseline."
+league_id,INTEGER,0,0.0,competition metadata,exclude_scope,"Mostly available before the match, but not necessary for the smallest useful draft-only baseline."
+league_tier,VARCHAR,0,0.0,competition metadata,exclude_scope,"Mostly available before the match, but not necessary for the smallest useful draft-only baseline."
+league_start_date_time,TIMESTAMP_NS,1544,0.8,competition metadata,exclude_scope,"Mostly available before the match, but not necessary for the smallest useful draft-only baseline."
+league_end_date_time,TIMESTAMP_NS,1632,0.84,competition metadata,exclude_scope,"Mostly available before the match, but not necessary for the smallest useful draft-only baseline."
+league_region,VARCHAR,38834,20.04,competition metadata,exclude_scope,"Mostly available before the match, but not necessary for the smallest useful draft-only baseline."
+series_id,INTEGER,0,0.0,competition metadata,exclude_scope,"Mostly available before the match, but not necessary for the smallest useful draft-only baseline."
+series_type,VARCHAR,0,0.0,competition metadata,exclude_scope,"Mostly available before the match, but not necessary for the smallest useful draft-only baseline."
+match_id,BIGINT,0,0.0,identifier,tracking_only,"Useful for deduplication and tracing a row, but an arbitrary ID is not a feature."
+match_start_date_time,TIMESTAMP_NS,0,0.0,time,split_only,"Use for a chronological train/validation/test split, not as a direct feature in version one."
+match_duration_seconds,INTEGER,0,0.0,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+first_blood_time_seconds,INTEGER,421,0.22,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_team_id,BIGINT,855,0.44,target mapping,target_derivation_only,Needed to map winner_id to Radiant or Dire; excluded from the draft-only model.
+radiant_team_name,VARCHAR,928,0.48,team identity,exclude_scope,"Known before the match, but excluded so version one measures draft information rather than team reputation."
+dire_team_id,BIGINT,946,0.49,target mapping,target_derivation_only,Needed to map winner_id to Radiant or Dire; excluded from the draft-only model.
+dire_team_name,VARCHAR,1005,0.52,team identity,exclude_scope,"Known before the match, but excluded so version one measures draft information rather than team reputation."
+winner_id,BIGINT,792,0.41,target source,target_derivation_only,"Directly identifies the winner; use it only to create radiant_win, then remove it."
+radiant_kills,SMALLINT,120873,62.38,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_kills,SMALLINT,120873,62.38,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_1_id,BIGINT,3,0.0,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_1_name,VARCHAR,3,0.0,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_1_hero_id,BIGINT,0,0.0,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+radiant_player_1_hero,VARCHAR,490,0.25,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+radiant_player_1_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_1_lane,VARCHAR,37203,19.2,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_1_role,VARCHAR,37176,19.19,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_1_kills,SMALLINT,0,0.0,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_1_deaths,SMALLINT,0,0.0,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_1_assists,SMALLINT,0,0.0,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_1_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_2_id,BIGINT,7,0.0,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_2_name,VARCHAR,17,0.01,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_2_hero_id,BIGINT,5,0.0,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+radiant_player_2_hero,VARCHAR,503,0.26,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+radiant_player_2_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_2_lane,VARCHAR,37215,19.21,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_2_role,VARCHAR,37178,19.19,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_2_kills,SMALLINT,5,0.0,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_2_deaths,SMALLINT,5,0.0,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_2_assists,SMALLINT,5,0.0,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_2_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_3_id,BIGINT,13,0.01,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_3_name,VARCHAR,56,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_3_hero_id,BIGINT,47,0.02,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+radiant_player_3_hero,VARCHAR,541,0.28,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+radiant_player_3_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_3_lane,VARCHAR,37228,19.21,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_3_role,VARCHAR,37183,19.19,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_3_kills,SMALLINT,47,0.02,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_3_deaths,SMALLINT,47,0.02,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_3_assists,SMALLINT,47,0.02,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_3_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_4_id,BIGINT,55,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_4_name,VARCHAR,62,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_4_hero_id,BIGINT,51,0.03,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+radiant_player_4_hero,VARCHAR,557,0.29,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+radiant_player_4_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_4_lane,VARCHAR,37224,19.21,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_4_role,VARCHAR,37190,19.19,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_4_kills,SMALLINT,51,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_4_deaths,SMALLINT,51,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_4_assists,SMALLINT,51,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_4_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_5_id,BIGINT,60,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_5_name,VARCHAR,64,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+radiant_player_5_hero_id,BIGINT,51,0.03,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+radiant_player_5_hero,VARCHAR,550,0.28,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+radiant_player_5_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_5_lane,VARCHAR,37241,19.22,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_5_role,VARCHAR,37195,19.2,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+radiant_player_5_kills,SMALLINT,51,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_5_deaths,SMALLINT,51,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_5_assists,SMALLINT,51,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+radiant_player_5_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_1_id,BIGINT,54,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_1_name,VARCHAR,60,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_1_hero_id,BIGINT,55,0.03,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+dire_player_1_hero,VARCHAR,543,0.28,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+dire_player_1_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_1_lane,VARCHAR,37248,19.22,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_1_role,VARCHAR,37198,19.2,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_1_kills,SMALLINT,55,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_1_deaths,SMALLINT,55,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_1_assists,SMALLINT,55,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_1_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_2_id,BIGINT,63,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_2_name,VARCHAR,68,0.04,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_2_hero_id,BIGINT,58,0.03,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+dire_player_2_hero,VARCHAR,565,0.29,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+dire_player_2_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_2_lane,VARCHAR,37257,19.23,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_2_role,VARCHAR,37199,19.2,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_2_kills,SMALLINT,58,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_2_deaths,SMALLINT,58,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_2_assists,SMALLINT,58,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_2_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_3_id,BIGINT,66,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_3_name,VARCHAR,70,0.04,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_3_hero_id,BIGINT,58,0.03,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+dire_player_3_hero,VARCHAR,554,0.29,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+dire_player_3_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_3_lane,VARCHAR,37245,19.22,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_3_role,VARCHAR,37199,19.2,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_3_kills,SMALLINT,58,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_3_deaths,SMALLINT,58,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_3_assists,SMALLINT,58,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_3_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_4_id,BIGINT,66,0.03,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_4_name,VARCHAR,77,0.04,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_4_hero_id,BIGINT,65,0.03,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+dire_player_4_hero,VARCHAR,541,0.28,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+dire_player_4_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_4_lane,VARCHAR,37251,19.22,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_4_role,VARCHAR,37202,19.2,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_4_kills,SMALLINT,65,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_4_deaths,SMALLINT,65,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_4_assists,SMALLINT,65,0.03,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_4_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_5_id,BIGINT,73,0.04,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_5_name,VARCHAR,100,0.05,player identity,exclude_scope,"Potentially known before the match, but high-cardinality identity features complicate a simple draft model."
+dire_player_5_hero_id,BIGINT,90,0.05,draft,use_feature,The selected hero is known when the draft ends and is the main version-one input.
+dire_player_5_hero,VARCHAR,570,0.29,draft label,display_only,"Human-readable duplicate of hero_id; keep for inspection, not as a second model feature."
+dire_player_5_position,VARCHAR,39235,20.25,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_5_lane,VARCHAR,37252,19.22,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_5_role,VARCHAR,37203,19.2,role assignment,exclude_leakage_risk,May be assigned or inferred using match play; exclude until its timestamp and origin are verified.
+dire_player_5_kills,SMALLINT,90,0.05,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_5_deaths,SMALLINT,90,0.05,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_5_assists,SMALLINT,90,0.05,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+dire_player_5_networth,BIGINT,82084,42.36,post-match result,exclude_leakage,Created during or after the match and would reveal information unavailable at draft time.
+game_version_id,INTEGER,90,0.05,pre-match context,use_feature,The game patch is known before the match and changes hero balance.

@@ -1,0 +1,52 @@
+{
+  "source": {
+    "kaggle_dataset": "darianogina/dota-2-matches-pro-leagues",
+    "url": "https://www.kaggle.com/datasets/darianogina/dota-2-matches-pro-leagues",
+    "raw_rows": 193773,
+    "raw_unique_matches": 193466,
+    "raw_date_min": "2011-06-19 00:00:00",
+    "raw_date_max": "2024-10-15 01:28:24"
+  },
+  "sample": {
+    "requested_rows": 30000,
+    "actual_rows": 30000,
+    "unique_matches": 30000,
+    "date_min": "2011-08-17 00:00:00",
+    "date_max": "2024-10-15 01:28:24",
+    "radiant_win_rate": 0.511167,
+    "sha256": "28128b85bb9af2fd36126537642bb78297f715382e840b605b6305fd1a3fd89c",
+    "columns": [
+      "match_id",
+      "match_start_date_time",
+      "game_version_id",
+      "game_version",
+      "radiant_player_1_hero_id",
+      "radiant_player_1_hero",
+      "radiant_player_2_hero_id",
+      "radiant_player_2_hero",
+      "radiant_player_3_hero_id",
+      "radiant_player_3_hero",
+      "radiant_player_4_hero_id",
+      "radiant_player_4_hero",
+      "radiant_player_5_hero_id",
+      "radiant_player_5_hero",
+      "dire_player_1_hero_id",
+      "dire_player_1_hero",
+      "dire_player_2_hero_id",
+      "dire_player_2_hero",
+      "dire_player_3_hero_id",
+      "dire_player_3_hero",
+      "dire_player_4_hero_id",
+      "dire_player_4_hero",
+      "dire_player_5_hero_id",
+      "dire_player_5_hero",
+      "radiant_win"
+    ]
+  },
+  "selection": {
+    "deduplication": "Keep one row per match_id.",
+    "eligibility": "Valid winner, non-null patch ID, and ten distinct positive hero IDs with names.",
+    "sampling": "Take the first 30,000 matches after ordering by md5(match_id).",
+    "output_order": "Sort selected rows chronologically by match time, then match_id."
+  }
+}
