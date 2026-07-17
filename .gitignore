@@ -8,5 +8,5 @@ __pycache__/
 # Keep the reproducible sample in Git, but do not commit the full raw download.
 data/raw/dota2_matches.parquet
 
-# Model artifacts belong in a later version.
+# Model artifacts are not tracked.
 models/

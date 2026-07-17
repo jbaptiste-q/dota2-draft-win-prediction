@@ -1,8 +1,8 @@
-"""Create the reproducible, leakage-aware version-one sample.
+"""Create the reproducible, leakage-aware 30,000-match sample.
 
-This script does not train a model. It reads the raw Kaggle Parquet file,
-deduplicates matches, removes rows without a valid winner or complete draft,
-selects 30,000 matches deterministically, and writes a compact CSV.
+The workflow reads the raw Kaggle Parquet file, deduplicates matches, removes
+rows without a valid winner or complete draft, and selects matches
+deterministically.
 """
 
 from __future__ import annotations
@@ -30,7 +30,7 @@ def sql_path(path: Path) -> str:
 
 
 def classify_column(column: str) -> tuple[str, str, str]:
-    """Assign each raw column a version-one role and junior-friendly reason."""
+    """Assign each raw column a project role and concise rationale."""
     if column == "winner_id":
         return (
             "target source",
@@ -53,7 +53,7 @@ def classify_column(column: str) -> tuple[str, str, str]:
         return (
             "time",
             "split_only",
-            "Use for a chronological train/validation/test split, not as a direct feature in version one.",
+            "Use for the chronological split, not as a direct model feature.",
         )
     if column == "game_version_id":
         return (
@@ -65,7 +65,7 @@ def classify_column(column: str) -> tuple[str, str, str]:
         return (
             "draft",
             "use_feature",
-            "The selected hero is known when the draft ends and is the main version-one input.",
+            "The selected hero is known when the draft ends and is a primary model input.",
         )
     if column.endswith("_hero"):
         return (
@@ -100,7 +100,7 @@ def classify_column(column: str) -> tuple[str, str, str]:
         return (
             "team identity",
             "exclude_scope",
-            "Known before the match, but excluded so version one measures draft information rather than team reputation.",
+            "Known before the match, but excluded so the baseline measures draft information rather than team reputation.",
         )
     if column.startswith("league_") or column in {
         "league",
@@ -115,7 +115,7 @@ def classify_column(column: str) -> tuple[str, str, str]:
     return (
         "other",
         "review_before_use",
-        "Not required for version one; verify when it becomes available before using it later.",
+        "Outside the baseline scope; verify availability before considering it as a feature.",
     )
 
 
