@@ -1,63 +1,70 @@
 # Data and leakage guide
 
-## What one row means
+## Prediction context
 
-Each row represents one professional Dota 2 match. Radiant and Dire each have five hero picks. The target, `radiant_win`, is `true` when `winner_id` equals `radiant_team_id` in the raw data.
+Each row represents one professional Dota 2 match. Radiant and Dire each have five hero picks. The target, `radiant_win`, is true when Radiant wins.
 
-## The 25 columns in the processed sample
+The prediction point is immediately after the draft and before gameplay begins. Every model feature must be available at that moment.
 
-| Column(s) | Version-one role | Junior-friendly explanation |
-|---|---|---|
-| `match_id` | Tracking only | Identifies a match and helps detect duplicates. Do not give arbitrary IDs to the model. |
-| `match_start_date_time` | Split only | Use this to split old matches into training data and newer matches into validation/test data. |
-| `game_version_id` | Model feature | Patch ID known before play; hero balance changes between patches. |
-| `game_version` | Display only | Human-readable patch name. It duplicates `game_version_id`. |
-| `radiant_player_1_hero_id` through `radiant_player_5_hero_id` | Model features | The five Radiant hero picks. |
-| `dire_player_1_hero_id` through `dire_player_5_hero_id` | Model features | The five Dire hero picks. |
-| The ten matching columns ending in `_hero` | Display only | Hero names make the CSV understandable but duplicate the numeric hero IDs. |
-| `radiant_win` | Target | The value the future model will predict. Never include it among input features. |
+## Processed columns
 
-The exact ordered column list is also stored in `data/processed/sample_metadata.json`.
+| Column(s) | Use | Rationale |
+| --- | --- | --- |
+| `match_id` | Tracking | Identifies matches and supports duplicate checks. |
+| `match_start_date_time` | Data split | Orders matches for chronological evaluation. |
+| `game_version_id` | Feature | Represents the patch known before the match starts. |
+| `game_version` | Reference | Provides a readable patch name without duplicating the numeric feature. |
+| `radiant_player_1_hero_id` through `radiant_player_5_hero_id` | Features | Identify the five Radiant hero picks. |
+| `dire_player_1_hero_id` through `dire_player_5_hero_id` | Features | Identify the five Dire hero picks. |
+| The ten matching columns ending in `_hero` | Reference | Provide readable hero names while the model uses hero IDs. |
+| `radiant_win` | Target | Records whether Radiant won and never enters the feature matrix. |
 
-## What data leakage means
+The ordered column list is stored in `data/processed/sample_metadata.json`.
 
-Data leakage happens when a model receives information that would not exist at the moment the prediction is supposed to be made. Leakage can produce excellent test scores while creating a useless real-world model.
+## Leakage policy
 
-Our prediction moment is **immediately after the draft and before gameplay begins**. This timing rule makes feature decisions much clearer.
+Data leakage occurs when a model receives information that would not be available at prediction time. It can produce strong evaluation scores without producing a useful model.
 
-## Columns excluded because they leak the answer
+The following fields are excluded:
 
-- `winner_id` directly states the winning team. It is used once to create `radiant_win`, then removed.
-- `match_duration_seconds`, `first_blood_time_seconds`, `radiant_kills`, and `dire_kills` are generated during or after play.
-- Every player column ending in `_kills`, `_deaths`, `_assists`, or `_networth` describes what happened in the match.
-- Player `_position`, `_lane`, and `_role` fields are excluded as a leakage risk because the dataset may infer them from match activity. We should not use them until their creation timing is verified.
+- `winner_id`, which directly identifies the winner
+- match duration, first-blood time, team kills, and other values known only during or after gameplay
+- player kills, deaths, assists, and net worth
+- player position, lane, and role fields whose timing is uncertain
+- the target and all fields derived from the final result
 
-## Columns excluded only to keep version one simple
+## Scope exclusions
 
-Not every excluded column is leakage. This distinction matters.
+Some fields may be known before a match but are outside the draft-focused baseline:
 
-- League, series, region, and tier metadata may be known before a match, but are outside a minimal draft-only baseline.
-- Team and player identities may also be known beforehand, but they introduce high-cardinality reputation effects and make evaluation more complicated.
-- Hero names duplicate hero IDs, so names are kept for humans but not used as additional model inputs.
-- `match_id` is an identifier, not a meaningful game feature.
+- league, series, region, and tournament tier
+- team and player identities
+- hero names that duplicate hero IDs
+- match IDs and other tracking fields
 
-These fields could be studied in later versions after the draft-only baseline is trustworthy.
+These fields could support later experiments, but they would introduce reputation effects, higher-cardinality features, or redundant information.
 
-## Why use a chronological split later
+## Chronological evaluation
 
-Randomly mixing old and new matches can let the same teams, players, tournament series, and patch environment appear on both sides of the evaluation. A chronological split better imitates the real task: learning from the past and predicting newer matches.
+The split follows match time:
 
-No split or model has been created yet. For now, `match_start_date_time` is retained so that choice can be made transparently during exploratory analysis.
+| Split | Matches | Period |
+| --- | ---: | --- |
+| Train | 21,004 | Through 2022-11-11 |
+| Validation | 4,496 | 2022-11-12 through 2023-11-19 |
+| Test | 4,500 | After 2023-11-19 through 2024-10-15 |
 
-## Full raw-column inventory
+This setup better reflects the real task of learning from past drafts and predicting matches from newer patches and competitive environments.
 
-`column_inventory.csv` lists all 130 source columns. Its `v1_decision` values mean:
+## Raw-column inventory
 
-- `use_feature`: planned model input.
-- `target_derivation_only`: needed to construct or verify the label, then removed.
-- `split_only`: used to create honest time-based data splits.
-- `tracking_only`: useful for data quality and traceability.
-- `display_only`: retained for human readability but not used by the model.
-- `exclude_leakage`: definitely contains information from the match outcome or gameplay.
-- `exclude_leakage_risk`: timing is uncertain, so exclusion is the safe choice.
-- `exclude_scope`: potentially valid later, but intentionally omitted from the simplest baseline.
+`column_inventory.csv` documents all 130 source columns. The `v1_decision` field uses these labels:
+
+- `use_feature`: model input
+- `target_derivation_only`: used to construct or verify the target
+- `split_only`: used for chronological splitting
+- `tracking_only`: retained for quality checks and traceability
+- `display_only`: retained for readability
+- `exclude_leakage`: unavailable at prediction time
+- `exclude_leakage_risk`: excluded because availability is uncertain
+- `exclude_scope`: potentially useful but outside the current project scope

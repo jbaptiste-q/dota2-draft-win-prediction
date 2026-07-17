@@ -1,15 +1,26 @@
-# Data folders
+# Data
+
+This directory separates source files from the compact dataset used by the project.
 
 ## `raw/`
 
-Files downloaded from Kaggle live here and should remain unchanged. Treat raw data as evidence: processing code reads it, but never edits it. The large Parquet file is ignored by Git because GitHub repositories should not store replaceable bulk data.
+| File | Purpose |
+| --- | --- |
+| `dota2_matches.parquet` | Full professional-match table downloaded from Kaggle. It is kept locally and excluded from Git. |
+| `dota2_matches_PREVIEW.csv` | Small source preview for quick schema checks. |
+| `dota2_versions.csv` | Maps game-version IDs to patch names and release dates. |
+
+Raw files remain unchanged so the processing workflow can be reproduced from a stable source.
 
 ## `processed/`
 
-Files created by `scripts/make_sample.py` live here. They are reproducible outputs rather than manually edited data.
+| File | Purpose |
+| --- | --- |
+| `dota2_matches_sample_30000.csv` | Analysis-ready sample containing 30,000 valid matches and 25 selected columns. |
+| `sample_metadata.json` | Records sample criteria, summary statistics, column order, and checksum. |
 
-- `dota2_matches_sample_30000.csv` is the compact version-one dataset.
-- `sample_metadata.json` is an audit record describing exactly how that sample was created.
+Rebuild the processed files with:
 
-If the processing logic changes, rerun the script instead of editing the CSV by hand.
-
+```bash
+python scripts/make_sample.py
+```

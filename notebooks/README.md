@@ -1,9 +1,11 @@
 # Notebooks
 
-Notebooks are numbered in the order a reviewer should read them.
+The notebooks present the analysis in the order a reviewer would follow the project.
 
-- `01_eda.ipynb` performs exploratory data analysis and data-quality checks. It does not train a model.
-- `02_feature_engineering.ipynb` creates chronological split labels and leakage-aware numeric features in memory. Its code is English-only, and it does not train a model or write model artifacts.
-- `03_baseline_model.ipynb` trains a majority-class baseline and a logistic-regression model, evaluates chronological validation and test sets, and inspects coefficients. Its code is English-only.
+| Notebook | Focus |
+| --- | --- |
+| `01_eda.ipynb` | Examines data quality, target balance, time coverage, patch history, and hero-pick patterns. |
+| `02_feature_engineering.ipynb` | Creates chronological splits and side-aware hero and patch features without leaking match outcomes. |
+| `03_baseline_model.ipynb` | Compares a class-prior baseline with logistic regression and evaluates performance over time. |
 
-Keeping notebooks separate from reusable code makes the repository easier to review: explanations and exploration belong here, while repeatable data preparation belongs in `scripts/`.
+The notebooks contain exploration and interpretation. Reusable feature and training logic lives in `src/`, with automated checks in `tests/`.
