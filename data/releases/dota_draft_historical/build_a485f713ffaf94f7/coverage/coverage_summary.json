@@ -1,0 +1,32 @@
+{
+  "complete_bans_count": 9718,
+  "complete_picks_count": 9741,
+  "eligibility_failures": {
+    "<trainable>": 9700,
+    "incomplete_team1_bans": 12,
+    "incomplete_team1_picks": 71,
+    "incomplete_team2_bans": 10,
+    "invalid_game_result": 13,
+    "invalid_series_result": 18,
+    "missing_game_duration": 2,
+    "missing_game_winner": 3,
+    "missing_or_invalid_sides": 185
+  },
+  "files": {
+    "coverage_by_patch": "coverage_by_patch.parquet",
+    "coverage_by_tier": "coverage_by_tier.parquet",
+    "coverage_by_tournament": "coverage_by_tournament.parquet",
+    "coverage_by_year": "coverage_by_year.parquet",
+    "eligibility_failures": "eligibility_failures.parquet"
+  },
+  "game_count": 10014,
+  "match_count": 4977,
+  "matches_with_games": 4909,
+  "matches_without_games": 68,
+  "normalized_build": "build_6f44f771e75eabff",
+  "patch_known_count": 9886,
+  "sides_known_count": 9813,
+  "trainable_game_count": 9700,
+  "trainable_game_pct": 96.86439,
+  "winner_known_count": 9998
+}

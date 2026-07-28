@@ -1,0 +1,85 @@
+{
+  "campaign_id": "m3_5_20220101_20260727_e2c4c37a9792",
+  "configuration": {
+    "acquisition_version": "liquipedia-history-v1",
+    "campaign_request_budget": {
+      "all_http_outcomes_count": true,
+      "cache_hits_count": false,
+      "max_additional_http_attempts": 100,
+      "pilot_historical_attempts_count_against_expansion": false
+    },
+    "campaign_schema_version": "liquipedia-history-campaign-v1",
+    "partitioning": {
+      "historical_partition_max_requests": 8,
+      "pilot_end_utc": "2026-07-27T00:00:00+00:00",
+      "pilot_execution_policy": "verified_cache_only",
+      "pilot_partition_max_requests": 4,
+      "pilot_start_utc": "2026-07-01T00:00:00+00:00",
+      "strategy": "calendar_quarter_half_open"
+    },
+    "pilot_request_identity": {
+      "config_hash": "0b40ae8811d6140590657c976ed350d44ab98c9d8289bde8c1d6a57221610258",
+      "required_request_hashes": [
+        "9f0b310bee831a6c921fb568cdb5e71a979ebe9832f3e22b29c4e2afa21371c6",
+        "0060ee0181d4b51e1c477ee857c41e08b8b9a0b40c8e04f65b924b47b98bfd66"
+      ],
+      "run_id": "m3_20260701_20260727_0b40ae8811d6",
+      "terminal_sequence": 2
+    },
+    "request_contract": {
+      "automatic_retries": 0,
+      "hourly_request_limit": 54,
+      "ordering": "date ASC, match2id ASC",
+      "page_size": 100,
+      "projection": [
+        "pageid",
+        "pagename",
+        "namespace",
+        "objectname",
+        "match2id",
+        "status",
+        "winner",
+        "walkover",
+        "resulttype",
+        "finished",
+        "patch",
+        "date",
+        "dateexact",
+        "bestof",
+        "tournament",
+        "parent",
+        "series",
+        "liquipediatier",
+        "extradata",
+        "match2games",
+        "match2opponents"
+      ],
+      "rawstreams": "false",
+      "request_interval_seconds": 67.0,
+      "streamurls": "false"
+    },
+    "request_estimate": {
+      "planning_range_not_success_gate": true,
+      "successful_pages_max": 95,
+      "successful_pages_min": 75
+    },
+    "scope": {
+      "end_utc_exclusive": "2026-07-27T00:00:00+00:00",
+      "finished_matches_only": true,
+      "patch_filter_stage": "normalized_training_dataset",
+      "patches": [],
+      "start_utc_inclusive": "2022-01-01T00:00:00+00:00",
+      "tiers": [
+        "1",
+        "2"
+      ]
+    },
+    "source": {
+      "endpoint": "https://api.liquipedia.net/api/v3/match",
+      "html_scraping": false,
+      "official_api_only": true,
+      "wiki": "dota2"
+    }
+  },
+  "configuration_fingerprint": "e2c4c37a9792cfa3e724d6bfee1173feb1c1ec880644ef43b159c73a2ca52774"
+}

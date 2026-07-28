@@ -1,0 +1,298 @@
+{
+  "summary_schema_version": "milestone-3.5-final-summary-v1",
+  "evidence_as_of_utc": "2026-07-28T15:31:50.447340+00:00",
+  "campaign": {
+    "campaign_id": "m3_5_20220101_20260727_e2c4c37a9792",
+    "scope": {
+      "start_utc": "2022-01-01T00:00:00+00:00",
+      "end_utc": "2026-07-27T00:00:00+00:00",
+      "interval": "half-open",
+      "tiers": [
+        "1",
+        "2"
+      ],
+      "match_status": "completed",
+      "logical_partition_count": 19
+    },
+    "status": "bounded_finalization_complete",
+    "historical_expansion_status": "stopped_at_2024-Q2_budget_exhaustion",
+    "full_fixed_window_complete": false,
+    "configuration_fingerprint": "e2c4c37a9792cfa3e724d6bfee1173feb1c1ec880644ef43b159c73a2ca52774",
+    "campaign_plan_fingerprint": "b443f0910d40dfdb0f6986b17b76b582cc738c7c9f162d42317ef632c3759b9b",
+    "campaign_config_sha256": "9e52e198ebccb8bf738fec33a53cf743cc1082cc94ac1ef2acf49d20b8b64255",
+    "campaign_plan_sha256": "c42cb290ef94fee00c1dc105016a860fa008855d6271dab391a8f69c731ebacc"
+  },
+  "partitions": {
+    "completed": [
+      {
+        "partition_id": "2022-Q1",
+        "run_id": "m3_20220101_20220401_36bbf248c8cf",
+        "published": true
+      },
+      {
+        "partition_id": "2022-Q2",
+        "run_id": "m3_20220401_20220701_60f8944a646a",
+        "published": true
+      },
+      {
+        "partition_id": "2022-Q3",
+        "run_id": "m3_20220701_20221001_19a8d74f1c5b",
+        "published": true
+      },
+      {
+        "partition_id": "2022-Q4",
+        "run_id": "m3_20221001_20230101_ef93d0bbe56b",
+        "published": true
+      },
+      {
+        "partition_id": "2023-Q1",
+        "run_id": "m3_20230101_20230401_f0eaf0202083",
+        "published": true
+      },
+      {
+        "partition_id": "2023-Q2",
+        "run_id": "m3_20230401_20230701_5d5756ba4fd9",
+        "published": true
+      },
+      {
+        "partition_id": "2023-Q3",
+        "run_id": "m3_20230701_20231001_3914e6822405",
+        "published": true
+      },
+      {
+        "partition_id": "2023-Q4",
+        "run_id": "m3_20231001_20240101_5afa75ba56fa",
+        "published": true
+      },
+      {
+        "partition_id": "2024-Q1",
+        "run_id": "m3_20240101_20240401_2c59812252db",
+        "published": true,
+        "budget_amendment_fingerprint": "95d0a475c79f38692641bb29c0bc93168b873e3056b4be37cef10c377ff6b9e8",
+        "effective_plan_fingerprint": "29993c0a7718a2a39d67fab1eb865df4fb017b4e9d0890e46d55d88b23428ae4"
+      },
+      {
+        "partition_id": "2026-07-pilot",
+        "run_id": "m3_20260701_20260727_0b40ae8811d6",
+        "published": false,
+        "reason_not_published": "excluded_from_provisional_contiguous_historical_prefix"
+      }
+    ],
+    "incomplete": [
+      {
+        "partition_id": "2024-Q2",
+        "run_id": "m3_20240401_20240701_6575003bb769",
+        "status": "budget_exhausted",
+        "accepted_pages": 8,
+        "records": 800,
+        "next_sequence": 9,
+        "next_offset": 800,
+        "terminal_page_observed": false,
+        "published": false
+      }
+    ],
+    "unstarted": [
+      "2024-Q3",
+      "2024-Q4",
+      "2025-Q1",
+      "2025-Q2",
+      "2025-Q3",
+      "2025-Q4",
+      "2026-Q1",
+      "2026-Q2"
+    ]
+  },
+  "request_accounting": {
+    "expansion_budget": 100,
+    "expansion_http_attempts_used": 63,
+    "expansion_http_attempts_remaining": 37,
+    "pilot_http_attempts_excluded_from_expansion_budget": 2,
+    "ledger_http_attempts_total": 65,
+    "ledger_http_200_total": 65,
+    "automatic_retries": 0,
+    "http_errors": 0,
+    "published_release_partition_http_attempts": 47,
+    "published_release_partition_cache_hits": 8
+  },
+  "bounded_2024_q1_run": {
+    "run_id": "m3_20240101_20240401_2c59812252db",
+    "accepted_pages": 17,
+    "accepted_records": 1610,
+    "terminal_page_records": 10,
+    "network_http_attempts": 9,
+    "network_http_200_outcomes": 9,
+    "immutable_cache_hits": 8,
+    "accepted_http_200_backed_pages": 17,
+    "predecessor_run_id": "m3_20240101_20240401_4aa59da8deab",
+    "predecessor_status": "budget_exhausted",
+    "predecessor_http_attempts_counted_once_in_campaign_budget": 8
+  },
+  "published_release": {
+    "alias": "m3.5-tier1-tier2-2022q1-2024q1-provisional-v1",
+    "alias_sha256": "02e9cdae337732ecbcc478d586348b82f8308a60d8b1978cf279ebab85244610",
+    "directory": "data/releases/dota_draft_historical/build_a485f713ffaf94f7",
+    "release_schema_version": "dota-draft-historical-release-v1",
+    "publication_version": "1.0.0",
+    "status": "provisional_contiguous_prefix",
+    "scope": {
+      "start_utc": "2022-01-01T00:00:00+00:00",
+      "end_utc": "2024-04-01T00:00:00+00:00",
+      "interval": "half-open",
+      "partition_count": 9,
+      "tiers": [
+        "1",
+        "2"
+      ]
+    },
+    "metrics": {
+      "matches": 4977,
+      "matches_with_games": 4909,
+      "matches_without_games": 68,
+      "normalized_games": 10014,
+      "eligible_supervised_games": 9700,
+      "excluded_games": 314,
+      "eligibility_percentage": 96.86439,
+      "heroes": 124,
+      "patch_known_games": 9886,
+      "winner_known_games": 9998,
+      "sides_known_games": 9813,
+      "eligible_match_time_min_utc": "2022-01-03T04:55:00+00:00",
+      "eligible_match_time_max_utc": "2024-03-31T18:20:00+00:00",
+      "target_class_balance": {
+        "radiant_win_true": 4833,
+        "radiant_win_false": 4867
+      }
+    },
+    "fingerprints": {
+      "release": "a485f713ffaf94f784ea1c770478be5c172d60285eb8369e294d34d9d447e7da",
+      "release_manifest_sha256": "fb456a7cf03be15852060e0dc4d619798d4da787dc3ad7c3cf328c0a83ee33cb",
+      "publisher_source_sha256": "07f25eb1e643cf6f2d755f83073a715bdacb7b62696cc1c5050bdef0ccfdcac3",
+      "normalized_build": "6f44f771e75eabffb393f2a3a2bbe27097d4c882d38fbfd10b476fa66dfcae1f",
+      "normalized_manifest_sha256": "b18256f9fa5fe85c920a00e41233247c651e6d6b3e183ce92058951fda9d73a4",
+      "supervised_build": "c1ea1d31968eb4c9c6fc4cd8dd7812ca2189694ca94ace48b1aae676e146acd9",
+      "supervised_manifest_sha256": "5b4b807f81c2b960ed813d373ccd3f2b602b77cff61a680a86002c6b2d9810ad"
+    },
+    "schemas": {
+      "normalized": "liquipedia-dota-draft-v1",
+      "supervised": "dota-draft-supervised-v1"
+    }
+  },
+  "exclusion_counts": {
+    "incomplete_team1_bans": 12,
+    "incomplete_team1_picks": 71,
+    "incomplete_team2_bans": 10,
+    "invalid_game_result": 13,
+    "invalid_series_result": 18,
+    "missing_game_duration": 2,
+    "missing_game_winner": 3,
+    "missing_or_invalid_sides": 185,
+    "total": 314
+  },
+  "duration_compatibility": {
+    "default_sentinel": {
+      "raw_occurrences_in_published_snapshots": 18,
+      "normalization": "null",
+      "inferred_or_zero_filled": false,
+      "primary_exclusion_label_occurrences": 2
+    },
+    "reviewed_context_gated_anomalies": [
+      {
+        "match_id": "D8VM7QJos8_R04-M001",
+        "game_number": 3,
+        "raw_value": "<s>Game 3</s>",
+        "classification": "unplayed_game_slot_placeholder",
+        "handling": "normalize_to_null_only_for_exact_occurrence_and_context",
+        "exclusion_reason": "missing_game_winner"
+      },
+      {
+        "match_id": "D8VM7QJos8_R04-M003",
+        "game_number": 3,
+        "raw_value": "<s>Game 3</s>",
+        "classification": "unplayed_game_slot_placeholder",
+        "handling": "normalize_to_null_only_for_exact_occurrence_and_context",
+        "exclusion_reason": "missing_game_winner"
+      },
+      {
+        "match_id": "D8VM7QJos8_R05-M002",
+        "game_number": 3,
+        "raw_value": "7m04",
+        "classification": "source_duration_7m04_anomaly",
+        "handling": "normalize_to_null_only_for_exact_occurrence_and_context",
+        "inferred_seconds": null,
+        "exclusion_reason": "incomplete_team1_picks"
+      },
+      {
+        "match_id": "D8VM7QJos8_R06-M001",
+        "game_number": 5,
+        "raw_value": "<s>Game 5</s>",
+        "classification": "unplayed_game_slot_placeholder",
+        "handling": "normalize_to_null_only_for_exact_occurrence_and_context",
+        "exclusion_reason": "missing_game_winner"
+      }
+    ],
+    "unpublished_q2_anomaly": {
+      "cache_page": 7,
+      "match_id": "ubD8YXh91K_R02-M001",
+      "game_number": 2,
+      "raw_value": "21m38",
+      "source_sha256": "2bda2ac87c2d31a8695c8627ed6ec1852441f69ddd1029d2c1e71b52ae501343",
+      "classification": "unsupported_duration_format",
+      "otherwise_eligible_before_duration_check": true,
+      "handling": "strict_duration_normalizer_error",
+      "compatibility_change_made": false,
+      "published_release_affected": false,
+      "reason_release_unaffected": "2024-Q2 is incomplete and excluded in full"
+    },
+    "generic_parser_broadened": false,
+    "raw_values_preserved": true,
+    "context_mismatch_behavior": "fail_closed"
+  },
+  "q2_2024_estimate": {
+    "scope": {
+      "start_utc": "2024-04-01T00:00:00+00:00",
+      "end_utc": "2024-07-01T00:00:00+00:00",
+      "interval": "half-open"
+    },
+    "observed_pages": 8,
+    "observed_unique_matches": 800,
+    "page_8_match_time_min_utc": "2024-06-14T09:50:00+00:00",
+    "page_8_match_time_max_utc": "2024-06-25T05:00:00+00:00",
+    "estimated_additional_matches": 54,
+    "estimated_additional_requests_point": 1,
+    "estimated_additional_requests_range": [
+      1,
+      2
+    ],
+    "remaining_campaign_budget_sufficient_for_q2_estimate": true,
+    "extension_authorized_or_executed": false,
+    "partial_partition_in_release": false
+  },
+  "integrity": {
+    "normalized_equals_eligible_plus_excluded": true,
+    "reconciliation": "10014 = 9700 + 314",
+    "duplicate_stable_identifiers": 0,
+    "quarantined_records": 0,
+    "published_partition_assembly_duplicate_matches": 0,
+    "published_partition_assembly_duplicate_games": 0,
+    "lineage_verified": true,
+    "cache_and_checkpoint_hashes_verified": true
+  },
+  "milestone_4_readiness": {
+    "eligible_games_vs_10000_planning_target_percentage": 97.0,
+    "planning_target_is_success_gate": false,
+    "sufficient_for_sparse_and_tree_baselines": true,
+    "sufficient_for_exhaustive_historical_claims": false
+  },
+  "validation": {
+    "command": ".venv/bin/python -m pytest -q",
+    "tests_passed": 92,
+    "tests_failed": 0,
+    "authenticated_requests_during_tests": 0
+  },
+  "credential_handling": {
+    "credentials_included": false,
+    "absolute_local_paths_included": false,
+    "official_api_only": true,
+    "html_scraping_used": false
+  }
+}

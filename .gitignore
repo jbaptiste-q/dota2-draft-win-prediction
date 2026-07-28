@@ -4,9 +4,50 @@ __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
 .pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.env
+.env.*
+!.env.example
+.secrets/
 
-# Keep the reproducible sample in Git, but do not commit the full raw download.
+# Historical Kaggle source files are local-only, including after archival.
 data/raw/dota2_matches.parquet
+archive/kaggle_baseline/data/raw/dota2_matches.parquet
+archive/kaggle_baseline/data/raw/dota2-pro-leagues.zip
+
+# Authenticated Liquipedia responses stay local. The directory README is tracked.
+data/validation/liquipedia/runs/
+data/validation/liquipedia/discovery/
+
+# Content-addressed Liquipedia dataset builds are reproducible local artifacts.
+data/processed/liquipedia/build_*/
+
+# Historical API cache, checkpoints, plans, and canonical dataset builds.
+data/raw/liquipedia/backfill/
+data/backfill/
+data/training/dota_draft_supervised/build_*/
+
+# Keep the credential-free Milestone 3.5 campaign plan and preflight evidence.
+!data/backfill/
+data/backfill/*
+!data/backfill/campaigns/
+data/backfill/campaigns/*
+!data/backfill/campaigns/*/
+!data/backfill/campaigns/*/campaign_config.json
+!data/backfill/campaigns/*/campaign_plan.json
+!data/backfill/campaigns/*/campaign_plan.md
+!data/backfill/campaigns/*/campaign_preflight.json
+!data/backfill/campaigns/*/campaign_preflight.md
+!data/backfill/campaigns/*/stage_c_acquisition_summary.json
+!data/backfill/campaigns/*/milestone_3_5_final_summary.json
+!data/backfill/campaigns/*/amendments/
+!data/backfill/campaigns/*/amendments/*/
+!data/backfill/campaigns/*/amendments/*/budget_amendment.json
+!data/backfill/campaigns/*/amendments/*/budget_amendment.md
 
 # Model artifacts are not tracked.
 models/

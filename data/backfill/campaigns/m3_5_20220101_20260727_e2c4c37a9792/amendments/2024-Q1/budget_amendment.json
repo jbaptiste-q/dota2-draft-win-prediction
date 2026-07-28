@@ -1,0 +1,400 @@
+{
+  "amended_run": {
+    "conditional_requests": [
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 800,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 800,
+        "request_hash": "c7aa370982768a22974e7ced7438bd7079e24f785f48a4a76f1a71a6eebc2b7a",
+        "sequence": 9
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 900,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 900,
+        "request_hash": "28021996ccd458493d6c4611100488a0eb88bd9e1e54a814c0fe4cea74a8d284",
+        "sequence": 10
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1000,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1000,
+        "request_hash": "10b7c4293e05c5a03b6297acbe544ffbcf538c439ee26e83912a0080474cfc07",
+        "sequence": 11
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1100,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1100,
+        "request_hash": "bcb63899ace7fbdb005757cd7e980772ef271f4e1202d43a421886a41849567d",
+        "sequence": 12
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1200,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1200,
+        "request_hash": "aef3466e4e0dd7fc709dbf29900101e240bb77ad70c000bde5868d40017aed6b",
+        "sequence": 13
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1300,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1300,
+        "request_hash": "27ea74b9725cd22200f35cbf31e58a2374040a1d15f988cf224d3893c58b0a86",
+        "sequence": 14
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1400,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1400,
+        "request_hash": "19ba999550d6b20ce769ad78471cedd2f5e30c9fe91467fb706590017501cc09",
+        "sequence": 15
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1500,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1500,
+        "request_hash": "9c7897acab8b77dc413f5cfa4822d204d5ade4809c1d3b6798fdec627c76218d",
+        "sequence": 16
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1600,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1600,
+        "request_hash": "5ae3c150bf9d8e33b77f9b2df24a3c72e8342414736b59db4a37eaf19728d810",
+        "sequence": 17
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1700,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1700,
+        "request_hash": "80f55a31ae912a2ca07d13ef89074d566360a237ed63fe14ca7659bf13ce5a10",
+        "sequence": 18
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1800,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1800,
+        "request_hash": "8adbac5f97875c5c6a55a17e30827b075e9c350e8f0c5c0ed73330aef706db67",
+        "sequence": 19
+      },
+      {
+        "canonical_request": {
+          "endpoint": "https://api.liquipedia.net/api/v3/match",
+          "method": "GET",
+          "parameters": {
+            "conditions": "([[liquipediatier::1]] OR [[liquipediatier::2]]) AND [[finished::1]] AND [[date::>2023-12-31 23:59:59]] AND [[date::<2024-04-01 00:00:00]]",
+            "limit": 100,
+            "offset": 1900,
+            "order": "date ASC, match2id ASC",
+            "query": "pageid,pagename,namespace,objectname,match2id,status,winner,walkover,resulttype,finished,patch,date,dateexact,bestof,tournament,parent,series,liquipediatier,extradata,match2games,match2opponents",
+            "rawstreams": "false",
+            "streamurls": "false",
+            "wiki": "dota2"
+          }
+        },
+        "offset": 1900,
+        "request_hash": "289251a3b442f0452e78698d941fece552912f7e9021819690707e36956a7636",
+        "sequence": 20
+      }
+    ],
+    "config_hash": "2c59812252db906c8b373ec33fbc9b5cec0bb3f06e7b7c3250eafd94e442d097",
+    "first_conditional_offset": 800,
+    "first_conditional_sequence": 9,
+    "maximum_new_http_attempts": 12,
+    "required_cache_prefix_pages": 8,
+    "run_id": "m3_20240101_20240401_2c59812252db",
+    "scope": {
+      "acquisition_version": "liquipedia-history-v1",
+      "end_utc": "2024-04-01T00:00:00+00:00",
+      "hourly_request_limit": 54,
+      "max_requests": 20,
+      "page_size": 100,
+      "patch_filter_stage": "normalized_training_dataset",
+      "patches": [],
+      "projection": [
+        "pageid",
+        "pagename",
+        "namespace",
+        "objectname",
+        "match2id",
+        "status",
+        "winner",
+        "walkover",
+        "resulttype",
+        "finished",
+        "patch",
+        "date",
+        "dateexact",
+        "bestof",
+        "tournament",
+        "parent",
+        "series",
+        "liquipediatier",
+        "extradata",
+        "match2games",
+        "match2opponents"
+      ],
+      "request_interval_seconds": 67.0,
+      "start_utc": "2024-01-01T00:00:00+00:00",
+      "tiers": [
+        "1",
+        "2"
+      ]
+    },
+    "total_page_slot_ceiling": 20
+  },
+  "authenticated_requests_performed_by_planning": 0,
+  "budget_amendment_fingerprint": "95d0a475c79f38692641bb29c0bc93168b873e3056b4be37cef10c377ff6b9e8",
+  "budget_amendment_schema_version": "liquipedia-history-campaign-budget-amendment-v1",
+  "campaign": {
+    "attempt_hard_maximum": 100,
+    "campaign_id": "m3_5_20220101_20260727_e2c4c37a9792",
+    "configuration_fingerprint": "e2c4c37a9792cfa3e724d6bfee1173feb1c1ec880644ef43b159c73a2ca52774",
+    "plan_fingerprint": "b443f0910d40dfdb0f6986b17b76b582cc738c7c9f162d42317ef632c3759b9b"
+  },
+  "campaign_accounting_at_planning": {
+    "attempt_hard_maximum": 100,
+    "attempts_remaining": 54,
+    "attempts_used": 46
+  },
+  "campaign_accounting_policy": {
+    "all_http_outcomes_count_as_attempts": true,
+    "attempt_hard_maximum": 100,
+    "cache_hits_count_as_attempts": false,
+    "predecessor_attempts_remain_counted": true
+  },
+  "commands": {
+    "recovery": ".venv/bin/python scripts/plan_liquipedia_history_campaign.py --check-partition-readiness 2024-Q1 --include-approved-amendment 2024-Q1 && \\\n.venv/bin/python scripts/backfill_liquipedia_history.py \\\n  --start 2024-01-01T00:00:00Z \\\n  --end 2024-04-01T00:00:00Z \\\n  --tier 1 \\\n  --tier 2 \\\n  --page-size 100 \\\n  --max-requests 20 \\\n  --max-network-attempts 12 \\\n  --require-cache-prefix-pages 8 \\\n  --hourly-limit 54 \\\n  --request-interval-seconds 67 \\\n  --timeout-seconds 30 \\\n  --execute \\\n  --confirm-live-request-budget 12",
+    "subsequent_chronological_readiness": ".venv/bin/python scripts/plan_liquipedia_history_campaign.py --check-partition-readiness 2024-Q2 --include-approved-amendment 2024-Q1"
+  },
+  "effective_plan_fingerprint": "29993c0a7718a2a39d67fab1eb865df4fb017b4e9d0890e46d55d88b23428ae4",
+  "partition_id": "2024-Q1",
+  "paths": {
+    "amended_checkpoint": "data/backfill/runs/m3_20240101_20240401_2c59812252db/checkpoint.json",
+    "cache": "data/raw/liquipedia/backfill/cache",
+    "predecessor_checkpoint": "data/backfill/runs/m3_20240101_20240401_4aa59da8deab/checkpoint.json",
+    "sqlite_request_ledger": "data/raw/liquipedia/backfill/state.sqlite3"
+  },
+  "predecessor": {
+    "config_hash": "4aa59da8deab0748102a63a09c21d1b9bc10dfeb317bf57b7633d2ea0014a051",
+    "http_attempts": 8,
+    "page_slot_ceiling": 8,
+    "records_seen": 800,
+    "run_id": "m3_20240101_20240401_4aa59da8deab",
+    "terminal_status": "budget_exhausted",
+    "verified_prefix_pages": [
+      {
+        "is_final_page": false,
+        "offset": 0,
+        "record_count": 100,
+        "request_hash": "f9e12568c2d7178b77200b2c1c1498337a0919a8e9500c2e67beb41d37d74b1a",
+        "response_sha256": "97620ce703a96f4d5441b92adfd0d1940a04fffbc3c81e3ac572115bf8613f67",
+        "sequence": 1
+      },
+      {
+        "is_final_page": false,
+        "offset": 100,
+        "record_count": 100,
+        "request_hash": "a27170f581d2b9e9fce4fbb544934e3e50bdbee9f1a590e5abfe15f9f8fe3659",
+        "response_sha256": "55767332b49409129d9141fad66e2ed094bd94a7fd7830138d9851e1e6918bb7",
+        "sequence": 2
+      },
+      {
+        "is_final_page": false,
+        "offset": 200,
+        "record_count": 100,
+        "request_hash": "1fd60dfaa9e991c5a53c1ee1e1b548da7779b7be848a64eed5999fbb24cf4977",
+        "response_sha256": "b5d17cafce179d8bd6aa6285f7a14d1df8e44031c409ee457c4a215cee1ab4bf",
+        "sequence": 3
+      },
+      {
+        "is_final_page": false,
+        "offset": 300,
+        "record_count": 100,
+        "request_hash": "268fee7ac477e77b79553109ab25aeeaafe4251e8be164978776d34e2455e54a",
+        "response_sha256": "407362909722e42512813f2af916e5fe77acd95ed52675eb42e52b9e46ec94ca",
+        "sequence": 4
+      },
+      {
+        "is_final_page": false,
+        "offset": 400,
+        "record_count": 100,
+        "request_hash": "3cb467f8d65bc344c675a9599d5df717be7f865fdbf3089b4854474df1fea50d",
+        "response_sha256": "ab8a7135fe34faa0ac124c0b8ee722044693f8406d576a335e77071221f5f121",
+        "sequence": 5
+      },
+      {
+        "is_final_page": false,
+        "offset": 500,
+        "record_count": 100,
+        "request_hash": "b574a7af1b7a82967a51220f7aea0493b46dfbba3c9cecf3971aab1505f3108c",
+        "response_sha256": "95a21b0164f2f2fed4dfc8f69aa8ad32177ce3b1dd091f6c49a75ca62a2e1ce1",
+        "sequence": 6
+      },
+      {
+        "is_final_page": false,
+        "offset": 600,
+        "record_count": 100,
+        "request_hash": "4178b85449866d8e111c282740059e4dcceed83b2ebae3e1261353aa295dbd55",
+        "response_sha256": "158b4c0bbe85b4cccf7c3ff83b2c05be596f5f7a71da5c9856063bf1ed58e3c0",
+        "sequence": 7
+      },
+      {
+        "is_final_page": false,
+        "offset": 700,
+        "record_count": 100,
+        "request_hash": "0aaa6401beda7eff4b54e513f73a84b8d903ecff8080aaf6ab9801cf89bc7ff1",
+        "response_sha256": "91b61bbd141d3841af969b12af2623b4166d7c28ab140134311d317fe7e69220",
+        "sequence": 8
+      }
+    ]
+  },
+  "unchanged_policy": {
+    "automatic_retries": 0,
+    "chronological_progression": true,
+    "date_range": true,
+    "endpoint": true,
+    "finished_matches_only": true,
+    "immutable_cache": true,
+    "ordering": true,
+    "page_size": true,
+    "projection": true,
+    "request_interval_seconds": 67.0,
+    "rolling_hour_limit": 54,
+    "stop_gates": true,
+    "tiers": true
+  }
+}

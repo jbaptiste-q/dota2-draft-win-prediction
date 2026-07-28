@@ -1,0 +1,520 @@
+{
+  "coverage": {
+    "artifacts": {
+      "coverage_by_patch.parquet": {
+        "bytes": 4079,
+        "file": "coverage_by_patch.parquet",
+        "sha256": "d6203e993d16d71380d26e3ad6060f3f60e2516792fddc1e970da929a7be092d"
+      },
+      "coverage_by_tier.parquet": {
+        "bytes": 2627,
+        "file": "coverage_by_tier.parquet",
+        "sha256": "224036afe8c818e958b48aad0485d29771991e348a32874a90008839e5c4d4b4"
+      },
+      "coverage_by_tournament.parquet": {
+        "bytes": 9086,
+        "file": "coverage_by_tournament.parquet",
+        "sha256": "c08eac715c9215c50a7e4c1a3f4edeb341bec408703cc365705999746e81c249"
+      },
+      "coverage_by_year.parquet": {
+        "bytes": 2733,
+        "file": "coverage_by_year.parquet",
+        "sha256": "dc02cfffd5de14350b0e36ae79dfcad428cf2353ab37f3bc0d0aa03adc02b26c"
+      },
+      "coverage_summary.json": {
+        "bytes": 994,
+        "file": "coverage_summary.json",
+        "sha256": "1555bc0bb25f184e4b7a6c4ab33d1d0c3ac4b397b2b00cad38c49e114cad9e27"
+      },
+      "coverage_summary.md": {
+        "bytes": 646,
+        "file": "coverage_summary.md",
+        "sha256": "d037affcbb8092bfcd84982a79f179480b02f23d9d7e65b5c8e93d84ab22ad8f"
+      },
+      "eligibility_failures.parquet": {
+        "bytes": 582,
+        "file": "eligibility_failures.parquet",
+        "sha256": "cd908367d2a635e9b2076a66ad78f2301985895445e005459df6e9ccb81c2e39"
+      }
+    },
+    "summary": {
+      "complete_bans_count": 9718,
+      "complete_picks_count": 9741,
+      "eligibility_failures": {
+        "<trainable>": 9700,
+        "incomplete_team1_bans": 12,
+        "incomplete_team1_picks": 71,
+        "incomplete_team2_bans": 10,
+        "invalid_game_result": 13,
+        "invalid_series_result": 18,
+        "missing_game_duration": 2,
+        "missing_game_winner": 3,
+        "missing_or_invalid_sides": 185
+      },
+      "files": {
+        "coverage_by_patch": "coverage_by_patch.parquet",
+        "coverage_by_tier": "coverage_by_tier.parquet",
+        "coverage_by_tournament": "coverage_by_tournament.parquet",
+        "coverage_by_year": "coverage_by_year.parquet",
+        "eligibility_failures": "eligibility_failures.parquet"
+      },
+      "game_count": 10014,
+      "match_count": 4977,
+      "matches_with_games": 4909,
+      "matches_without_games": 68,
+      "normalized_build": "build_6f44f771e75eabff",
+      "patch_known_count": 9886,
+      "sides_known_count": 9813,
+      "trainable_game_count": 9700,
+      "trainable_game_pct": 96.86439,
+      "winner_known_count": 9998
+    }
+  },
+  "limitations": [
+    "This is a provisional contiguous historical prefix.",
+    "Later historical partitions and the cached July 2026 pilot are intentionally excluded."
+  ],
+  "normalized": {
+    "build_fingerprint": "6f44f771e75eabffb393f2a3a2bbe27097d4c882d38fbfd10b476fa66dfcae1f",
+    "directory_name": "build_6f44f771e75eabff",
+    "manifest_sha256": "b18256f9fa5fe85c920a00e41233247c651e6d6b3e183ce92058951fda9d73a4",
+    "schema_version": "liquipedia-dota-draft-v1",
+    "tables": {
+      "draft_bans": {
+        "file": "draft_bans.parquet",
+        "rows": 136231,
+        "sha256": "13b942ced132bb1cff6098c1f16f1aa4d357dc56c3c4c5f1b04f67f9433ed2c0"
+      },
+      "draft_picks": {
+        "file": "draft_picks.parquet",
+        "rows": 97556,
+        "sha256": "6929939716f94cc9228691ce411546bf86bc5592a852b74442863fbbfa98acc5"
+      },
+      "games": {
+        "file": "games.parquet",
+        "rows": 10014,
+        "sha256": "e05c2a6669c725145ab13ee73fbe096434bcb76d0eb63e34afa43cf4d7b9e8ca"
+      },
+      "heroes": {
+        "file": "heroes.parquet",
+        "rows": 124,
+        "sha256": "8d7f7a49e114d528f0e395dbc8c0a39261a0a82b54609095c36d4b49aefa7b16"
+      },
+      "match_players": {
+        "file": "match_players.parquet",
+        "rows": 49342,
+        "sha256": "31ae7d16411702ee4dffaf18ec1e0cee63d9758b789d63eb1e7b673404abea09"
+      },
+      "match_teams": {
+        "file": "match_teams.parquet",
+        "rows": 9954,
+        "sha256": "872003a6510e287e071ea15db5c525319139be2cef5e0d78ac9c54dad1382314"
+      },
+      "matches": {
+        "file": "matches.parquet",
+        "rows": 4977,
+        "sha256": "2b89790f6c0ead223c1aab02d8fd372c124ade08c0680241dadf453d518999f9"
+      },
+      "ml_draft_games": {
+        "file": "ml_draft_games.parquet",
+        "rows": 9700,
+        "sha256": "d6619a57bf29549982c9a05fdf87b45d88ced625da41cc4e065e5885d02cd1b4"
+      }
+    }
+  },
+  "normalized_build_fingerprint": "6f44f771e75eabffb393f2a3a2bbe27097d4c882d38fbfd10b476fa66dfcae1f",
+  "partitions": [
+    {
+      "acquisition_fingerprint": "a940da4bc82f802ec0eb1618f0c9acdee7e0fbca0e3a56ec1db9876463e0cdea",
+      "assembly": {
+        "accepted_games": 787,
+        "accepted_matches": 353,
+        "build_fingerprint": "79d921a5e899a88cc34d5c66b4888d681f8f71ad64f3c1bc10fd25c421fd68a7",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "8358f27edd162ea273257eede4346a509e8b371dadf578e21f48e7bf42c8ca60",
+        "manifest_sha256": "25ddddf04c87385b9b2380bf474bfa968cb03510435402bb1aff3962ae89ac2e",
+        "quarantined_records": 0,
+        "record_index_sha256": "2e1445826696559d7436083ba79b587ebad0207c0c90bd1f21dfdf4c5c76ffc8",
+        "snapshot_sha256": "cc09da8e918f7c4c8d85f22fa5d92048c641dd98467c94c0c586218090a86a32"
+      },
+      "cache_hit_count": 0,
+      "checkpoint_sha256": "d086026b9d657b508d816a9131facd52a9df5d5c7ef6e469a21e3900bc18ea31",
+      "config_hash": "36bbf248c8cfc2fe9c7505af9eabedcb2c39f31a9dbe7c424eb57e9b2257f477",
+      "partition_id": "2022-Q1",
+      "raw_response_sha256": [
+        "1421bf9a2a1f2ba225be85d729c6624204c18d2a926c4b0cc9139450b5140417",
+        "26226331cd0ed1161ca89443203f8dcfe39d2ff020e587eae4d1fd3dbddcb0a3",
+        "357d4c40ebd61a3f42c1c0565fccdc748a737b9e69b2b57c60e3d13be883b54e",
+        "3cd6f7ee162dac21b91bc1ef22efe6d77b3a9ffdfe54ae5e2978315d8b48ab2a"
+      ],
+      "request_count": 4,
+      "run_id": "m3_20220101_20220401_36bbf248c8cf",
+      "run_manifest_sha256": "88b311665e0978d6c7192fe4c35c38ddb9dfbd0ff23bda3b1c87e8bb809a9612",
+      "scope": {
+        "end_utc": "2022-04-01T00:00:00+00:00",
+        "start_utc": "2022-01-01T00:00:00+00:00"
+      }
+    },
+    {
+      "acquisition_fingerprint": "1db8f69e3b54d2e754a9d64e7e0f92e7819ea909aa9e595f8c1f5cb1ca4a3004",
+      "assembly": {
+        "accepted_games": 764,
+        "accepted_matches": 357,
+        "build_fingerprint": "e9f6a7465b552271e6d520806b47ba05d5407b4b9a177ee4f9f99e01d29e2d85",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "c8904156b115c6adc6eb6e247c63e466a260fe261515c8ecf492773fa93f4a65",
+        "manifest_sha256": "1b4d2f4037bbeb3db06dcc7735e51814849ee0634b7458961e92606ba8df5601",
+        "quarantined_records": 0,
+        "record_index_sha256": "14cb6268e64569f131c8f35a042a58d82b07c4cbf51609cb7f960693f64c67e3",
+        "snapshot_sha256": "8f4704d26feadd3e987907cc0ca5f92e8a8d57318701e9a4d7be8630b1e06857"
+      },
+      "cache_hit_count": 0,
+      "checkpoint_sha256": "aaf468f6e6dd594bc5570852c9d699ba9cefea6476a8dd3ba48d9c0ff1d3ae74",
+      "config_hash": "60f8944a646a7a390039d9c4b69fa394aa1dca4d2a598ed7ee33f1c27ee283f3",
+      "partition_id": "2022-Q2",
+      "raw_response_sha256": [
+        "19d4f60e31dc9935565815773df0990fe7a901207592ada1a62693ad45855413",
+        "59ba4fb770707006476e56ab295d4ad8ef96c1465223ffa54c837a9a605f4c2f",
+        "8779955db20a246034cc84a51f2f7819d880f5232bcc9e610823ba9a42420749",
+        "f3bf566070f4b1d8ed522ca99bc4a1d59a064bbf41b97f9844acc9dc9edc7d02"
+      ],
+      "request_count": 4,
+      "run_id": "m3_20220401_20220701_60f8944a646a",
+      "run_manifest_sha256": "7e1890c396ff65426e03d3ff3ee588f16dbf975d19b5dd781beb63790d9ddc7c",
+      "scope": {
+        "end_utc": "2022-07-01T00:00:00+00:00",
+        "start_utc": "2022-04-01T00:00:00+00:00"
+      }
+    },
+    {
+      "acquisition_fingerprint": "01347a87198cbc9858513ae0a8c0fc596d33b185ad884ac6a470672e00f0011a",
+      "assembly": {
+        "accepted_games": 969,
+        "accepted_matches": 446,
+        "build_fingerprint": "30806006bda3cd16e675c550908d504ae029879ec16e0e3b044083f0a4e9af68",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "5943a9f81c2a913dc998b932b8d7cfd16a0fb6643f53b62cf7eaae8c5f1705a7",
+        "manifest_sha256": "559b81457c593a6887ef1371c53903af3eb8ba451df741b316cecfe93fe223b6",
+        "quarantined_records": 0,
+        "record_index_sha256": "84715cf0bdb7fc0fb56f8b9ec4a578112a8d9421075a730b9f990b27cfd7a11b",
+        "snapshot_sha256": "b4f4c76fd9ca0dee2bced24a0046559919d141be269323ffcabb7127de19ae6f"
+      },
+      "cache_hit_count": 0,
+      "checkpoint_sha256": "9b692d7c3268dc6ae59a0a6a08ae0a03a9b6811ff23dcd8ee85cf7a650d26350",
+      "config_hash": "19a8d74f1c5bed697445b546f3fdd6d27d2c677c53657ca1966840b6ed6ec0e2",
+      "partition_id": "2022-Q3",
+      "raw_response_sha256": [
+        "074d005a8c36697f42ddcc243ea34d362eaf5a7f80aaf3b3866fdf796af48015",
+        "1d85be10c567d0fac2f5512416646295254fa02d09116293e753e39a8cf2d332",
+        "884f8a767db54fd502c464d8e147d92eb9207fefda8ddeff22aae3beb96528bd",
+        "8d6d541f18fa38948a5d2d14029a8eed63eccccc851df217dba7b84d36572dca",
+        "94901db08a6bf2f501221e0b97ef6c59d88847500e88fc5e18f6972c66aefa78"
+      ],
+      "request_count": 5,
+      "run_id": "m3_20220701_20221001_19a8d74f1c5b",
+      "run_manifest_sha256": "110033bcae392f4c303187e5f30d51b101ef6a39b5f568e32c004e29eb4e4af5",
+      "scope": {
+        "end_utc": "2022-10-01T00:00:00+00:00",
+        "start_utc": "2022-07-01T00:00:00+00:00"
+      }
+    },
+    {
+      "acquisition_fingerprint": "3d09ee8570cd723e6e24333f686e923cce4b3585eac5f008bbf776ff55f6b76d",
+      "assembly": {
+        "accepted_games": 578,
+        "accepted_matches": 265,
+        "build_fingerprint": "da1a9a854986d18838e577f9a1612321fcf86b2ef188e2b666dec6ab806c10c0",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "1a1a4e62341f12982615e69edb458f37bee949d6fb64ce4b28946f4fcea04522",
+        "manifest_sha256": "80d55accb6d2b4c6df061bd1da0caeee1c00e463ae6a41c47033d19c7a107033",
+        "quarantined_records": 0,
+        "record_index_sha256": "ab8675c498e6b7cd70a2300db9043534fcb28b25d3a3c22a49804234a8c5c806",
+        "snapshot_sha256": "9a1d15782d5ac07594d5eb5bcf5fa338e2633a9cf1239f5ce393d6af0a2b9611"
+      },
+      "cache_hit_count": 0,
+      "checkpoint_sha256": "1e592f05aeb23fd8742fea83152584ee43a69fa773b3b05e45a59cceeed7f2d0",
+      "config_hash": "ef93d0bbe56b3acb38674e503541d1fc107f6405adaf22e589af05e1dd5829f6",
+      "partition_id": "2022-Q4",
+      "raw_response_sha256": [
+        "2e08fe99f903bc9aecbb9faa6c0addd0acc0550daaef873c98af6f54428cfe9b",
+        "78a20aa919cef8f63092bf346de11a143777b479362a3ec33bcc3fdf761d3278",
+        "9355a95aacdb79a0f133e67db5c08e9bb5b52327aa4794792dec477bb9f66c46"
+      ],
+      "request_count": 3,
+      "run_id": "m3_20221001_20230101_ef93d0bbe56b",
+      "run_manifest_sha256": "006e155c7ba84120bfe21f3a1bb3a2314f55b458a1d4623c37d3a5db7b3b6f99",
+      "scope": {
+        "end_utc": "2023-01-01T00:00:00+00:00",
+        "start_utc": "2022-10-01T00:00:00+00:00"
+      }
+    },
+    {
+      "acquisition_fingerprint": "e9bef6328a996ea3c38dccc42e5c161829f9a1885d5e7ecc8b38ee3224245985",
+      "assembly": {
+        "accepted_games": 1224,
+        "accepted_matches": 551,
+        "build_fingerprint": "66b221d3f87d058d7022a40bf9dae2f21704c4cd46ef1e40a7f0d17549a335d5",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "87fe3d11d9e03cdee514b653c9d6b9a61c95750c5fbb9fd98c39fd0bb71c147c",
+        "manifest_sha256": "864b12821f75315b6eb59c65c2b86137a1de9be3ff0fd248df781fd232959edf",
+        "quarantined_records": 0,
+        "record_index_sha256": "9149bdb6f348b61092463d38f24ac64f2821d3a27a0d3091fb78dd9d0ab37446",
+        "snapshot_sha256": "c5b55891d298faea24aef0570c9ca701ec0c37549c35f580432a11a8c5b5f44c"
+      },
+      "cache_hit_count": 0,
+      "checkpoint_sha256": "4ab0920bd00ed9b5126b2e19221b46681d27267cb22669738a205c497c090252",
+      "config_hash": "f0eaf02020834b358b061df339f92422bd66bc4d72671a838208978b7ca727a4",
+      "partition_id": "2023-Q1",
+      "raw_response_sha256": [
+        "17a9c1caf8041ebf99f2f33ecf59f9ec27f91fb241bead2e009f809baf63f892",
+        "93632713993b89d22e3bf3766c30539fe49b67a92580255b09eb473c0fa88e7a",
+        "b57fedb1c1ef8cc1b1b00d754c325d759232adcfbe4aedc4b3f4f721c08f96ae",
+        "badcbb9fd7d636bd1f4ad751a3e1f923ce3f980fe3a36f33919bea829c35aeb9",
+        "bcc81f0256796012651d4b900b4d349af01ba151a79e5ed69b928387af1a2482",
+        "c1c72a4a532d6549520a8980c35e59d848dd4a33833181df95ff9d22c27eddfc"
+      ],
+      "request_count": 6,
+      "run_id": "m3_20230101_20230401_f0eaf0202083",
+      "run_manifest_sha256": "fc1a6686bd3950cf93d20b8a4dce0f89053a4139c2c7bc2b98f1d50f7065803c",
+      "scope": {
+        "end_utc": "2023-04-01T00:00:00+00:00",
+        "start_utc": "2023-01-01T00:00:00+00:00"
+      }
+    },
+    {
+      "acquisition_fingerprint": "a2d180cf07239af9a5154a63b83fa1d06b4957d445f758c7bb204f2a87f5e006",
+      "assembly": {
+        "accepted_games": 1171,
+        "accepted_matches": 546,
+        "build_fingerprint": "9573cfd8c0943cebb1aab41da079e3c1427c56f6a14880c875997f43c8e21962",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "e7d026d82e8f172d3fd5f90eba8428883f80368cb307f434c0cacf98a4caf0b4",
+        "manifest_sha256": "4e3884e2998eeea7693ecb699caea67a83f6b959bbe67933d9b91aad3363ff0c",
+        "quarantined_records": 0,
+        "record_index_sha256": "98edf22567e20bae0a85bd82eb895d12cfa309173f319ecec922388e401c9b9b",
+        "snapshot_sha256": "0fea9338fb12c701e199f32b08ee13560e029b7e9d3398bc7613ebef1826db50"
+      },
+      "cache_hit_count": 0,
+      "checkpoint_sha256": "8fb0f26c14b907ff959d9e4353f95e0580e4b201cf8a012b79b9cc7d20fe86b2",
+      "config_hash": "5d5756ba4fd9df0fd6a610c37bbe67691aea6a35c5c0b339891ac0533b9f1d89",
+      "partition_id": "2023-Q2",
+      "raw_response_sha256": [
+        "101dc94285d3b17bebc96efd7960c8f2df7ee89ec1b2491afea5811c0e1d23ed",
+        "16b8cc0e272ee05c240a20f3c60b58eb090cb2e1849efac3ff6f0671c3592819",
+        "51271d5cbf9bbd3cbd0e1cc8129753181b5b5e00b3fb1e1722947bbbc94f275a",
+        "8ce8d5f4eaca9832a1753e557b1365548bb4a3b5167918ea1188e68feafd10f2",
+        "ca8c4d402e2b4143f428d13f86d42d2b8b53050292c1890d369330019db105d4",
+        "db9bb718e32a09912bcbb994dce6ab2c4fb7cf3d975e747abea183493ef7f41e"
+      ],
+      "request_count": 6,
+      "run_id": "m3_20230401_20230701_5d5756ba4fd9",
+      "run_manifest_sha256": "02388841407836a8d512a492e98993e6afa4eae905c8f87ba34058a3244e8bbc",
+      "scope": {
+        "end_utc": "2023-07-01T00:00:00+00:00",
+        "start_utc": "2023-04-01T00:00:00+00:00"
+      }
+    },
+    {
+      "acquisition_fingerprint": "0a22eacdac2c43851acb116f67f1301a050ec205f679d4e0766246da178beba9",
+      "assembly": {
+        "accepted_games": 943,
+        "accepted_matches": 421,
+        "build_fingerprint": "dadaa3e5a3aba73b38547974691f7bdcec2342edbde172b182510905fa6730e0",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "f7330d1eafea791bc9b33cb051b80327013edcab027207eed02675561dcc9446",
+        "manifest_sha256": "f4ae8cbc683e5657fdb4205d7a3ee79712374fc09eeb076e62bd22ea16670763",
+        "quarantined_records": 0,
+        "record_index_sha256": "481ac0230d95f45e64c09e75148e167aaeb90a1b33eab41fe6ec8d4b4124980d",
+        "snapshot_sha256": "325e099b03404e1ef12c4c620b14a88615532ce959add6b49c6f32a1b53f3b09"
+      },
+      "cache_hit_count": 0,
+      "checkpoint_sha256": "9ca8fe90720758095185f1c1917fbb2ef274e3a45cdfb9e5b6b2e2d85c5d0611",
+      "config_hash": "3914e6822405be757288e5fcf1c01ea374c4f7cead9abcad888e76f757e2b6cc",
+      "partition_id": "2023-Q3",
+      "raw_response_sha256": [
+        "195d887a9cf06650dd83c36f7b7296f15287dd6e753e09aaebf7df06c5b75ec8",
+        "6181d1fc1f1b44ba728c5562805dce1ff066afb8b13513c0eea251d1cbf42098",
+        "6c75225dc0197906fdd015d50690877415ac78b8b076638e7f594a8860407585",
+        "7a751f0e9d58b0f9f36e0e45a4f66d4aa7435d85535f3b8ac8bbfebd80f83485",
+        "9f192973a5fd4a2fa93f8c60b54291ae8a213d1c6c833403f5f33f7d8ba714ba"
+      ],
+      "request_count": 5,
+      "run_id": "m3_20230701_20231001_3914e6822405",
+      "run_manifest_sha256": "16adbf4e4000600df7b81b204b015685c08f1f386b787f8d0a934704521f9e8d",
+      "scope": {
+        "end_utc": "2023-10-01T00:00:00+00:00",
+        "start_utc": "2023-07-01T00:00:00+00:00"
+      }
+    },
+    {
+      "acquisition_fingerprint": "29779e12f2d3a11491d2d51d47c74cfb9cf670777acfb55ef8848790c821146d",
+      "assembly": {
+        "accepted_games": 826,
+        "accepted_matches": 428,
+        "build_fingerprint": "f5e8f0ef41882f08373f86472419960489dcd6c7ec75a52f687ad0ad2d753668",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "d05b8ba5f97ce6dac2ec74edb4c332a7c8402310d6ed5b57e9bc1df0fdb7de7a",
+        "manifest_sha256": "649d8b6f35642e0bd4ab2f25044e155e7323cf9114cd588b76c741d668637538",
+        "quarantined_records": 0,
+        "record_index_sha256": "9e1a15f3ccda47c5018d3f168a598539cc17f892a880f2d606ed674bbe7d5ee6",
+        "snapshot_sha256": "a0a5abed7a8738618b31c5b60a297dc8624bb5e2b155ae5b5bb28a11d529cf98"
+      },
+      "cache_hit_count": 0,
+      "checkpoint_sha256": "af69d90bcae032571fa88e72dc0cc5ae3c33caf69388457591e1b71b93b42991",
+      "config_hash": "5afa75ba56fa1a6a6ea4b7dc1692795dadb9a82d21d365fdd2c921b4e42e1069",
+      "partition_id": "2023-Q4",
+      "raw_response_sha256": [
+        "2eb21d8b21ac4db4f778f614a3da226445690266707e160c1558e7a5a3c7dfb3",
+        "690d7bed0d5b6d91dc90c8c6a21003ed9d136d3a53c8b1ef8abb781e1179f5a0",
+        "6b7f7341b0aac88608caf5f744b120cb126c81e56d86dd8c949a2a56b74b402e",
+        "9df75b65159256d8a8f962d2b5f72465e35fd68018356347282baa3da914a1c3",
+        "db3f44d7bab50a78936acf048139f480798cc1c4733fe5ff945a6cbfc640d518"
+      ],
+      "request_count": 5,
+      "run_id": "m3_20231001_20240101_5afa75ba56fa",
+      "run_manifest_sha256": "35f98c234d998a816a8962ba2399266191142b1856b55892aff69371fee1e264",
+      "scope": {
+        "end_utc": "2024-01-01T00:00:00+00:00",
+        "start_utc": "2023-10-01T00:00:00+00:00"
+      }
+    },
+    {
+      "acquisition_fingerprint": "b731416b76aa91d795641733fe7e4d7a8992e07ec8758be7d09e41f64a0c5a3b",
+      "assembly": {
+        "accepted_games": 2752,
+        "accepted_matches": 1610,
+        "build_fingerprint": "d865cd1ba34fdc1b3f728c75f30a94786b43827732baef503e81080b91bdb195",
+        "duplicate_games": 0,
+        "duplicate_matches": 0,
+        "game_index_sha256": "f5df7309266d648ea36144bba8e8ccf96cb8f40c2b68e19566598acbbf1429b9",
+        "manifest_sha256": "45dc499758ed827a4ffe843ca85b79feb3765f4a645f7f25bf2e938baba3fad2",
+        "quarantined_records": 0,
+        "record_index_sha256": "bdb38ea1ea036f5920791606b18fe747ee32f4f05d86e69a183137a1478b2ff2",
+        "snapshot_sha256": "c7c671dbc90aeabc4b761ab84a1e87042101b5e8102cc360249817b988a4848c"
+      },
+      "cache_hit_count": 8,
+      "checkpoint_sha256": "c27a9243aedb95ca40d7e09e0fa8002ae593f97359a1a6f248bec71509599abc",
+      "config_hash": "2c59812252db906c8b373ec33fbc9b5cec0bb3f06e7b7c3250eafd94e442d097",
+      "partition_id": "2024-Q1",
+      "raw_response_sha256": [
+        "158b4c0bbe85b4cccf7c3ff83b2c05be596f5f7a71da5c9856063bf1ed58e3c0",
+        "18f5ad2f130a86ebd8905e78dfc0bc5f4f5fa762ba31f582065c6edebb45e43f",
+        "22a067f9325455e4d9b5228c9aaf7c28be0004cdeb138e63502b34250ea5836c",
+        "282d8f6dbc1a5e5af7ffe3140b1e7b0e5d2c4010612bfc5dd63a6962f9c20dc1",
+        "2d85d659147bb15384668a39b24fe84ee3c4c087c5703571830a1db89d23b985",
+        "342bbe14d03610586d2679635751239a269b629bfd66783a4ff30a2d189f7767",
+        "407362909722e42512813f2af916e5fe77acd95ed52675eb42e52b9e46ec94ca",
+        "55767332b49409129d9141fad66e2ed094bd94a7fd7830138d9851e1e6918bb7",
+        "91b61bbd141d3841af969b12af2623b4166d7c28ab140134311d317fe7e69220",
+        "95a21b0164f2f2fed4dfc8f69aa8ad32177ce3b1dd091f6c49a75ca62a2e1ce1",
+        "97620ce703a96f4d5441b92adfd0d1940a04fffbc3c81e3ac572115bf8613f67",
+        "ab8a7135fe34faa0ac124c0b8ee722044693f8406d576a335e77071221f5f121",
+        "b174f539ecbb07115927cf656b64b1f5e523a4c8c49e254f50b7110c93a87b49",
+        "b5d17cafce179d8bd6aa6285f7a14d1df8e44031c409ee457c4a215cee1ab4bf",
+        "d9624ac3004adcd4c1ce23f5edc1edfe4455f4f0dfe2eb31c15b2f24841a0a21",
+        "e2a0904587ad0e6ea367aebb6d7f164e634e59dd768114975110d5485f59d13d",
+        "ff831b22a3fdc6b4d436a0fa0d49d840bbeca814c3c8ad680886acaa2de8739d"
+      ],
+      "request_count": 9,
+      "run_id": "m3_20240101_20240401_2c59812252db",
+      "run_manifest_sha256": "825c2294193b037064053d1408de38884ed87774531b79e83890afa8e34b499c",
+      "scope": {
+        "end_utc": "2024-04-01T00:00:00+00:00",
+        "start_utc": "2024-01-01T00:00:00+00:00"
+      }
+    }
+  ],
+  "publication_version": "1.0.0",
+  "publisher_source_sha256": "07f25eb1e643cf6f2d755f83073a715bdacb7b62696cc1c5050bdef0ccfdcac3",
+  "reconciliation": {
+    "duplicate_stable_identifiers": 0,
+    "eligible_games": 9700,
+    "excluded_games": 314,
+    "normalized_equals_eligible_plus_excluded": true,
+    "normalized_games": 10014,
+    "quarantined_records": 0
+  },
+  "release_fingerprint": "a485f713ffaf94f784ea1c770478be5c172d60285eb8369e294d34d9d447e7da",
+  "release_schema_version": "dota-draft-historical-release-v1",
+  "release_status": "provisional_contiguous_prefix",
+  "request_accounting": {
+    "cache_hits": 8,
+    "http_attempts": 47
+  },
+  "scope": {
+    "end_utc": "2024-04-01T00:00:00+00:00",
+    "interval": "half-open",
+    "partition_count": 9,
+    "partition_ids": [
+      "2022-Q1",
+      "2022-Q2",
+      "2022-Q3",
+      "2022-Q4",
+      "2023-Q1",
+      "2023-Q2",
+      "2023-Q3",
+      "2023-Q4",
+      "2024-Q1"
+    ],
+    "start_utc": "2022-01-01T00:00:00+00:00",
+    "tiers": [
+      "1",
+      "2"
+    ]
+  },
+  "source_attribution": {
+    "license": "CC-BY-SA 3.0",
+    "source": "Liquipedia",
+    "terms": "https://liquipedia.net/api-terms-of-use"
+  },
+  "supervised": {
+    "artifacts": {
+      "data_card": {
+        "bytes": 845,
+        "file": "data_card.md",
+        "sha256": "5643590fee7f619ed9aacf59f19be6b943822bb287deb8fda68f4cbea48659b7"
+      },
+      "draft_training_games": {
+        "bytes": 357470,
+        "file": "draft_training_games.parquet",
+        "sha256": "86fc4327c30a92ef50de889b343682f5934615b6b14f75057a4a9e3ff957a719"
+      },
+      "excluded_games": {
+        "bytes": 8151,
+        "file": "excluded_games.parquet",
+        "sha256": "f4e25cff320f1504a00861a9660ff0d3689cfa938f5118c3fb22245511cecd57"
+      },
+      "hero_vocabulary": {
+        "bytes": 2159,
+        "file": "hero_vocabulary.parquet",
+        "sha256": "8d7f7a49e114d528f0e395dbc8c0a39261a0a82b54609095c36d4b49aefa7b16"
+      },
+      "quality_report": {
+        "bytes": 1544,
+        "file": "quality_report.json",
+        "sha256": "9ad679e676b7213f3ad858e56f2b5a4f859ffb2123b362f00ff8df4575df92df"
+      },
+      "schema": {
+        "bytes": 6744,
+        "file": "schema.json",
+        "sha256": "4bae8474d0d982c0356bda042ab15739572e97f97b63548e3685c028480872b4"
+      }
+    },
+    "build_fingerprint": "c1ea1d31968eb4c9c6fc4cd8dd7812ca2189694ca94ace48b1aae676e146acd9",
+    "directory_name": "build_c1ea1d31968eb4c9",
+    "eligible_games": 9700,
+    "excluded_games": 314,
+    "manifest_sha256": "5b4b807f81c2b960ed813d373ccd3f2b602b77cff61a680a86002c6b2d9810ad",
+    "normalized_games": 10014,
+    "schema_version": "dota-draft-supervised-v1"
+  },
+  "supervised_build_fingerprint": "c1ea1d31968eb4c9c6fc4cd8dd7812ca2189694ca94ace48b1aae676e146acd9"
+}

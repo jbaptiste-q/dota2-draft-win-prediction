@@ -1,0 +1,19 @@
+{
+  "alias": "m3.5-tier1-tier2-2022q1-2024q1-provisional-v1",
+  "alias_schema_version": "dota-draft-historical-alias-v1",
+  "normalized_build": {
+    "build_fingerprint": "6f44f771e75eabffb393f2a3a2bbe27097d4c882d38fbfd10b476fa66dfcae1f",
+    "directory_name": "build_6f44f771e75eabff"
+  },
+  "release_fingerprint": "a485f713ffaf94f784ea1c770478be5c172d60285eb8369e294d34d9d447e7da",
+  "release_manifest": {
+    "relative_path": "build_a485f713ffaf94f7/manifest.json",
+    "sha256": "fb456a7cf03be15852060e0dc4d619798d4da787dc3ad7c3cf328c0a83ee33cb"
+  },
+  "release_status": "provisional_contiguous_prefix",
+  "supervised_build": {
+    "build_fingerprint": "c1ea1d31968eb4c9c6fc4cd8dd7812ca2189694ca94ace48b1aae676e146acd9",
+    "directory_name": "build_c1ea1d31968eb4c9",
+    "schema_version": "dota-draft-supervised-v1"
+  }
+}

@@ -1,1 +1,1 @@
-"""Reusable code for the Dota 2 draft win prediction project."""
+"""Official-Liquipedia data engineering packages for the Dota 2 Draft AI."""
