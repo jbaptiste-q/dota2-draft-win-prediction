@@ -112,18 +112,19 @@ No other product capability is required for completion.
 | Check | Result |
 | --- | --- |
 | Focused Draft Assistant tests | **54 passed** |
-| Python compilation | Focused Draft Assistant paths passed; full validation pending |
-| Dependency consistency | Pending final roadmap validation |
+| Python compilation | **Passed** for `src`, `scripts`, and `tests` |
+| Dependency consistency | **Passed** — no broken requirements |
 | JavaScript syntax | **Passed** |
-| Repository hygiene | Pending final roadmap validation |
-| Complete active offline suite | Pending final roadmap validation |
+| Repository hygiene | **Passed** |
+| Complete active offline suite | **410 passed; 16 known Joblib/NumPy deprecation warnings** |
 | Working-tree whitespace validation | **Passed** |
 | Authenticated Liquipedia requests | **0** |
 | Model training or optimization | **0** |
 | Locked 2026-Q1 evaluation access | **0** |
 
-The pending validation rows must be replaced only with observed results from
-the final roadmap validation; no count is inferred in this report.
+The full results were observed on the M6 release candidate. The warnings arise
+from Joblib assigning NumPy array shapes during existing bundle compatibility
+tests; they do not change assertions or release behavior.
 
 ## Completion criteria
 

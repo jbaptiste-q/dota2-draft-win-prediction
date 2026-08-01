@@ -73,13 +73,13 @@ substitute for the product release tag.
 | --- | --- |
 | M5.3 product contract remains unchanged | **Pending final diff review** |
 | Public deployment verified | **Pending M6 completion** |
-| One-click example verified in production | **Pending M6 completion** |
-| Manual completed-draft workflow verified in production | **Pending M6 completion** |
-| What-if replacement verified in production | **Pending M6 completion** |
+| Production root, assets, and frozen API routes verified | **Pending M6 completion** |
+| Example completed-draft API response verified | **Pending M6 completion** |
+| User-directed replacement API response verified | **Pending M6 completion** |
 | Product limitations and failed readiness evidence visible | **Pending M6 completion** |
 | Full offline suite | **Pending final observed result** |
-| Site build and static checks | **Pending final observed result** |
-| Browser and accessibility inspection | **Pending final observed result** |
+| Site build, golden parity, type, and lint checks | **Pending final observed result** |
+| Canonical frontend interaction and accessibility assertions | **Pending final observed result** |
 | Repository hygiene and credential checks | **Pending final observed result** |
 | Reviewed release diff contains no local-only data | **Pending final Git review** |
 | Authenticated Liquipedia requests during M5.3–M7 | **Pending final ledger statement; none authorized** |

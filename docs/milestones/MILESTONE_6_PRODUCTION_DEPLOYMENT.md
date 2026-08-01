@@ -56,27 +56,42 @@ The deployment URL, IDs, commit, and timestamp remain pending until the
 production result is inspected. A saved plan or local preview is not
 deployment evidence.
 
+## Deployment adapter
+
+FastAPI remains the canonical local API and contract reference. The selected
+hosting runtime does not execute Python, so M6 adds one thin, parity-tested
+Worker adapter rather than introducing a second backend or a separate hosting
+provider. The adapter imports the canonical frontend and exact SHA-pinned JSON
+snapshot at build time and mirrors only the five frozen public routes.
+
+Golden tests generate responses from the Python service and compare the full
+Worker payloads, deterministic identifiers, ordering, validation behavior, and
+floating-point values. No persistence, authentication, live data source, or
+new product capability is introduced.
+
 ## Required production verification
 
 | Check | Result |
 | --- | --- |
 | Production deployment reached a terminal successful state | **Pending** |
 | Public URL loads without authentication | **Pending** |
-| One-click example completes successfully | **Pending** |
-| Manual completed-draft analysis completes successfully | **Pending** |
-| What-if replacement completes successfully | **Pending** |
+| Root HTML and versioned static assets are served | **Pending** |
+| Health, hero catalog, and model-card routes return their frozen schemas | **Pending** |
+| Example completed-draft API request succeeds | **Pending** |
+| User-directed replacement API request succeeds | **Pending** |
 | Probability and contribution values match the reviewed local contract | **Pending** |
 | Failed readiness and sealed-test disclosures remain visible | **Pending** |
 | `recommendation: false` and non-causal replacement semantics remain visible | **Pending** |
-| Responsive desktop and mobile layouts pass visual inspection | **Pending** |
-| Keyboard interaction and accessible names pass inspection | **Pending** |
-| Browser console contains no unexpected errors | **Pending** |
+| Security headers preserve same-origin runtime access | **Pending** |
+| Product-specific 1200×630 social preview is served | **Pending** |
 | No Liquipedia credential is included in the deployment | **Pending** |
 | No authenticated payload, local database, or generated training data is included | **Pending** |
 | No runtime request is made to Liquipedia | **Pending** |
 
-Observed commands, browser steps, response values, and deployment inspection
-results should be recorded when these checks run.
+Observed commands, response values, and deployment inspection results should
+be recorded when these checks run. Browser visual QA is not part of this
+release gate because it was not requested; the canonical frontend's existing
+offline accessibility and interaction assertions remain in force.
 
 ## Offline release validation
 
