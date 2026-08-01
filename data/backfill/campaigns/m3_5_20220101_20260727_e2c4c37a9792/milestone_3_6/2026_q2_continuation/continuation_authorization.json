@@ -1,0 +1,28 @@
+{
+  "activated_at_utc": "2026-07-30T11:47:58.893593+00:00",
+  "api_key_read_by_activation": false,
+  "authenticated_requests_performed_by_activation": 0,
+  "continuation_plan_fingerprint": "ca8e5818a8f69e8a4b2610f098f5c692fe4e331f9bf89aadcf3ef2e3b395f2ee",
+  "credential_value_printed_or_persisted": false,
+  "gate": {
+    "authorization_id": "m3.6-2026-q2-ca8e5818a8f69e8a",
+    "continuation_plan_fingerprint": "ca8e5818a8f69e8a4b2610f098f5c692fe4e331f9bf89aadcf3ef2e3b395f2ee",
+    "partition": {
+      "accepted_page_count": 8,
+      "next_offset": 800,
+      "next_sequence": 9,
+      "partition_id": "2026-Q2",
+      "records_seen": 800,
+      "request_count": 8,
+      "run_id": "m3_20260401_20260701_f73ba01f2767",
+      "status": "budget_exhausted"
+    },
+    "request_accounting": {
+      "ledger_attempts_total": 145,
+      "successor_attempt_ceiling": 12,
+      "successor_attempts_remaining": 12,
+      "successor_attempts_used": 0
+    }
+  },
+  "successor_authorization_id": "m3.6-2026-q2-ca8e5818a8f69e8a"
+}

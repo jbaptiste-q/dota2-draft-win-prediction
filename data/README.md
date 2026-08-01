@@ -9,8 +9,9 @@ public provenance evidence.
 | Path | Contents |
 | --- | --- |
 | `validation/liquipedia/README.md` | Validation workflow and local-artifact contract; authenticated responses are excluded. |
-| `backfill/campaigns/<campaign-id>/` | Selected credential-free campaign configuration, request hashes, plans, preflight evidence, amendments, and summaries. |
+| `backfill/campaigns/<campaign-id>/` | Selected credential-free campaign configuration, request hashes, plans, preflight evidence, amendments, completion authorization, and summaries. |
 | `releases/dota_draft_historical/` | Immutable aliases, release manifests, and compact aggregate coverage evidence. |
+| `../src/draft_ai_assistant/resources/development_candidate_v0.json` | Compact JSON-only inference snapshot: coefficients, hero display catalog, limitations, and frozen model lineage; no source rows or executable serialization. |
 
 These artifacts contain no API key or authenticated response body. They make
 the dataset scope, request identities, source hashes, row counts, exclusions,
@@ -53,8 +54,15 @@ The release covers completed Tier 1 and Tier 2 professional matches in
 - 9,700 eligible supervised games; and
 - 314 explicit exclusions.
 
-The `provisional` label is intentional. Milestone 3.6 will fill the historical
-gap and extend the campaign through 2026-07-27.
+The `provisional` label is intentional. It remains compact public lineage
+evidence; it is not the active Milestone 4A corpus.
+
+Milestone 3.6 is frozen at the validated contiguous boundary
+`[2022-01-01, 2026-04-01)`. The active modeling corpus is defined by
+`configs/modeling/m4a_working_corpus.json`, which composes nine immutable
+`dota-draft-supervised-v1` builds into 23,123 eligible games without copying
+or rewriting them. Incomplete 2026-Q2 data and the noncontiguous July 2026
+pilot are excluded.
 
 ## Offline build commands
 

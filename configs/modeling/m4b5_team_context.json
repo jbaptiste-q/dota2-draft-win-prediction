@@ -1,0 +1,164 @@
+{
+  "schema_version": "draft-ai-team-context-experiment-v1",
+  "experiment_id": "m4b5-team-context-recovery-gate-v1",
+  "source": {
+    "corpus_config_path": "configs/modeling/m4a_working_corpus.json",
+    "corpus_config_sha256": "2c287af2668bd88e02db1fac3a3363d7b1a6f5f12b04c795741832c6bc81030a",
+    "corpus_id": "m4a-tier1-tier2-2022q1-2026q1-working-v1",
+    "split_manifest_path": "models/m4a/build_2c8c8d1ad87eb711cf474a4cf48b9dc2ad85d2f876b3b9c4c6f8a4d0e8a37e0b/split_manifest.parquet",
+    "split_manifest_sha256": "88d812b511987cd425d4556d8388f7e14edbefb892a9b9045f2dfa39d70238b8",
+    "split_manifest_fingerprint": "dcb1227db92e585d3faab3a435a02aac2e9cb81da44d79bbcf3d7c353cc06fd1",
+    "m4b2": {
+      "build_fingerprint": "a05b2792e3096869d10d7b58339542ceb3bfcf96810a6357520bacc8ac711456",
+      "predictions_path": "models/m4b2/build_a05b2792e3096869d10d7b58339542ceb3bfcf96810a6357520bacc8ac711456/development_predictions.parquet",
+      "predictions_sha256": "9ec6a96513cbd16113de155b24fee4eb2b8abfc4773d5960c6b0295daf49431b",
+      "selection_path": "models/m4b2/build_a05b2792e3096869d10d7b58339542ceb3bfcf96810a6357520bacc8ac711456/selection.json",
+      "selection_sha256": "120bbb45ee12714f67efb93db89ef5c51b7e60a8d12355188c204a9610ab261b",
+      "candidate_id": "b1_full_uniform_c0p01",
+      "candidate_fingerprint": "cc74f23fbd16e6ff6f5a3e2598cd9d326b78abee860bfceeb569154c0c77837e"
+    },
+    "m4b3": {
+      "build_fingerprint": "3f768bb13f0b447bcf6704086f00c28f4652a21e467089d3549060ad3ab64a5c",
+      "predictions_path": "models/m4b3/build_3f768bb13f0b447bcf6704086f00c28f4652a21e467089d3549060ad3ab64a5c/calibration_oof_predictions.parquet",
+      "predictions_sha256": "0e6612c9ad6690988bd7e750ef3a01b6d90b0fe0394454590064fed871d52b12",
+      "readiness_path": "models/m4b3/build_3f768bb13f0b447bcf6704086f00c28f4652a21e467089d3549060ad3ab64a5c/readiness_gate.json",
+      "readiness_sha256": "a5c3ea0dadb59cffc7e4b2a79fd1227e105eaa22c5cd3f8865338761b443891b",
+      "raw_method": "raw"
+    }
+  },
+  "data_boundaries": {
+    "history_start_utc": "2022-01-01T00:00:00Z",
+    "development_end_utc_exclusive": "2025-10-01T00:00:00Z",
+    "q4_end_utc_exclusive": "2026-01-01T00:00:00Z",
+    "locked_test_start_utc": "2026-01-01T00:00:00Z",
+    "expected": {
+      "development_source_rows": 20087,
+      "q4_rows": 1089,
+      "q4_source_matches": 523,
+      "locked_component_rows_opened": 0
+    }
+  },
+  "team_strength": {
+    "feature": "elo_logit",
+    "initial_rating": 1500.0,
+    "rating_scale": 400.0,
+    "k_factor": 32.0,
+    "radiant_advantage": 0.0,
+    "decay": null,
+    "update_unit": "source_match_series_mean_game_score",
+    "same_timestamp_policy": "read_pre_batch_then_apply_all_updates",
+    "evaluation_policy": "freeze_at_fit_cutoff",
+    "unknown_team_policy": "initial_rating",
+    "team_alias_inference": false
+  },
+  "candidate": {
+    "candidate_id": "b1_plus_pre_series_elo_c0p01",
+    "representation": "b1-pick-presence-plus-one-elo-logit",
+    "draft_feature_variant": "b1-pick-presence",
+    "estimator": {
+      "family": "logistic_regression",
+      "penalty": "l2",
+      "C": 0.01,
+      "solver": "liblinear",
+      "class_weight": null,
+      "max_iter": 2000,
+      "random_seed": 42
+    }
+  },
+  "rolling_origin_folds": [
+    {
+      "fold_id": "2024-Q1",
+      "train_end_utc": "2024-01-01T00:00:00Z",
+      "evaluation_end_utc": "2024-04-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q2",
+      "train_end_utc": "2024-04-01T00:00:00Z",
+      "evaluation_end_utc": "2024-07-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q3",
+      "train_end_utc": "2024-07-01T00:00:00Z",
+      "evaluation_end_utc": "2024-10-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q4",
+      "train_end_utc": "2024-10-01T00:00:00Z",
+      "evaluation_end_utc": "2025-01-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q1",
+      "train_end_utc": "2025-01-01T00:00:00Z",
+      "evaluation_end_utc": "2025-04-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q2",
+      "train_end_utc": "2025-04-01T00:00:00Z",
+      "evaluation_end_utc": "2025-07-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q3",
+      "train_end_utc": "2025-07-01T00:00:00Z",
+      "evaluation_end_utc": "2025-10-01T00:00:00Z"
+    }
+  ],
+  "selection": {
+    "recent_fold_ids": [
+      "2025-Q1",
+      "2025-Q2",
+      "2025-Q3"
+    ],
+    "minimum_pooled_log_loss_improvement_vs_b1": 0.002,
+    "require_lower_brier_score_vs_b1": true,
+    "require_each_recent_fold_lower_than": [
+      "frozen_b1",
+      "canonical_b0"
+    ],
+    "require_paired_upper_bound_below_zero_vs": [
+      "frozen_b1",
+      "team_only"
+    ],
+    "require_draft_incremental_value_vs_team_only": true,
+    "seven_fold_mean_log_loss_no_worse_than_b1": true,
+    "maximum_single_fold_log_loss_regression": 0.01
+  },
+  "q4_readiness": {
+    "references": [
+      "canonical_b0",
+      "frozen_b1",
+      "team_only"
+    ],
+    "metrics": [
+      "log_loss",
+      "brier_score"
+    ],
+    "require_candidate_minus_reference_point_below": 0.0,
+    "require_candidate_minus_reference_upper_bound_below": 0.0
+  },
+  "evaluation": {
+    "reliability_bins": 10,
+    "paired_group_bootstrap": {
+      "group_column": "source_match_id",
+      "replicates": 1000,
+      "confidence_level": 0.95,
+      "random_seed": 42
+    }
+  },
+  "safety": {
+    "api_dependency": false,
+    "acquisition_dependency": false,
+    "raw_cache_dependency": false,
+    "authenticated_api_requests": 0,
+    "hyperparameter_search": false,
+    "raw_team_identity_features": false,
+    "roster_inference": false,
+    "tournament_features": false,
+    "patch_features": false,
+    "q4_open_only_after_development_qualification": true,
+    "locked_component_open": false,
+    "locked_test_target_use": false,
+    "locked_test_transform": false,
+    "locked_test_predictions": false,
+    "model_bundle_serialization": false
+  }
+}

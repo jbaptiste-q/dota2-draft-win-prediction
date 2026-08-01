@@ -48,6 +48,16 @@ data/backfill/campaigns/*
 !data/backfill/campaigns/*/amendments/*/
 !data/backfill/campaigns/*/amendments/*/budget_amendment.json
 !data/backfill/campaigns/*/amendments/*/budget_amendment.md
+!data/backfill/campaigns/*/milestone_3_6/
+!data/backfill/campaigns/*/milestone_3_6/completion_plan.json
+!data/backfill/campaigns/*/milestone_3_6/completion_plan.md
+!data/backfill/campaigns/*/milestone_3_6/completion_preflight.json
+!data/backfill/campaigns/*/milestone_3_6/completion_preflight.md
+!data/backfill/campaigns/*/milestone_3_6/execution_authorization.json
+!data/backfill/campaigns/*/milestone_3_6/execution_authorization.md
+!data/backfill/campaigns/*/milestone_3_6/execution_progress.json
+!data/backfill/campaigns/*/milestone_3_6/execution_progress.md
 
-# Model artifacts are not tracked.
+# Training and experiment model builds are local-only. The one reviewed,
+# JSON-only product snapshot lives under src/draft_ai_assistant/resources/.
 models/

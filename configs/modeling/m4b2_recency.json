@@ -1,0 +1,312 @@
+{
+  "config_schema_version": "draft-ai-recency-experiment-v1",
+  "experiment_id": "m4b2-b1-regularization-recency-v1",
+  "source": {
+    "corpus_config_path": "configs/modeling/m4a_working_corpus.json",
+    "corpus_config_sha256": "2c287af2668bd88e02db1fac3a3363d7b1a6f5f12b04c795741832c6bc81030a",
+    "corpus_id": "m4a-tier1-tier2-2022q1-2026q1-working-v1",
+    "split_manifest_fingerprint": "dcb1227db92e585d3faab3a435a02aac2e9cb81da44d79bbcf3d7c353cc06fd1",
+    "m4a": {
+      "build_fingerprint": "2c8c8d1ad87eb711cf474a4cf48b9dc2ad85d2f876b3b9c4c6f8a4d0e8a37e0b",
+      "manifest_path": "models/m4a/build_2c8c8d1ad87eb711cf474a4cf48b9dc2ad85d2f876b3b9c4c6f8a4d0e8a37e0b/infrastructure_manifest.json",
+      "manifest_sha256": "33b144502306f1a7200bd5198be1fc8ae50c6b5e5a9e946f2e82461bb4c61f54",
+      "artifacts": {
+        "baseline_contracts_json": {
+          "file": "baseline_contracts.json",
+          "sha256": "a7b0fdea40efccb81abc8a74be94ed4440565e5510177659fdad8b64400b9efa"
+        },
+        "feature_contracts_json": {
+          "file": "feature_contracts.json",
+          "sha256": "6d921c44fb92de820178c4fee63fb50bdf143eb8a2d046420d4d61d8072697ab"
+        },
+        "preparation_report_md": {
+          "file": "preparation_report.md",
+          "sha256": "7db9e7e96f5782f9a9b80defccdfa80152018fa1483c14f15f77e792ed5f825c"
+        },
+        "split_manifest_parquet": {
+          "file": "split_manifest.parquet",
+          "sha256": "88d812b511987cd425d4556d8388f7e14edbefb892a9b9045f2dfa39d70238b8"
+        },
+        "split_report_json": {
+          "file": "split_report.json",
+          "sha256": "6e82628d79f28a0c79911ab360bde650261f8c3791bb6d7ccd9c43640986e342"
+        },
+        "split_report_md": {
+          "file": "split_report.md",
+          "sha256": "b9a1c6509b99dcd99ff24f5a4f6645daad3985feedcd8f623a685d4d276826e6"
+        }
+      }
+    },
+    "m4b1": {
+      "experiment_id": "m4b1-b0-b3-temporal-baselines-v1",
+      "experiment_config_path": "configs/modeling/m4b_baselines.json",
+      "experiment_config_sha256": "2113c896181fcdf480f86fbefef28be5624f789b98ed0cb3620dca76f18fd0c0",
+      "experiment_config_fingerprint": "fc9ec3eae2fa9a888c60e02746f10c0747e79fdbd69bd81136192ec5e6f2e142",
+      "build_fingerprint": "391418b8096620924b75c09f518b94ba304fbf5d02a16dc94af7eb7cd7f3410f",
+      "manifest_path": "models/m4b/build_391418b8096620924b75c09f518b94ba304fbf5d02a16dc94af7eb7cd7f3410f/experiment_manifest.json",
+      "manifest_sha256": "635c1312616330ffd12c07bffbc3bcffae8a7d3e2a7a61b5f0479d3bb4a37fc0",
+      "artifacts": {
+        "comparison": {
+          "file": "baseline_comparison.json",
+          "sha256": "d5b8923f1c5f04468245b4c1a24bf7b78c0ec88ea5f8b87704c3c67bf9cc0d80"
+        },
+        "confidence_intervals": {
+          "file": "confidence_intervals.json",
+          "sha256": "8a16b9d667380d75d524257cb8430bf731c870eb977e9723a1a218e43a2ce416"
+        },
+        "explanations": {
+          "file": "coefficient_explanations.json",
+          "sha256": "4dff61e4d603d5d30075b39d84a2bbe0888ad6960ab7d545c5b4fe853fb6b049"
+        },
+        "metrics": {
+          "file": "metrics.json",
+          "sha256": "f8bfd2e6690fd19f9d2f6e310fc0b30b7debabcd0d682b7fe517dca0174a138f"
+        },
+        "reliability": {
+          "file": "reliability.json",
+          "sha256": "65dd587ea311193b62173714e0135a61243242e75c0fa7690d9fbb89017fa16f"
+        },
+        "report": {
+          "file": "experiment_report.md",
+          "sha256": "5aea7d52866ab23f84a703feda4a7a0c19acad97c0636d2a0f88adf9320a2ea5"
+        },
+        "rolling_predictions": {
+          "file": "rolling_predictions.parquet",
+          "sha256": "f87a0f17edcab35b87331e7ee91e179337fbb57692c2e0ed3ad614a8db10ddde"
+        },
+        "tuning_predictions": {
+          "file": "tuning_predictions.parquet",
+          "sha256": "3460623554c7e9e4c64dc22fa20ad14a2887bfb6959cfd34c100a1d0a8076b7e"
+        }
+      }
+    }
+  },
+  "representation": {
+    "baseline_id": "B1",
+    "feature_variant": "b1-pick-presence",
+    "side_relative": true,
+    "includes_bans": false,
+    "slot_aware": false
+  },
+  "history_policies": [
+    {
+      "history_policy_id": "full_uniform",
+      "training_rows": "all_strictly_past_rows",
+      "sample_weight": "uniform",
+      "anchor": "train_end_utc"
+    },
+    {
+      "history_policy_id": "full_exp180",
+      "training_rows": "all_strictly_past_rows",
+      "sample_weight": "exponential_half_life",
+      "half_life_days": 180,
+      "normalization": "mean_one",
+      "anchor": "train_end_utc"
+    },
+    {
+      "history_policy_id": "trailing365_uniform",
+      "training_rows": "trailing_half_open_window",
+      "window_days": 365,
+      "sample_weight": "uniform",
+      "interval_semantics": "[train_end_utc-window_days,train_end_utc)",
+      "anchor": "train_end_utc"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "b1_full_uniform_c0p01",
+      "history_policy_id": "full_uniform",
+      "C": 0.01
+    },
+    {
+      "candidate_id": "b1_full_uniform_c0p1",
+      "history_policy_id": "full_uniform",
+      "C": 0.1
+    },
+    {
+      "candidate_id": "b1_full_uniform_c1",
+      "history_policy_id": "full_uniform",
+      "C": 1.0
+    },
+    {
+      "candidate_id": "b1_full_exp180_c0p01",
+      "history_policy_id": "full_exp180",
+      "C": 0.01
+    },
+    {
+      "candidate_id": "b1_full_exp180_c0p1",
+      "history_policy_id": "full_exp180",
+      "C": 0.1
+    },
+    {
+      "candidate_id": "b1_full_exp180_c1",
+      "history_policy_id": "full_exp180",
+      "C": 1.0
+    },
+    {
+      "candidate_id": "b1_trailing365_uniform_c0p01",
+      "history_policy_id": "trailing365_uniform",
+      "C": 0.01
+    },
+    {
+      "candidate_id": "b1_trailing365_uniform_c0p1",
+      "history_policy_id": "trailing365_uniform",
+      "C": 0.1
+    },
+    {
+      "candidate_id": "b1_trailing365_uniform_c1",
+      "history_policy_id": "trailing365_uniform",
+      "C": 1.0
+    }
+  ],
+  "estimator": {
+    "family": "logistic_regression",
+    "penalty": "l2",
+    "solver": "liblinear",
+    "class_weight": null,
+    "max_iter": 2000,
+    "random_seed": 42
+  },
+  "roles": {
+    "fit": [
+      "train"
+    ],
+    "development_evaluation": [
+      "train",
+      "tuning"
+    ],
+    "prohibited": [
+      "calibration",
+      "locked_test"
+    ]
+  },
+  "rolling_origin_folds": [
+    {
+      "fold_id": "2024-Q1",
+      "train_start_utc": "2022-01-01T00:00:00Z",
+      "train_end_utc": "2024-01-01T00:00:00Z",
+      "evaluation_start_utc": "2024-01-01T00:00:00Z",
+      "evaluation_end_utc": "2024-04-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q2",
+      "train_start_utc": "2022-01-01T00:00:00Z",
+      "train_end_utc": "2024-04-01T00:00:00Z",
+      "evaluation_start_utc": "2024-04-01T00:00:00Z",
+      "evaluation_end_utc": "2024-07-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q3",
+      "train_start_utc": "2022-01-01T00:00:00Z",
+      "train_end_utc": "2024-07-01T00:00:00Z",
+      "evaluation_start_utc": "2024-07-01T00:00:00Z",
+      "evaluation_end_utc": "2024-10-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q4",
+      "train_start_utc": "2022-01-01T00:00:00Z",
+      "train_end_utc": "2024-10-01T00:00:00Z",
+      "evaluation_start_utc": "2024-10-01T00:00:00Z",
+      "evaluation_end_utc": "2025-01-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q1",
+      "train_start_utc": "2022-01-01T00:00:00Z",
+      "train_end_utc": "2025-01-01T00:00:00Z",
+      "evaluation_start_utc": "2025-01-01T00:00:00Z",
+      "evaluation_end_utc": "2025-04-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q2",
+      "train_start_utc": "2022-01-01T00:00:00Z",
+      "train_end_utc": "2025-04-01T00:00:00Z",
+      "evaluation_start_utc": "2025-04-01T00:00:00Z",
+      "evaluation_end_utc": "2025-07-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q3",
+      "train_start_utc": "2022-01-01T00:00:00Z",
+      "train_end_utc": "2025-07-01T00:00:00Z",
+      "evaluation_start_utc": "2025-07-01T00:00:00Z",
+      "evaluation_end_utc": "2025-10-01T00:00:00Z"
+    }
+  ],
+  "evaluation": {
+    "metrics": [
+      "log_loss",
+      "brier_score",
+      "roc_auc",
+      "accuracy",
+      "balanced_accuracy",
+      "calibration_in_the_large",
+      "calibration_slope",
+      "expected_calibration_error"
+    ],
+    "reliability_bins": 10,
+    "bootstrap_replicates": 1000,
+    "bootstrap_confidence_level": 0.95,
+    "bootstrap_group_column": "source_match_id",
+    "random_seed": 42,
+    "coefficient_top_k": 20
+  },
+  "selection_policy": {
+    "selection_fold_ids": [
+      "2025-Q1",
+      "2025-Q2",
+      "2025-Q3"
+    ],
+    "pooled_predictions": "concatenate_each_selected_game_once",
+    "qualification_metrics": [
+      "log_loss",
+      "brier_score"
+    ],
+    "point_estimate_references": [
+      "canonical_b0",
+      "policy_matched_b0"
+    ],
+    "require_strict_improvement_in_each_fold": true,
+    "require_strict_improvement_on_pooled_predictions": true,
+    "paired_group_bootstrap": {
+      "reference": "policy_matched_b0",
+      "metrics": [
+        "log_loss",
+        "brier_score"
+      ],
+      "confidence_level": 0.95,
+      "replicates": 1000,
+      "group_column": "source_match_id",
+      "require_upper_bound_below": 0.0,
+      "random_seed": 42
+    },
+    "ranking_metric": "pooled_log_loss",
+    "ranking_direction": "minimize",
+    "practical_log_loss_tie": 0.002,
+    "history_preference": [
+      "full_uniform",
+      "full_exp180",
+      "trailing365_uniform"
+    ],
+    "C_preference": [
+      0.01,
+      0.1,
+      1.0
+    ],
+    "result_label": "recency_candidate_not_final_champion"
+  },
+  "safety": {
+    "api_dependency": false,
+    "acquisition_dependency": false,
+    "calibration_fit": false,
+    "calibration_predictions": false,
+    "locked_test_predictions": false,
+    "patch_features": false,
+    "context_features": false,
+    "ban_features": false,
+    "slot_features": false,
+    "b2_or_b3_candidates": false,
+    "nonlinear_challengers": false,
+    "open_ended_hyperparameter_search": false,
+    "pre_registered_candidates_only": true,
+    "model_serialization": false
+  }
+}

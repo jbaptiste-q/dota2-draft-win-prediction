@@ -1,0 +1,218 @@
+{
+  "api_key_read_by_planning": false,
+  "authenticated_requests_performed_by_planning": 0,
+  "continuation_plan_fingerprint": "ca8e5818a8f69e8a4b2610f098f5c692fe4e331f9bf89aadcf3ef2e3b395f2ee",
+  "continuation_plan_schema_version": "liquipedia-2026-q2-continuation-plan-v1",
+  "execution_policy": {
+    "automatic_retries": 0,
+    "credential_value_printed_or_persisted": false,
+    "hourly_request_limit": 54,
+    "html_scraping": false,
+    "official_api_only": true,
+    "request_interval_seconds": 67.0,
+    "runner_cumulative_attempt_ceiling": 20
+  },
+  "partition": {
+    "conditional_request_slots": [
+      {
+        "offset": 800,
+        "request_hash": "a01ac3f77da5ab997ae71a1cd90a85c163007f1f84466868e281f7ddb3ca929d",
+        "sequence": 9
+      },
+      {
+        "offset": 900,
+        "request_hash": "426260093b202da5edf3ae00784d2311c642f44e1ca0a86f8b05336253d5a404",
+        "sequence": 10
+      },
+      {
+        "offset": 1000,
+        "request_hash": "0017821fa5e4e54a83d4e5678448cbb22a95046ed630f7a9e4d428f4aba40a8a",
+        "sequence": 11
+      },
+      {
+        "offset": 1100,
+        "request_hash": "ddedaac9ce6b6e509b33ca53dead9eae52b60f547e0b966294023ba5da592493",
+        "sequence": 12
+      },
+      {
+        "offset": 1200,
+        "request_hash": "4a1814f07daeecc16ab9f664bb97b7bb7fdf320ceaf46e433e46390133c3c2d3",
+        "sequence": 13
+      },
+      {
+        "offset": 1300,
+        "request_hash": "ca390beb559c268db4d83fc9e53e63bf1a8e8181787c9fed9efbb316f27cbae0",
+        "sequence": 14
+      },
+      {
+        "offset": 1400,
+        "request_hash": "b4c0d25bfd04e43580647acc19413d05a2d5d6f0d12dda5bae2d19fcde617de0",
+        "sequence": 15
+      },
+      {
+        "offset": 1500,
+        "request_hash": "212961d6352f448936b6cc51ed5be390b6ba7617235636370af1a797d7fef20a",
+        "sequence": 16
+      },
+      {
+        "offset": 1600,
+        "request_hash": "1af8cf1cc8422a325a4d60efd33361b32cdef3bae9d203d0774cf1d7d2bf1c7c",
+        "sequence": 17
+      },
+      {
+        "offset": 1700,
+        "request_hash": "329b4786c9ae4f78878e3bb3562682d8392b66156afb1bcca2eb956d3fe4c2f1",
+        "sequence": 18
+      },
+      {
+        "offset": 1800,
+        "request_hash": "c1fe1918251edf78c0cfc4e33a5f18a20c35ea311e9b41ff7c3daf6b0b2738dd",
+        "sequence": 19
+      },
+      {
+        "offset": 1900,
+        "request_hash": "8ee371510e0c4ca3ba2c9b3ffaa150279cd87f50b99f565970df0064eccb39b5",
+        "sequence": 20
+      }
+    ],
+    "config_hash": "f73ba01f2767edf144776d532b3fbf6a0a7ee8151f39f4e0e96f23586a1ddc31",
+    "partition_id": "2026-Q2",
+    "required_prefix": {
+      "next_offset": 800,
+      "next_sequence": 9,
+      "pages": 8,
+      "pages_evidence": [
+        {
+          "is_final_page": false,
+          "offset": 0,
+          "record_count": 100,
+          "request_hash": "0ca682712292f51b2007b0d6be7747bd50a3be1c0729cb4f3a369efdeedca8b8",
+          "response_sha256": "86826788ecb3964390b6b15444aaec60bd5dc214aafb3dd211a932b712646cad",
+          "sequence": 1
+        },
+        {
+          "is_final_page": false,
+          "offset": 100,
+          "record_count": 100,
+          "request_hash": "92cd6bdba03415b751077df6b29ba46558d6ad5c9fe698ada8025b5deac2a9b6",
+          "response_sha256": "8acf0b1156b3332005846c3d74633384273c18cbc262207c6211c208942020b0",
+          "sequence": 2
+        },
+        {
+          "is_final_page": false,
+          "offset": 200,
+          "record_count": 100,
+          "request_hash": "7cc42de32bf8594861940987a0e01a7415abaf98a74ebc1151bbf66e2a22e764",
+          "response_sha256": "155e866729ddeaa388b4b1155bccd95e1e6165398faf3c352a2a9c338e39f11a",
+          "sequence": 3
+        },
+        {
+          "is_final_page": false,
+          "offset": 300,
+          "record_count": 100,
+          "request_hash": "a9f5d205135185d1ab5112dd1f64993475b06f44daba65bc1d131ccf9fb8ae6a",
+          "response_sha256": "782abfce4a7987bf2f841080196cb11e4f07fe979f2f9a78e2098b8a6de95701",
+          "sequence": 4
+        },
+        {
+          "is_final_page": false,
+          "offset": 400,
+          "record_count": 100,
+          "request_hash": "0a98b0a00557983e88451b897540dd519acf33c0e9dec05c52ec88bfdc63bb3d",
+          "response_sha256": "c5bd440f7c3fcf34bd1d66e5978099f3af095da20f32502917f02a43c1ed9706",
+          "sequence": 5
+        },
+        {
+          "is_final_page": false,
+          "offset": 500,
+          "record_count": 100,
+          "request_hash": "fcde7443b0a6611f668c80eba7cd2a85455985b98d026a65e021f89f2a5259c6",
+          "response_sha256": "744b84f5b923c45c01c5afa7ba8fd0b1af718c0944bceb3ae94d4004641f9cb2",
+          "sequence": 6
+        },
+        {
+          "is_final_page": false,
+          "offset": 600,
+          "record_count": 100,
+          "request_hash": "bc2e4bd71894d8fa40015393f2c3a61a6f4595309f553e2db61d653e9010acb7",
+          "response_sha256": "54ce6c6401fa73c8ca9a2958ba6d7cf573600cfe5a4626d1232a2fce99026d40",
+          "sequence": 7
+        },
+        {
+          "is_final_page": false,
+          "offset": 700,
+          "record_count": 100,
+          "request_hash": "d3ae754cd59019247712e60e734692eca2e77b16c81a599047bebc44bcc2d9a4",
+          "response_sha256": "d8f81ea540d3690389e0a16234e48375015788b5e50cbdc5c5db939c5e87a1eb",
+          "sequence": 8
+        }
+      ],
+      "records": 800
+    },
+    "run_id": "m3_20260401_20260701_f73ba01f2767",
+    "scope": {
+      "acquisition_version": "liquipedia-history-v1",
+      "end_utc": "2026-07-01T00:00:00+00:00",
+      "hourly_request_limit": 54,
+      "max_requests": 20,
+      "page_size": 100,
+      "patch_filter_stage": "normalized_training_dataset",
+      "patches": [],
+      "projection": [
+        "pageid",
+        "pagename",
+        "namespace",
+        "objectname",
+        "match2id",
+        "status",
+        "winner",
+        "walkover",
+        "resulttype",
+        "finished",
+        "patch",
+        "date",
+        "dateexact",
+        "bestof",
+        "tournament",
+        "parent",
+        "series",
+        "liquipediatier",
+        "extradata",
+        "match2games",
+        "match2opponents"
+      ],
+      "request_interval_seconds": 67.0,
+      "start_utc": "2026-04-01T00:00:00+00:00",
+      "tiers": [
+        "1",
+        "2"
+      ]
+    }
+  },
+  "post_acquisition": {
+    "model_fitting": false,
+    "reuse_existing_partition_validator": true,
+    "run_complete_offline_test_suite": true
+  },
+  "predecessor_authorization": {
+    "authorization_id": "m3.6-completion-80bf4dc4fa31810d",
+    "baseline_request_id": 65,
+    "maximum_new_attempts": 80,
+    "plan_fingerprint": "80bf4dc4fa31810dca0d1b8d3f1ece37779e0560dc1eeaeccd435e05e6ebbde0",
+    "preflight_fingerprint": "2255aa5979e0743ebba28a95ca453bcca5c4cd48d6f7e6608bca621f91033280",
+    "required_state": "exactly_exhausted"
+  },
+  "successor_authorization": {
+    "allowed_runs": {
+      "m3_20260401_20260701_f73ba01f2767": 12
+    },
+    "baseline_excluded_run_ids": [
+      "m3_20260701_20260727_0b40ae8811d6"
+    ],
+    "baseline_expansion_attempts": 143,
+    "baseline_request_id": 145,
+    "baseline_total_attempts": 145,
+    "maximum_new_attempts": 12
+  },
+  "successor_authorization_id": "m3.6-2026-q2-ca8e5818a8f69e8a"
+}

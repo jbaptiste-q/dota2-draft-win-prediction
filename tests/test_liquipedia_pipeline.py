@@ -14,12 +14,15 @@ from src.liquipedia_pipeline.dataset import build_dataset_tables
 from src.liquipedia_pipeline.normalization import (
     DURATION_COMPATIBILITY_INELIGIBLE_ANOMALY,
     DURATION_COMPATIBILITY_SOURCE_ANOMALY,
+    DURATION_COMPATIBILITY_SOURCE_ANOMALY_21M38,
     DURATION_COMPATIBILITY_UNUSED_SLOT,
     NormalizationError,
     classify_duration_compatibility,
     normalize_matches,
+    normalize_player,
     parse_duration_seconds,
 )
+from src.liquipedia_pipeline.models import ParsedPlayer
 from src.liquipedia_pipeline.parsing import ParseError, parse_documents
 from src.liquipedia_pipeline.pipeline import run_pipeline
 from src.liquipedia_pipeline.raw import load_raw_documents
@@ -243,6 +246,94 @@ def reviewed_duration_compatibility_payload(
     }
 
 
+def reviewed_21m38_payload() -> dict:
+    """Reproduce the reviewed complete-game context without repairing duration."""
+    team1 = team(1, "ToLight Team")
+    team2 = team(2, "PAL Gaming")
+    team1["score"] = 2
+    team2["score"] = 0
+    game2_draft = {
+        "team1side": "radiant",
+        "team2side": "dire",
+        "timestamp": 1717815600,
+        "team1hero1": "Vengeful Spirit",
+        "team1hero2": "Beastmaster",
+        "team1hero3": "Bane",
+        "team1hero4": "Lifestealer",
+        "team1hero5": "Tiny",
+        "team2hero1": "Disruptor",
+        "team2hero2": "Jakiro",
+        "team2hero3": "Centaur Warrunner",
+        "team2hero4": "Invoker",
+        "team2hero5": "Juggernaut",
+        "team1ban1": "Phoenix",
+        "team1ban2": "Templar Assassin",
+        "team1ban3": "Weaver",
+        "team1ban4": "Winter Wyvern",
+        "team1ban5": "Shadow Fiend",
+        "team1ban6": "Gyrocopter",
+        "team1ban7": "Troll Warlord",
+        "team2ban1": "Storm Spirit",
+        "team2ban2": "Chen",
+        "team2ban3": "Night Stalker",
+        "team2ban4": "Axe",
+        "team2ban5": "Venomancer",
+        "team2ban6": "Slardar",
+        "team2ban7": "Outworld Destroyer",
+    }
+    return {
+        "result": [
+            {
+                "match2id": "ubD8YXh91K_R02-M001",
+                "date": "2024-06-08 03:00:00",
+                "extradata": {
+                    "timestamp": 1717815600,
+                    "timezoneoffset": "+8:00",
+                },
+                "patch": "7.36b",
+                "liquipediatier": "1",
+                "tournament": (
+                    "The International 2024: China Open Qualifier #2"
+                ),
+                "parent": "The_International/2024/China/Open_Qualifier/2",
+                "series": "The International",
+                "bestof": 2,
+                "finished": 1,
+                "winner": 1,
+                "status": "",
+                "resulttype": "",
+                "walkover": "",
+                "match2opponents": [team1, team2],
+                "match2games": [
+                    {
+                        "match2gameid": 1,
+                        "date": "2024-06-08 03:00:00",
+                        "patch": "7.36b",
+                        "length": "19m44s",
+                        "winner": 1,
+                        "extradata": {
+                            "timestamp": 1717815600,
+                            **draft_fields(),
+                        },
+                    },
+                    {
+                        "match2gameid": 2,
+                        "date": "2024-06-08 03:00:00",
+                        "patch": "7.36b",
+                        "length": "21m38",
+                        "winner": 1,
+                        "status": "",
+                        "resulttype": "",
+                        "walkover": "",
+                        "extradata": game2_draft,
+                    },
+                ],
+            }
+        ],
+        "error": [],
+    }
+
+
 def write_payload(
     path: Path,
     payload: dict,
@@ -310,6 +401,41 @@ def test_normalization_is_typed_and_preserves_source_meaning(
     assert game.duration_seconds == 2465
     assert game.start_time_utc.isoformat() == "2024-03-09T16:00:00+00:00"
     assert game.picks[0].hero.hero_key == "dire-pick-1"
+
+
+def test_symbol_only_player_handle_uses_missing_key_when_publisher_id_exists(
+) -> None:
+    player = ParsedPlayer(
+        player_slot=5,
+        source_name="^^!",
+        display_name="^^!",
+        flag="Peru",
+        publisher_id="238858075",
+    )
+
+    normalized = normalize_player(player)
+
+    assert normalized.player_key is None
+    assert normalized.source_name == "^^!"
+    assert normalized.display_name == "^^!"
+    assert normalized.publisher_id == "238858075"
+
+
+def test_symbol_only_player_handle_without_publisher_id_remains_fail_closed(
+) -> None:
+    player = ParsedPlayer(
+        player_slot=5,
+        source_name="^^!",
+        display_name="^^!",
+        flag="Peru",
+        publisher_id=None,
+    )
+
+    with pytest.raises(
+        NormalizationError,
+        match="no normalizable characters",
+    ):
+        normalize_player(player)
 
 
 def test_dataset_keeps_all_source_shapes_but_only_exports_valid_ml_rows(
@@ -432,6 +558,62 @@ def test_duration_normalization_is_strict() -> None:
         parse_duration_seconds("<s>Game 5</s>")
     with pytest.raises(NormalizationError, match="Unsupported duration"):
         parse_duration_seconds("7m04")
+    with pytest.raises(NormalizationError, match="Unsupported duration"):
+        parse_duration_seconds("21m38")
+
+
+def test_reviewed_21m38_occurrence_becomes_missing_duration(
+    tmp_path: Path,
+) -> None:
+    payload = reviewed_21m38_payload()
+    raw_path = tmp_path / "reviewed-21m38.json"
+    original = write_payload(raw_path, payload)
+    parsed = parse_documents(load_raw_documents([raw_path]))
+    parsed_game = parsed[0].games[1]
+
+    assert parsed_game.duration_text == "21m38"
+    assert classify_duration_compatibility(
+        parsed_game,
+        match=parsed[0],
+    ) == DURATION_COMPATIBILITY_SOURCE_ANOMALY_21M38
+
+    normalized = normalize_matches(parsed)
+    tables = build_dataset_tables(normalized)
+
+    assert raw_path.read_bytes() == original
+    assert normalized[0].games[1].duration_seconds is None
+    assert not bool(tables.games.iloc[1]["is_trainable_draft"])
+    assert tables.games.iloc[1]["exclusion_reason"] == "missing_game_duration"
+
+
+def test_reviewed_21m38_occurrence_fails_on_context_mismatch(
+    tmp_path: Path,
+) -> None:
+    payload = reviewed_21m38_payload()
+    payload["result"][0]["match2games"][1]["extradata"]["team2ban7"] = "Oracle"
+    raw_path = tmp_path / "mismatched-21m38.json"
+    write_payload(raw_path, payload)
+
+    with pytest.raises(
+        NormalizationError,
+        match="context-mismatched duration compatibility",
+    ):
+        normalize_matches(parse_documents(load_raw_documents([raw_path])))
+
+
+def test_arbitrary_21m38_remains_unsupported_for_eligible_game(
+    tmp_path: Path,
+) -> None:
+    payload = reviewed_21m38_payload()
+    payload["result"][0]["match2id"] = "Different_Match_0001"
+    raw_path = tmp_path / "arbitrary-21m38.json"
+    write_payload(raw_path, payload)
+
+    with pytest.raises(
+        NormalizationError,
+        match="Unsupported duration format",
+    ):
+        normalize_matches(parse_documents(load_raw_documents([raw_path])))
 
 
 @pytest.mark.parametrize(

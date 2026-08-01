@@ -1,0 +1,43 @@
+{
+  "api_key_read_by_recovery": false,
+  "authenticated_requests_performed_by_recovery": 0,
+  "continuation_plan_fingerprint": "ca8e5818a8f69e8a4b2610f098f5c692fe4e331f9bf89aadcf3ef2e3b395f2ee",
+  "credential_value_printed_or_persisted": false,
+  "gate": {
+    "authorization_id": "m3.6-2026-q2-ca8e5818a8f69e8a",
+    "continuation_plan_fingerprint": "ca8e5818a8f69e8a4b2610f098f5c692fe4e331f9bf89aadcf3ef2e3b395f2ee",
+    "partition": {
+      "accepted_page_count": 8,
+      "next_offset": 800,
+      "next_sequence": 9,
+      "partition_id": "2026-Q2",
+      "records_seen": 800,
+      "request_count": 9,
+      "run_id": "m3_20260401_20260701_f73ba01f2767",
+      "status": "failed"
+    },
+    "request_accounting": {
+      "ledger_attempts_total": 146,
+      "retry_pending": true,
+      "successful_new_pages": 0,
+      "successor_attempt_ceiling": 12,
+      "successor_attempts_remaining": 11,
+      "successor_attempts_used": 1,
+      "transport_failure_attempt_id": 146
+    }
+  },
+  "handling": {
+    "attempt_remains_charged": true,
+    "automatic_retry_performed": false,
+    "http_status": null,
+    "manual_retry_pending": true,
+    "outcome": "http_error",
+    "record_count": null,
+    "response_path": null,
+    "response_sha256": null
+  },
+  "read_timeout_recovery_schema_version": "liquipedia-2026-q2-read-timeout-recovery-v1",
+  "recovered_at_utc": "2026-07-30T11:58:20.259329+00:00",
+  "request_id": 146,
+  "successor_authorization_id": "m3.6-2026-q2-ca8e5818a8f69e8a"
+}

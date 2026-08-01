@@ -1,0 +1,895 @@
+{
+  "authorization_id": "m3.6-completion-80bf4dc4fa31810d",
+  "credential_policy": {
+    "credential_path_persisted": false,
+    "credential_value_persisted": false,
+    "credential_value_printed": false
+  },
+  "execution_progress_schema_version": "liquipedia-history-completion-progress-v1",
+  "next_partition": "2026-Q2",
+  "partitions": [
+    {
+      "cache_hits": 8,
+      "duplicate_games": 0,
+      "duplicate_matches": 0,
+      "eligibility_pct": 95.269894,
+      "eligible_games": 1712,
+      "excluded_games": 85,
+      "games": 1797,
+      "global_attempts_remaining": 78,
+      "global_attempts_used": 2,
+      "http_attempts": 2,
+      "http_attempts_this_partition": 2,
+      "matches": 908,
+      "offline_tests": {
+        "command": ".venv/bin/python -m pytest -q",
+        "credentials_available_to_tests": false,
+        "network_enabled": false,
+        "passed": true,
+        "summary": "119 passed in 7.92s"
+      },
+      "partition_id": "2024-Q2",
+      "quarantined_records": 0,
+      "run_id": "m3_20240401_20240701_df05306783f7",
+      "status": "complete_validated",
+      "validation": {
+        "acquisition": {
+          "cache_hit_count": 8,
+          "fingerprint": "2147a8d32a291f4cbcd0edc5a40b3f3180583037f2248cfb7fa01a8bb790f45a",
+          "raw_response_sha256": [
+            "038c37424f273e8f23afb3f98e3bbdf0c0beda60fced3332945c2a8c1a70f9a5",
+            "0a5d10f02e2aac645eb834877bf164e1bb6163046083673f9e7c6839e04e23ef",
+            "0f716f631e411481106c787057c07e7acc9a722b3cdca5115479d8bc55242e20",
+            "250f43d75e3b51f578aacdd0f3861a05b958cf5618ddd69c09ae6adbddd7441d",
+            "2bda2ac87c2d31a8695c8627ed6ec1852441f69ddd1029d2c1e71b52ae501343",
+            "4c48ecfd225f61173350eb2e983838660f437ec34cb9f4720b7ffaf6b53cb2bb",
+            "51a1e477988c3c9c64fab546d33c1f3cfdcd0b42c151df2b38d829f85b071847",
+            "80049ac016c375a9381b982e3b6efc45aae5c7666f464f2757fc2f7142693756",
+            "91945898f851d7540ec85a99e89a6d4e456c4f884f2287e52783fe40477b2214",
+            "bb5c6d186d3916549c7e3b6d01d23955e7a42dfab77c3f46961f4858523a634d"
+          ],
+          "request_count": 2
+        },
+        "assembly": {
+          "accepted_games": 1797,
+          "accepted_matches": 908,
+          "duplicate_games": 0,
+          "duplicate_matches": 0,
+          "fingerprint": "e57dda5b1fb228d5e8d20833c68bfb83ddf08898d184e6ba5fdf86ca94a7ca91",
+          "quarantined_records": 0
+        },
+        "completed_prefix_partitions": [
+          "2022-Q1",
+          "2022-Q2",
+          "2022-Q3",
+          "2022-Q4",
+          "2023-Q1",
+          "2023-Q2",
+          "2023-Q3",
+          "2023-Q4",
+          "2024-Q1",
+          "2024-Q2"
+        ],
+        "coverage_percentages": {
+          "eligibility": 95.269894,
+          "patch": 100.0,
+          "sides": 96.661102,
+          "winner": 99.554814
+        },
+        "normalized": {
+          "build_fingerprint": "b87e5f708becd83bbe241f7939ffcaffca8752bab93ce43e5ed551b8680c0552",
+          "games": 1797,
+          "manifest_sha256": "5f65f8cfbb16a50ba0306678a6197b0b45e1438bf4ef2068a2ec4a46a785932b",
+          "matches": 908,
+          "schema_version": "liquipedia-dota-draft-v1"
+        },
+        "partition_id": "2024-Q2",
+        "run_id": "m3_20240401_20240701_df05306783f7",
+        "scope": {
+          "end_utc_exclusive": "2024-07-01T00:00:00+00:00",
+          "start_utc_inclusive": "2024-04-01T00:00:00+00:00"
+        },
+        "sequence_mode": "provisional-prefix",
+        "status": "passed",
+        "supervised": {
+          "build_fingerprint": "c6fe7ef66a8a24a3cc8f7d22deb4b2b558f2cb4cc28ba7b661929d9543bcd7f2",
+          "eligible_games": 1712,
+          "excluded_games": 85,
+          "exclusion_counts": {
+            "duplicate_picked_hero": 2,
+            "incomplete_team1_bans": 4,
+            "incomplete_team1_picks": 10,
+            "incomplete_team2_bans": 4,
+            "invalid_game_result": 8,
+            "invalid_series_result": 3,
+            "missing_game_duration": 2,
+            "missing_or_invalid_sides": 52
+          },
+          "hero_vocabulary_size": 124,
+          "manifest_sha256": "b9bc5151b88ab543b9e3f11487b0ffa10f49b2fa3ef6bf27bef1ab932aee6968",
+          "schema_version": "dota-draft-supervised-v1",
+          "target_class_counts": {
+            "false": 856,
+            "true": 856
+          }
+        }
+      }
+    },
+    {
+      "cache_hits": 0,
+      "duplicate_games": 0,
+      "duplicate_matches": 0,
+      "eligibility_pct": 96.582545,
+      "eligible_games": 1837,
+      "excluded_games": 65,
+      "games": 1902,
+      "global_attempts_remaining": 67,
+      "global_attempts_used": 13,
+      "http_attempts": 11,
+      "http_attempts_this_invocation": 0,
+      "matches": 1037,
+      "offline_tests": {
+        "command": ".venv/bin/python -m pytest -q",
+        "credentials_available_to_tests": false,
+        "network_enabled": false,
+        "passed": true,
+        "summary": "121 passed in 7.11s"
+      },
+      "partition_id": "2024-Q3",
+      "quarantined_records": 0,
+      "run_id": "m3_20240701_20241001_5659f531fd34",
+      "status": "complete_validated",
+      "validation": {
+        "acquisition": {
+          "cache_hit_count": 0,
+          "fingerprint": "9826292527826b2b47a4bbf49bc6b1d1014027229a0f3e9cd568580674b566c9",
+          "raw_response_sha256": [
+            "05041abe5517fb0be416e81caa7c9c5b0d9f954f50f50069ee5e52eb947bf939",
+            "3e16a56ba0b669b157a82be4014e6d6552c3a0a7fdaf07cecd65a87399aca58f",
+            "4ed9c56a13efc2232da11ded34f82384292bb48c78f85d675f109179d4d2394b",
+            "54ef09e6afa64db3cf401eff35676a8a54b8bf54adb84542a643fc55a9a77fe9",
+            "60365caf7d0408f156a2197db5a0013a5b07cba6ca429da4c7755c3518e4bbad",
+            "7d84dfb59b841e158d18e520b6c6ff43e389d2122ca8d58d9ed5595e93d17672",
+            "8ef3322944e83171458e73c917bd9ad7d04b4f5524dce69930dc186ad58b92f6",
+            "a162a7cbfc073b14b485a9530ad8f17806b1219168107c3c9435b96f9ae5030a",
+            "baa59be586883d23bffb7eb0e4ccff53ae4b705a02225e4f06010a2596e1016f",
+            "cd504d7bc636032932b698422020ff1c602da7f17cbe70bbaf3418e466a5d505",
+            "cd9b9bd0f3b7fc842681cd54785c0dcf60c24d7e96224dd1ca642df1ea390554"
+          ],
+          "request_count": 11
+        },
+        "assembly": {
+          "accepted_games": 1902,
+          "accepted_matches": 1037,
+          "duplicate_games": 0,
+          "duplicate_matches": 0,
+          "fingerprint": "dc253172826747bf8a2352c87c8b6ea10714bdb7c339c8cb40dcc4194adf0f87",
+          "quarantined_records": 0
+        },
+        "completed_prefix_partitions": [
+          "2022-Q1",
+          "2022-Q2",
+          "2022-Q3",
+          "2022-Q4",
+          "2023-Q1",
+          "2023-Q2",
+          "2023-Q3",
+          "2023-Q4",
+          "2024-Q1",
+          "2024-Q2",
+          "2024-Q3"
+        ],
+        "coverage_percentages": {
+          "eligibility": 96.582545,
+          "patch": 96.319664,
+          "sides": 98.002103,
+          "winner": 99.106204
+        },
+        "normalized": {
+          "build_fingerprint": "4aa3bf3ed0b776a98ecbe5ff405921eca93ef70f9fc1e7f445d972f38c643c28",
+          "games": 1902,
+          "manifest_sha256": "e9c3c1d302eaa992f1d65a0b39eadc1d2202d2fff978917aad1e2b700c5d6d42",
+          "matches": 1037,
+          "schema_version": "liquipedia-dota-draft-v1"
+        },
+        "partition_id": "2024-Q3",
+        "run_id": "m3_20240701_20241001_5659f531fd34",
+        "scope": {
+          "end_utc_exclusive": "2024-10-01T00:00:00+00:00",
+          "start_utc_inclusive": "2024-07-01T00:00:00+00:00"
+        },
+        "sequence_mode": "provisional-prefix",
+        "status": "passed",
+        "supervised": {
+          "build_fingerprint": "aa0d2820ee3923bdc23af6071b3f15fd4793fac3ec07f831539a4e8ff0d91f0a",
+          "eligible_games": 1837,
+          "excluded_games": 65,
+          "exclusion_counts": {
+            "incomplete_team1_bans": 16,
+            "incomplete_team1_picks": 1,
+            "incomplete_team2_bans": 3,
+            "invalid_game_result": 17,
+            "invalid_series_result": 6,
+            "missing_game_duration": 2,
+            "missing_or_invalid_sides": 20
+          },
+          "hero_vocabulary_size": 124,
+          "manifest_sha256": "3639a74a27c9ef07b116006b54c139c8691250f55b122ebf27994e28d5571f79",
+          "schema_version": "dota-draft-supervised-v1",
+          "target_class_counts": {
+            "false": 889,
+            "true": 948
+          }
+        }
+      }
+    },
+    {
+      "cache_hits": 0,
+      "duplicate_games": 0,
+      "duplicate_matches": 0,
+      "eligibility_pct": 98.111837,
+      "eligible_games": 1351,
+      "excluded_games": 26,
+      "games": 1377,
+      "global_attempts_remaining": 59,
+      "global_attempts_used": 21,
+      "http_attempts": 8,
+      "http_attempts_this_invocation": 8,
+      "matches": 731,
+      "offline_tests": {
+        "command": ".venv/bin/python -m pytest -q",
+        "credentials_available_to_tests": false,
+        "network_enabled": false,
+        "passed": true,
+        "summary": "121 passed in 6.83s"
+      },
+      "partition_id": "2024-Q4",
+      "quarantined_records": 0,
+      "run_id": "m3_20241001_20250101_ecd00b0cc3ce",
+      "status": "complete_validated",
+      "validation": {
+        "acquisition": {
+          "cache_hit_count": 0,
+          "fingerprint": "a5cb1b1eb34169c19cc4615016ae53f3fdcdb1891711062675a4231e7f0b6ba3",
+          "raw_response_sha256": [
+            "0a478c320cdd07fbdf3b0be7378fa0d72228747d671377e55992888eb3ce8041",
+            "0ced9c3b19a20ac5d0206f12cf874f12db9e9f0505cf9419fcc772a37cca8f20",
+            "1a581e1be3009837e79a9bc92102e1391d3a4a91be6b4ba526c95abf4849d7a4",
+            "271d3ba35a1f515f84d0830922825c7043796e9329cdb4f94974b123e604793e",
+            "3ee4ac12047832cd7ca5311d0ec61b87476ff34ee1249a4110a364e38bba6fd9",
+            "61be05827b834f36da009cb7206d6b77e88c81ef6a09c91064fd654e78c8ed14",
+            "81efd1432e1a2d006c260d57103496b3af2ca76f774fec09083b3d91cd6040e0",
+            "f90628c2d50129029ac69d00522a9438a1fdc318cd7317d367a43f8d6cca7d6d"
+          ],
+          "request_count": 8
+        },
+        "assembly": {
+          "accepted_games": 1377,
+          "accepted_matches": 731,
+          "duplicate_games": 0,
+          "duplicate_matches": 0,
+          "fingerprint": "5f625b52e8b4a45049bf031f43462358549774be211b9332226f366316497b70",
+          "quarantined_records": 0
+        },
+        "completed_prefix_partitions": [
+          "2022-Q1",
+          "2022-Q2",
+          "2022-Q3",
+          "2022-Q4",
+          "2023-Q1",
+          "2023-Q2",
+          "2023-Q3",
+          "2023-Q4",
+          "2024-Q1",
+          "2024-Q2",
+          "2024-Q3",
+          "2024-Q4"
+        ],
+        "coverage_percentages": {
+          "eligibility": 98.111837,
+          "patch": 100.0,
+          "sides": 98.620189,
+          "winner": 99.201162
+        },
+        "normalized": {
+          "build_fingerprint": "3c7aff5ff2100a818312daa9921fa3660702b8ebddb730a65aa1c2057dcce5e0",
+          "games": 1377,
+          "manifest_sha256": "2f7ab42750d6c961904f12f8ab086ecea1a92309f1bb24595569d2119b8692b0",
+          "matches": 731,
+          "schema_version": "liquipedia-dota-draft-v1"
+        },
+        "partition_id": "2024-Q4",
+        "run_id": "m3_20241001_20250101_ecd00b0cc3ce",
+        "scope": {
+          "end_utc_exclusive": "2025-01-01T00:00:00+00:00",
+          "start_utc_inclusive": "2024-10-01T00:00:00+00:00"
+        },
+        "sequence_mode": "provisional-prefix",
+        "status": "passed",
+        "supervised": {
+          "build_fingerprint": "8860ca6c6bda60d29151ab43194b6ea729e6caaf563abcc0ec85f80e36a71d32",
+          "eligible_games": 1351,
+          "excluded_games": 26,
+          "exclusion_counts": {
+            "incomplete_team1_bans": 2,
+            "incomplete_team1_picks": 5,
+            "invalid_game_result": 11,
+            "missing_or_invalid_sides": 8
+          },
+          "hero_vocabulary_size": 124,
+          "manifest_sha256": "8c6b67edc2e550de00331a5d844a24f79b4190ec5a44f9ff0ce81fd243bd3791",
+          "schema_version": "dota-draft-supervised-v1",
+          "target_class_counts": {
+            "false": 644,
+            "true": 707
+          }
+        }
+      }
+    },
+    {
+      "cache_hits": 0,
+      "duplicate_games": 0,
+      "duplicate_matches": 0,
+      "eligibility_pct": 97.786631,
+      "eligible_games": 2209,
+      "excluded_games": 50,
+      "games": 2259,
+      "global_attempts_remaining": 44,
+      "global_attempts_used": 36,
+      "http_attempts": 15,
+      "http_attempts_this_invocation": 5,
+      "matches": 1289,
+      "offline_tests": {
+        "command": ".venv/bin/python -m pytest -q",
+        "credentials_available_to_tests": false,
+        "network_enabled": false,
+        "passed": true,
+        "summary": "124 passed in 7.66s"
+      },
+      "partition_id": "2025-Q1",
+      "quarantined_records": 0,
+      "run_id": "m3_20250101_20250401_a776b95bd596",
+      "status": "complete_validated",
+      "validation": {
+        "acquisition": {
+          "cache_hit_count": 0,
+          "fingerprint": "9a73ec18cd950088a4f44f14943a4b9ab983f6a756678bca19d970d874bd4f0a",
+          "raw_response_sha256": [
+            "0b89f8c73c79639fb87aa32a48a443ec6b7baca2ba3efe5e20e66dc4a070fa11",
+            "0ea3f7617bea0b0982136c6fa3c88637486d246673b15689bc9a005ed52a7638",
+            "2957dd2c4891011542e9aa701cd3f23ecaeb52af56852fc11dd82526e8f6437c",
+            "2db4ff89b657f9920c335c784dbfdda71b8555a056ad27e818b80a4cad59e6f7",
+            "34c18098a26f1a480f4ea2ec38cb5fbcd828491b4282d585d1455555949f2af1",
+            "4fad8d2e19076ef3fda1241cfb9108d6398a02a111f3998af000b60c09dba425",
+            "6cd4100ea0f7f3e86d060bd3881fadf8981365f5f8c25bad984b7d6ffde59afb",
+            "742644f9d0496f75e8cb9fe4fe3452bc3a19d5bef9e888ccf915df7468c07791",
+            "855ab6838b9f90555fb8301ce6afb530ec863251ede07d7c649e32e88de726db",
+            "9ba0704b504112e2bd3a73a490cada1532e14369d65095406beb3f750253dbee",
+            "ca5c5a9e9a8becc3812457cd364b160839eca6d7f83615de1c3dc20f0d5b76e4",
+            "db6898a623ef0d939cac1ff3cf3a105728ecb001337bae89b9c68b04960211cc",
+            "fceb9a0ca932646912b577d280e68863b843f7797e81a564f61fa721a5293e87"
+          ],
+          "request_count": 15
+        },
+        "assembly": {
+          "accepted_games": 2259,
+          "accepted_matches": 1289,
+          "duplicate_games": 0,
+          "duplicate_matches": 0,
+          "fingerprint": "f592a8b4467497f3b2960e59cc06c085d6d81379a0390a01aca1bcf08a0e6335",
+          "quarantined_records": 0
+        },
+        "completed_prefix_partitions": [
+          "2022-Q1",
+          "2022-Q2",
+          "2022-Q3",
+          "2022-Q4",
+          "2023-Q1",
+          "2023-Q2",
+          "2023-Q3",
+          "2023-Q4",
+          "2024-Q1",
+          "2024-Q2",
+          "2024-Q3",
+          "2024-Q4",
+          "2025-Q1"
+        ],
+        "coverage_percentages": {
+          "eligibility": 97.786631,
+          "patch": 99.867198,
+          "sides": 98.31784,
+          "winner": 99.557326
+        },
+        "normalized": {
+          "build_fingerprint": "62c49958834d7f9019d39569cc69ca8165261304e300c91198df1866f95025da",
+          "games": 2259,
+          "manifest_sha256": "076edb6089fba363b76fdc869ba61606439ad4fb05e97ea0d65c7cc9ce3801a7",
+          "matches": 1289,
+          "schema_version": "liquipedia-dota-draft-v1"
+        },
+        "partition_id": "2025-Q1",
+        "run_id": "m3_20250101_20250401_a776b95bd596",
+        "scope": {
+          "end_utc_exclusive": "2025-04-01T00:00:00+00:00",
+          "start_utc_inclusive": "2025-01-01T00:00:00+00:00"
+        },
+        "sequence_mode": "provisional-prefix",
+        "status": "passed",
+        "supervised": {
+          "build_fingerprint": "2ca66e275ca5ff367b35bebd4214de6d63d04e648d40cf0036c9d4455d4d6453",
+          "eligible_games": 2209,
+          "excluded_games": 50,
+          "exclusion_counts": {
+            "incomplete_team1_bans": 5,
+            "incomplete_team1_picks": 2,
+            "invalid_game_result": 10,
+            "invalid_series_result": 5,
+            "missing_or_invalid_sides": 28
+          },
+          "hero_vocabulary_size": 125,
+          "manifest_sha256": "db7b7bb8011ebde340627e6ae3a0e70cf0020150b79820a15a8da5b79fb38193",
+          "schema_version": "dota-draft-supervised-v1",
+          "target_class_counts": {
+            "false": 1043,
+            "true": 1166
+          }
+        }
+      }
+    },
+    {
+      "cache_hits": 0,
+      "duplicate_games": 0,
+      "duplicate_matches": 0,
+      "eligibility_pct": 84.925094,
+      "eligible_games": 1814,
+      "excluded_games": 322,
+      "games": 2136,
+      "global_attempts_remaining": 35,
+      "global_attempts_used": 45,
+      "http_attempts": 9,
+      "http_attempts_this_invocation": 9,
+      "matches": 867,
+      "offline_tests": {
+        "command": ".venv/bin/python -m pytest -q",
+        "credentials_available_to_tests": false,
+        "network_enabled": false,
+        "passed": true,
+        "summary": "124 passed in 7.28s"
+      },
+      "partition_id": "2025-Q2",
+      "quarantined_records": 0,
+      "run_id": "m3_20250401_20250701_1b756dc53f16",
+      "status": "complete_validated",
+      "validation": {
+        "acquisition": {
+          "cache_hit_count": 0,
+          "fingerprint": "aeaa30375eead1dcc37586c507c6f6537a62dc6f12f52f22b6822f0f87a19a5f",
+          "raw_response_sha256": [
+            "334497ec26ce02ec1ef7209181e29383d92e1388fd5c567d20693bc4e909d3b4",
+            "3643ea8842782c877ee63318c36c00e6643f3ab4ecb9247481e3337c6418ff16",
+            "5db83df86cbf36480d48284253f7705157b8f67119be8e484e129e9cd9e09708",
+            "680e75c7511af542569386115b7127f7456e80bf7e8b9ab5c012817845045eb4",
+            "68f6b1a176de01e6b7bbcb4355d12b1947ebb8bf04d1663a7c2b55761ddc0a40",
+            "7c6473a06b54b7c2181f4384cd8b87b79db66851098ea2ccaee5f4509252e576",
+            "a663af3c6a3e414bc4122ef12871bae7d91e29fe4429ae00ea6c7a30ae8f0f09",
+            "fb6f413b2296d76c75d58bf072293386c29745cd0d84a5c595fdfe51d6484d5d",
+            "fd9a662a9733212b5fd4150b4e3cb5574ec1b5a580203e4b8edf68b69fefce2b"
+          ],
+          "request_count": 9
+        },
+        "assembly": {
+          "accepted_games": 2136,
+          "accepted_matches": 867,
+          "duplicate_games": 0,
+          "duplicate_matches": 0,
+          "fingerprint": "b53644f4759e22f4f0374247b3da721888c2a0f73e032ed8495e6903d4607616",
+          "quarantined_records": 0
+        },
+        "completed_prefix_partitions": [
+          "2022-Q1",
+          "2022-Q2",
+          "2022-Q3",
+          "2022-Q4",
+          "2023-Q1",
+          "2023-Q2",
+          "2023-Q3",
+          "2023-Q4",
+          "2024-Q1",
+          "2024-Q2",
+          "2024-Q3",
+          "2024-Q4",
+          "2025-Q1",
+          "2025-Q2"
+        ],
+        "coverage_percentages": {
+          "eligibility": 84.925094,
+          "patch": 100.0,
+          "sides": 85.299625,
+          "winner": 86.142322
+        },
+        "normalized": {
+          "build_fingerprint": "4cd5d3e2b57463bb429a7bc884e8174ccb53cd102198b6f927bc97d2e70d6474",
+          "games": 2136,
+          "manifest_sha256": "8ab4999623e7507d7c9314893f09ebeecfbff399a46c0a6421c8b7c6fccc0806",
+          "matches": 867,
+          "schema_version": "liquipedia-dota-draft-v1"
+        },
+        "partition_id": "2025-Q2",
+        "run_id": "m3_20250401_20250701_1b756dc53f16",
+        "scope": {
+          "end_utc_exclusive": "2025-07-01T00:00:00+00:00",
+          "start_utc_inclusive": "2025-04-01T00:00:00+00:00"
+        },
+        "sequence_mode": "provisional-prefix",
+        "status": "passed",
+        "supervised": {
+          "build_fingerprint": "629ee14fcdf0ed824dffdb6cad6a56b96c9818a32cbccf34a7faa3d086a3b7ab",
+          "eligible_games": 1814,
+          "excluded_games": 322,
+          "exclusion_counts": {
+            "duplicate_picked_hero": 1,
+            "incomplete_team1_picks": 1,
+            "incomplete_team2_bans": 1,
+            "invalid_game_result": 296,
+            "invalid_series_result": 8,
+            "missing_game_duration": 1,
+            "missing_or_invalid_sides": 14
+          },
+          "hero_vocabulary_size": 125,
+          "manifest_sha256": "a6ffc6825b323ffbab7dd3cf46a86e9d2bdfc2ca7810bca3c9af2b077eae9be9",
+          "schema_version": "dota-draft-supervised-v1",
+          "target_class_counts": {
+            "false": 879,
+            "true": 935
+          }
+        }
+      }
+    },
+    {
+      "cache_hits": 0,
+      "duplicate_games": 0,
+      "duplicate_matches": 0,
+      "eligibility_pct": 81.108033,
+      "eligible_games": 1464,
+      "excluded_games": 341,
+      "games": 1805,
+      "global_attempts_remaining": 26,
+      "global_attempts_used": 54,
+      "http_attempts": 9,
+      "http_attempts_this_invocation": 9,
+      "matches": 866,
+      "offline_tests": {
+        "command": ".venv/bin/python -m pytest -q",
+        "credentials_available_to_tests": false,
+        "network_enabled": false,
+        "passed": true,
+        "summary": "124 passed in 7.22s"
+      },
+      "partition_id": "2025-Q3",
+      "quarantined_records": 0,
+      "run_id": "m3_20250701_20251001_08de1390c237",
+      "status": "complete_validated",
+      "validation": {
+        "acquisition": {
+          "cache_hit_count": 0,
+          "fingerprint": "53fb85cdbb4476725b992a539d1a01d0003c4764b149769565dbda1f5611637f",
+          "raw_response_sha256": [
+            "09a18ab655e1fb4bdbc8ba7c7cc46c40c5509879389bc986ba796c968bcf44ee",
+            "1046cae3c8e25f7496d7e1b4c309bc9aa58994571bc5f47015cb4e5f8c7df191",
+            "5c760dbaf2abfd29a1832f8458cbb47c5da664824130db4157a7cccf31841d4b",
+            "5ceb6ba0558ae839d5668602fb70c2e3bcbffd9200478a7f4c3c477ea224d366",
+            "be76b8082f1074b20dc11469dc87b1a690cb25a01c0a31e79045bb8dfee9f3c7",
+            "d54e083a704c82eb986df5449c7798a949dccd277a3399bdd7a27c7952e155c4",
+            "ddfa8ac6c6e8b9a7afbb7e459b20fc76442950156ccda91506f06a29a341034b",
+            "ece29bb7f9de647536bced6307a279069a061e4ead4a828a8bff8563f5bbb6ed",
+            "fe51888bd5aecef9dcefcbc8a3adac21975d2a7931cafabc79e8e79fadd1a741"
+          ],
+          "request_count": 9
+        },
+        "assembly": {
+          "accepted_games": 1805,
+          "accepted_matches": 866,
+          "duplicate_games": 0,
+          "duplicate_matches": 0,
+          "fingerprint": "5699d17e3cbd7c819c90982c54b3f9573834fcd98ed967e74bc473b69b26db95",
+          "quarantined_records": 0
+        },
+        "completed_prefix_partitions": [
+          "2022-Q1",
+          "2022-Q2",
+          "2022-Q3",
+          "2022-Q4",
+          "2023-Q1",
+          "2023-Q2",
+          "2023-Q3",
+          "2023-Q4",
+          "2024-Q1",
+          "2024-Q2",
+          "2024-Q3",
+          "2024-Q4",
+          "2025-Q1",
+          "2025-Q2",
+          "2025-Q3"
+        ],
+        "coverage_percentages": {
+          "eligibility": 81.108033,
+          "patch": 96.398892,
+          "sides": 81.66205,
+          "winner": 83.65651
+        },
+        "normalized": {
+          "build_fingerprint": "887842fe6ee41d6f191f7bd524417644765f1fe18e06e1f1a7fc0c64962004dc",
+          "games": 1805,
+          "manifest_sha256": "0943340842ef272119ecf5eb0ebf20c0b26859b5f073ea26e7b7a46b4ae45cc5",
+          "matches": 866,
+          "schema_version": "liquipedia-dota-draft-v1"
+        },
+        "partition_id": "2025-Q3",
+        "run_id": "m3_20250701_20251001_08de1390c237",
+        "scope": {
+          "end_utc_exclusive": "2025-10-01T00:00:00+00:00",
+          "start_utc_inclusive": "2025-07-01T00:00:00+00:00"
+        },
+        "sequence_mode": "provisional-prefix",
+        "status": "passed",
+        "supervised": {
+          "build_fingerprint": "d713108e4408046e6c91c669c1cd5d1a1582955e531f8121950027d2fa0887b9",
+          "eligible_games": 1464,
+          "excluded_games": 341,
+          "exclusion_counts": {
+            "incomplete_team1_bans": 4,
+            "incomplete_team1_picks": 3,
+            "incomplete_team2_bans": 3,
+            "invalid_game_result": 290,
+            "invalid_series_result": 5,
+            "missing_game_winner": 2,
+            "missing_or_invalid_sides": 34
+          },
+          "hero_vocabulary_size": 125,
+          "manifest_sha256": "de7df584efe4ece5ee14783963fab2a190a79fb6fafeb38242f2c5471a18cbd5",
+          "schema_version": "dota-draft-supervised-v1",
+          "target_class_counts": {
+            "false": 703,
+            "true": 761
+          }
+        }
+      }
+    },
+    {
+      "cache_hits": 0,
+      "duplicate_games": 0,
+      "duplicate_matches": 0,
+      "eligibility_pct": 83.769231,
+      "eligible_games": 1089,
+      "excluded_games": 211,
+      "games": 1300,
+      "global_attempts_remaining": 20,
+      "global_attempts_used": 60,
+      "http_attempts": 6,
+      "http_attempts_this_invocation": 6,
+      "matches": 536,
+      "offline_tests": {
+        "command": ".venv/bin/python -m pytest -q",
+        "credentials_available_to_tests": false,
+        "network_enabled": false,
+        "passed": true,
+        "summary": "124 passed in 7.89s"
+      },
+      "partition_id": "2025-Q4",
+      "quarantined_records": 0,
+      "run_id": "m3_20251001_20260101_00760b8766c9",
+      "status": "complete_validated",
+      "validation": {
+        "acquisition": {
+          "cache_hit_count": 0,
+          "fingerprint": "139595f372016d69e1181ab65e718273893ffc974afd1d589d25d98e70b90112",
+          "raw_response_sha256": [
+            "02cb86160952c723b7663507ee8a085c24b2d092c2ab1610b94ada3bcd36bfd8",
+            "0fb22cea4969107e730b6a59c807c58ce487b6393950e301734f4364e00ab76e",
+            "109c2098b3c24f26818daf2503e5c242362ad7c6a2d0d263c934523ce6c1e878",
+            "64e2d299d0b31ce400b05e5bf2482bde5cae885a904befd6907530acc46b88b9",
+            "c352bdf1a6dfd5d9b85692d7b5031515ec8877766e9b81b82ce1434246aba02f",
+            "c7b1b4f8595a87c6cdb8da68fa95eff9cee7e446eea008b4f39c9ab7d7a44d5b"
+          ],
+          "request_count": 6
+        },
+        "assembly": {
+          "accepted_games": 1300,
+          "accepted_matches": 536,
+          "duplicate_games": 0,
+          "duplicate_matches": 0,
+          "fingerprint": "fb862a75e583f72bd0461d8e064a2b55d02cf794e3048a12da5a8db828a2f6ad",
+          "quarantined_records": 0
+        },
+        "completed_prefix_partitions": [
+          "2022-Q1",
+          "2022-Q2",
+          "2022-Q3",
+          "2022-Q4",
+          "2023-Q1",
+          "2023-Q2",
+          "2023-Q3",
+          "2023-Q4",
+          "2024-Q1",
+          "2024-Q2",
+          "2024-Q3",
+          "2024-Q4",
+          "2025-Q1",
+          "2025-Q2",
+          "2025-Q3",
+          "2025-Q4"
+        ],
+        "coverage_percentages": {
+          "eligibility": 83.769231,
+          "patch": 95.846154,
+          "sides": 84.230769,
+          "winner": 84.846154
+        },
+        "normalized": {
+          "build_fingerprint": "ed01ac57f9d8ea4567089a3fafb37e5592e7e644f244392979ec16a495d31f7c",
+          "games": 1300,
+          "manifest_sha256": "6302496120380c874dd5906191e1981b0c920e53f96f039edd32d052127c4e42",
+          "matches": 536,
+          "schema_version": "liquipedia-dota-draft-v1"
+        },
+        "partition_id": "2025-Q4",
+        "run_id": "m3_20251001_20260101_00760b8766c9",
+        "scope": {
+          "end_utc_exclusive": "2026-01-01T00:00:00+00:00",
+          "start_utc_inclusive": "2025-10-01T00:00:00+00:00"
+        },
+        "sequence_mode": "provisional-prefix",
+        "status": "passed",
+        "supervised": {
+          "build_fingerprint": "aa53bfcce98dc5a51de94fec0cbae1e01686754614b484745bde00f4e94e0dde",
+          "eligible_games": 1089,
+          "excluded_games": 211,
+          "exclusion_counts": {
+            "incomplete_team1_bans": 3,
+            "incomplete_team1_picks": 1,
+            "invalid_game_result": 197,
+            "invalid_series_result": 2,
+            "missing_or_invalid_sides": 8
+          },
+          "hero_vocabulary_size": 126,
+          "manifest_sha256": "e12fdd93c93f7c0ffb87588c12dd3845a73714ab3772b8ba23976dccf3ee3a2d",
+          "schema_version": "dota-draft-supervised-v1",
+          "target_class_counts": {
+            "false": 539,
+            "true": 550
+          }
+        }
+      }
+    },
+    {
+      "cache_hits": 0,
+      "duplicate_games": 0,
+      "duplicate_matches": 0,
+      "eligibility_pct": 84.799652,
+      "eligible_games": 1947,
+      "excluded_games": 349,
+      "games": 2296,
+      "global_attempts_remaining": 8,
+      "global_attempts_used": 72,
+      "http_attempts": 12,
+      "http_attempts_this_invocation": 12,
+      "matches": 1147,
+      "offline_tests": {
+        "command": ".venv/bin/python -m pytest -q",
+        "credentials_available_to_tests": false,
+        "network_enabled": false,
+        "passed": true,
+        "summary": "124 passed in 8.01s"
+      },
+      "partition_id": "2026-Q1",
+      "quarantined_records": 0,
+      "run_id": "m3_20260101_20260401_8405a550a09e",
+      "status": "complete_validated",
+      "validation": {
+        "acquisition": {
+          "cache_hit_count": 0,
+          "fingerprint": "8b27e0a0de165d3e1cb7c64545b00b28de162111d3f5735de839cd318c86cd39",
+          "raw_response_sha256": [
+            "120fae71441764e73326afad1fde08e138483f0130f436ad94148116f6de3bf0",
+            "127c6dedd3a7ec7775f291663fe9a86e78a9dadd42a2907114ffe0a2ac7910d9",
+            "182d3380849efa48e8c7fecf784f9190f2b132902be5fc03030d9d2ae224a502",
+            "46dd188640708ee1b7c89931ce72a593db73176fd6bd759f21b67d8ae2726a10",
+            "5011cd9cffa82b4e71620932d19c1051682fed1738d18d44b339b08498e058cc",
+            "6892ff74335e900e8726bb7b2a8b3ab96a8183b6e2ca5d0346d9432852664427",
+            "781582792fcae0716dcec1036873702b44dcc4f9f509e577bd08b006631bd490",
+            "863e8203e112e7aab297fd7a6eef968674c7055a0d852a8c166f7e5aa468d00c",
+            "92fa0c5c8025c3f719124b851a70eaf15e22db8d1d48baa4530f3e57383b4694",
+            "e0ed5547b0d89d520db1474610eb379b69b6454c326f8ddfc0edcbf9c3b4e26d",
+            "ef14533fd2f1e981db7847c35f7cabb2736c8b9250cca6af984ab0d37180fbcb",
+            "fbb12c885944a33073bf67e10fd54be832050927ffc127090dfcadf468690fd8"
+          ],
+          "request_count": 12
+        },
+        "assembly": {
+          "accepted_games": 2296,
+          "accepted_matches": 1147,
+          "duplicate_games": 0,
+          "duplicate_matches": 0,
+          "fingerprint": "2a63b6fc49215fa6663b1f7de05ff36c5d0917ae8811eae1c0c19f1d735da6c0",
+          "quarantined_records": 0
+        },
+        "completed_prefix_partitions": [
+          "2022-Q1",
+          "2022-Q2",
+          "2022-Q3",
+          "2022-Q4",
+          "2023-Q1",
+          "2023-Q2",
+          "2023-Q3",
+          "2023-Q4",
+          "2024-Q1",
+          "2024-Q2",
+          "2024-Q3",
+          "2024-Q4",
+          "2025-Q1",
+          "2025-Q2",
+          "2025-Q3",
+          "2025-Q4",
+          "2026-Q1"
+        ],
+        "coverage_percentages": {
+          "eligibility": 84.799652,
+          "patch": 99.303136,
+          "sides": 85.452962,
+          "winner": 86.324042
+        },
+        "normalized": {
+          "build_fingerprint": "85dd2a9be3a2c5503743032f1d7eb71a3e00acc8d2d92c44fc89e5e69c8ad098",
+          "games": 2296,
+          "manifest_sha256": "96da549fc15ff35e8ab2b431d480bb580eba43ddf95bc15d9dd9e5d41ae25106",
+          "matches": 1147,
+          "schema_version": "liquipedia-dota-draft-v1"
+        },
+        "partition_id": "2026-Q1",
+        "run_id": "m3_20260101_20260401_8405a550a09e",
+        "scope": {
+          "end_utc_exclusive": "2026-04-01T00:00:00+00:00",
+          "start_utc_inclusive": "2026-01-01T00:00:00+00:00"
+        },
+        "sequence_mode": "provisional-prefix",
+        "status": "passed",
+        "supervised": {
+          "build_fingerprint": "f6172aeaf3895fe354b749066fd9e1c00f62580db185093b82b76a2cce6142ae",
+          "eligible_games": 1947,
+          "excluded_games": 349,
+          "exclusion_counts": {
+            "incomplete_team1_bans": 13,
+            "incomplete_team2_bans": 1,
+            "invalid_game_result": 314,
+            "missing_game_duration": 1,
+            "missing_or_invalid_sides": 20
+          },
+          "hero_vocabulary_size": 127,
+          "manifest_sha256": "f9d6edad0f8d7b924622d175a9aa5b59e13a9a04cec0ba11b8d42935ddd5e881",
+          "schema_version": "dota-draft-supervised-v1",
+          "target_class_counts": {
+            "false": 941,
+            "true": 1006
+          }
+        }
+      }
+    }
+  ],
+  "plan_fingerprint": "80bf4dc4fa31810dca0d1b8d3f1ece37779e0560dc1eeaeccd435e05e6ebbde0",
+  "preflight_fingerprint": "2255aa5979e0743ebba28a95ca453bcca5c4cd48d6f7e6608bca621f91033280",
+  "progress_fingerprint": "97b397ab5306a5526196f640dd3bfdeb23bba7bd6d7468820315d3b371993707",
+  "recorded_at_utc": "2026-07-30T04:39:40.289809+00:00",
+  "release": {
+    "alias": "m3.5-tier1-tier2-2022-2026-v1",
+    "published_by_this_command": false,
+    "ready_to_publish": false
+  },
+  "request_accounting": {
+    "baseline_expansion_attempts": 63,
+    "cumulative_expansion_attempts": 135,
+    "cumulative_expansion_ceiling": 143,
+    "new_attempts_remaining": 8,
+    "new_attempts_used": 72
+  },
+  "stop_reason": null
+}

@@ -1,0 +1,36 @@
+{
+  "authorization_id": "m3.6-completion-80bf4dc4fa31810d",
+  "baseline": {
+    "expansion_http_attempts": 63,
+    "ledger_http_attempts": 65
+  },
+  "budget": {
+    "cumulative_expansion_attempts": 63,
+    "cumulative_expansion_ceiling": 143,
+    "new_http_attempts_remaining": 80,
+    "new_http_attempts_used": 0
+  },
+  "cache_reuse": {
+    "pilot_requires_new_http_attempts": false,
+    "pilot_verified_pages": 2,
+    "q2_prefix_requires_new_http_attempts": false,
+    "q2_verified_prefix_pages": 8
+  },
+  "credential_policy": {
+    "credential_path_persisted": false,
+    "credential_value_persisted": false,
+    "credential_value_printed": false
+  },
+  "execution_authorization_schema_version": "liquipedia-history-completion-authorization-v1",
+  "paths": {
+    "immutable_cache": "data/raw/liquipedia/backfill/cache",
+    "request_ledger": "data/raw/liquipedia/backfill/state.sqlite3"
+  },
+  "plan_fingerprint": "80bf4dc4fa31810dca0d1b8d3f1ece37779e0560dc1eeaeccd435e05e6ebbde0",
+  "preflight_fingerprint": "2255aa5979e0743ebba28a95ca453bcca5c4cd48d6f7e6608bca621f91033280",
+  "recorded_at_utc": "2026-07-29T08:39:56.691023+00:00",
+  "resume": {
+    "next_partition": "2024-Q2",
+    "unresolved_attempts": 0
+  }
+}

@@ -74,7 +74,13 @@ def request_page(
                 content_encoding=content_encoding,
             )
     except HTTPError as error:
-        body = error.read()
+        try:
+            body = error.read()
+        except TimeoutError as timeout_error:
+            raise ApiRequestError(
+                "Liquipedia API request failed: response read timed out",
+                status=error.code,
+            ) from timeout_error
         if error.headers.get("Content-Encoding", "").casefold() == "gzip":
             body = gzip.decompress(body)
         message = body.decode("utf-8", errors="replace")[:500]
@@ -84,6 +90,10 @@ def request_page(
             f"Liquipedia API returned HTTP {error.code}: {message}",
             status=error.code,
             retry_after=retry_after,
+        ) from error
+    except TimeoutError as error:
+        raise ApiRequestError(
+            "Liquipedia API request failed: response read timed out"
         ) from error
     except URLError as error:
         raise ApiRequestError(

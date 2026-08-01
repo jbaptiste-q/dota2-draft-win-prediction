@@ -1,0 +1,77 @@
+{
+  "api_key_read_by_preflight": false,
+  "authenticated_requests_performed_by_preflight": 0,
+  "authorization": {
+    "approval_required_before_execution": true,
+    "cumulative_expansion_attempt_ceiling": 143,
+    "new_http_attempt_ceiling": 80
+  },
+  "base_campaign_state_fingerprint": "048259570b8802ca7d46a201d06b85ac0b63906fd5d3b651ca6406011d6174ce",
+  "completion_plan_fingerprint": "80bf4dc4fa31810dca0d1b8d3f1ece37779e0560dc1eeaeccd435e05e6ebbde0",
+  "completion_preflight_fingerprint": "2255aa5979e0743ebba28a95ca453bcca5c4cd48d6f7e6608bca621f91033280",
+  "completion_preflight_schema_version": "liquipedia-history-completion-preflight-v1",
+  "existing_state": {
+    "completed_through_partition": "2024-Q1",
+    "expansion_http_attempts": 63,
+    "ledger_http_attempts": 65,
+    "next_partition": "2024-Q2"
+  },
+  "pilot_reuse": {
+    "network_request_required": false,
+    "run_id": "m3_20260701_20260727_0b40ae8811d6",
+    "verified": true
+  },
+  "q2_cache_prefix": {
+    "effective_run_id": "m3_20240401_20240701_df05306783f7",
+    "first_conditional_request_hash": "b9180afeb42f5af39906dfbd4096f4f5c2601f479b0d8212d6619907e9a9ec54",
+    "maximum_new_http_attempts": 12,
+    "next_offset": 800,
+    "next_sequence": 9,
+    "predecessor_run_id": "m3_20240401_20240701_6575003bb769",
+    "records": 800,
+    "verified_pages": 8,
+    "verified_prefix_hashes": [
+      {
+        "request_hash": "194ddb609388dcf6219e04f4842fadf6bc142baf1b78d6b383e83089a28c1209",
+        "response_sha256": "80049ac016c375a9381b982e3b6efc45aae5c7666f464f2757fc2f7142693756",
+        "sequence": 1
+      },
+      {
+        "request_hash": "c729b8ce8d6b6c7b5b117448e54491ab68f1a385f1bbf6a250f1d32f6269f1c7",
+        "response_sha256": "0a5d10f02e2aac645eb834877bf164e1bb6163046083673f9e7c6839e04e23ef",
+        "sequence": 2
+      },
+      {
+        "request_hash": "b9987c19596c9fe3d3c515c99820589f84dc61f764a14f3c0a676d37a3465a75",
+        "response_sha256": "038c37424f273e8f23afb3f98e3bbdf0c0beda60fced3332945c2a8c1a70f9a5",
+        "sequence": 3
+      },
+      {
+        "request_hash": "ca1daec2550d4d2563aaf8ade9257131f59c9d36c359f82d82d436eb0d769768",
+        "response_sha256": "0f716f631e411481106c787057c07e7acc9a722b3cdca5115479d8bc55242e20",
+        "sequence": 4
+      },
+      {
+        "request_hash": "d8380e285af7f20df198837c7617d78069b9018c9b66a32607bee27b0ecc6737",
+        "response_sha256": "250f43d75e3b51f578aacdd0f3861a05b958cf5618ddd69c09ae6adbddd7441d",
+        "sequence": 5
+      },
+      {
+        "request_hash": "0c23def1ba711d300eb9bfe714b85bd89df4ea11bd08b329d4948f31dc92990d",
+        "response_sha256": "bb5c6d186d3916549c7e3b6d01d23955e7a42dfab77c3f46961f4858523a634d",
+        "sequence": 6
+      },
+      {
+        "request_hash": "cbaca58aa1d1bf6ab1a271e77fa5093074383420c1e445cd604f0431b8f1fa36",
+        "response_sha256": "2bda2ac87c2d31a8695c8627ed6ec1852441f69ddd1029d2c1e71b52ae501343",
+        "sequence": 7
+      },
+      {
+        "request_hash": "4715ae36a9d16d9439b1d2b9f37bc1987feca2e6dac5287cfd8a5d3d253a7049",
+        "response_sha256": "91945898f851d7540ec85a99e89a6d4e456c4f884f2287e52783fe40477b2214",
+        "sequence": 8
+      }
+    ]
+  },
+  "status": "ready_for_authenticated_approval"
+}

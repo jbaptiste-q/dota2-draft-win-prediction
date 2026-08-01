@@ -1,0 +1,253 @@
+{
+  "components": [
+    {
+      "build_fingerprint": "c1ea1d31968eb4c9c6fc4cd8dd7812ca2189694ca94ace48b1aae676e146acd9",
+      "component_id": "2022-Q1_to_2024-Q1",
+      "expected": {
+        "excluded_rows": 314,
+        "training_rows": 9700
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_c1ea1d31968eb4c9/manifest.json",
+      "manifest_sha256": "5b4b807f81c2b960ed813d373ccd3f2b602b77cff61a680a86002c6b2d9810ad",
+      "scope": {
+        "end_utc_exclusive": "2024-04-01T00:00:00Z",
+        "start_utc_inclusive": "2022-01-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_c1ea1d31968eb4c9/draft_training_games.parquet",
+        "sha256": "86fc4327c30a92ef50de889b343682f5934615b6b14f75057a4a9e3ff957a719"
+      }
+    },
+    {
+      "build_fingerprint": "c6fe7ef66a8a24a3cc8f7d22deb4b2b558f2cb4cc28ba7b661929d9543bcd7f2",
+      "component_id": "2024-Q2",
+      "expected": {
+        "excluded_rows": 85,
+        "training_rows": 1712
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_c6fe7ef66a8a24a3/manifest.json",
+      "manifest_sha256": "b9bc5151b88ab543b9e3f11487b0ffa10f49b2fa3ef6bf27bef1ab932aee6968",
+      "scope": {
+        "end_utc_exclusive": "2024-07-01T00:00:00Z",
+        "start_utc_inclusive": "2024-04-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_c6fe7ef66a8a24a3/draft_training_games.parquet",
+        "sha256": "b4fb7f3a58bf282255b2c0f9f2bda1019ea665a2153eaeda7f881af933afb7c6"
+      }
+    },
+    {
+      "build_fingerprint": "aa0d2820ee3923bdc23af6071b3f15fd4793fac3ec07f831539a4e8ff0d91f0a",
+      "component_id": "2024-Q3",
+      "expected": {
+        "excluded_rows": 65,
+        "training_rows": 1837
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_aa0d2820ee3923bd/manifest.json",
+      "manifest_sha256": "3639a74a27c9ef07b116006b54c139c8691250f55b122ebf27994e28d5571f79",
+      "scope": {
+        "end_utc_exclusive": "2024-10-01T00:00:00Z",
+        "start_utc_inclusive": "2024-07-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_aa0d2820ee3923bd/draft_training_games.parquet",
+        "sha256": "96dc042c9074235d1c68fdef52841a7557c9ca61b9e7cdda6c75d3cef2d8bb7b"
+      }
+    },
+    {
+      "build_fingerprint": "8860ca6c6bda60d29151ab43194b6ea729e6caaf563abcc0ec85f80e36a71d32",
+      "component_id": "2024-Q4",
+      "expected": {
+        "excluded_rows": 26,
+        "training_rows": 1351
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_8860ca6c6bda60d2/manifest.json",
+      "manifest_sha256": "8c6b67edc2e550de00331a5d844a24f79b4190ec5a44f9ff0ce81fd243bd3791",
+      "scope": {
+        "end_utc_exclusive": "2025-01-01T00:00:00Z",
+        "start_utc_inclusive": "2024-10-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_8860ca6c6bda60d2/draft_training_games.parquet",
+        "sha256": "063a4e0567116800e45f86299472e99d79f6b632724c4ce598b40a832ee0ca64"
+      }
+    },
+    {
+      "build_fingerprint": "2ca66e275ca5ff367b35bebd4214de6d63d04e648d40cf0036c9d4455d4d6453",
+      "component_id": "2025-Q1",
+      "expected": {
+        "excluded_rows": 50,
+        "training_rows": 2209
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_2ca66e275ca5ff36/manifest.json",
+      "manifest_sha256": "db7b7bb8011ebde340627e6ae3a0e70cf0020150b79820a15a8da5b79fb38193",
+      "scope": {
+        "end_utc_exclusive": "2025-04-01T00:00:00Z",
+        "start_utc_inclusive": "2025-01-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_2ca66e275ca5ff36/draft_training_games.parquet",
+        "sha256": "f7e7e00d9e208ca72294e4141391031882f28c8981437d25426db20ffaee10f4"
+      }
+    },
+    {
+      "build_fingerprint": "629ee14fcdf0ed824dffdb6cad6a56b96c9818a32cbccf34a7faa3d086a3b7ab",
+      "component_id": "2025-Q2",
+      "expected": {
+        "excluded_rows": 322,
+        "training_rows": 1814
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_629ee14fcdf0ed82/manifest.json",
+      "manifest_sha256": "a6ffc6825b323ffbab7dd3cf46a86e9d2bdfc2ca7810bca3c9af2b077eae9be9",
+      "scope": {
+        "end_utc_exclusive": "2025-07-01T00:00:00Z",
+        "start_utc_inclusive": "2025-04-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_629ee14fcdf0ed82/draft_training_games.parquet",
+        "sha256": "9ed89583d14ea9acc480952ad2c9a67cb7bebbb81b31e311405b736736f9d64d"
+      }
+    },
+    {
+      "build_fingerprint": "d713108e4408046e6c91c669c1cd5d1a1582955e531f8121950027d2fa0887b9",
+      "component_id": "2025-Q3",
+      "expected": {
+        "excluded_rows": 341,
+        "training_rows": 1464
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_d713108e4408046e/manifest.json",
+      "manifest_sha256": "de7df584efe4ece5ee14783963fab2a190a79fb6fafeb38242f2c5471a18cbd5",
+      "scope": {
+        "end_utc_exclusive": "2025-10-01T00:00:00Z",
+        "start_utc_inclusive": "2025-07-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_d713108e4408046e/draft_training_games.parquet",
+        "sha256": "160548c3c02b6a192c8bb9d4cd229d3251440b1aebd5f6b8cce07594d871dbfd"
+      }
+    },
+    {
+      "build_fingerprint": "aa53bfcce98dc5a51de94fec0cbae1e01686754614b484745bde00f4e94e0dde",
+      "component_id": "2025-Q4",
+      "expected": {
+        "excluded_rows": 211,
+        "training_rows": 1089
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_aa53bfcce98dc5a5/manifest.json",
+      "manifest_sha256": "e12fdd93c93f7c0ffb87588c12dd3845a73714ab3772b8ba23976dccf3ee3a2d",
+      "scope": {
+        "end_utc_exclusive": "2026-01-01T00:00:00Z",
+        "start_utc_inclusive": "2025-10-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_aa53bfcce98dc5a5/draft_training_games.parquet",
+        "sha256": "de58accdbbf8cd434a0faaad865db7876919f29905a2a147d03b40d2ec169384"
+      }
+    },
+    {
+      "build_fingerprint": "f6172aeaf3895fe354b749066fd9e1c00f62580db185093b82b76a2cce6142ae",
+      "component_id": "2026-Q1",
+      "expected": {
+        "excluded_rows": 349,
+        "training_rows": 1947
+      },
+      "manifest_path": "data/training/dota_draft_supervised/build_f6172aeaf3895fe3/manifest.json",
+      "manifest_sha256": "f9d6edad0f8d7b924622d175a9aa5b59e13a9a04cec0ba11b8d42935ddd5e881",
+      "scope": {
+        "end_utc_exclusive": "2026-04-01T00:00:00Z",
+        "start_utc_inclusive": "2026-01-01T00:00:00Z"
+      },
+      "training_artifact": {
+        "path": "data/training/dota_draft_supervised/build_f6172aeaf3895fe3/draft_training_games.parquet",
+        "sha256": "2111c63ce984e0c75fbfabff36eba74171c9d8f3c4e4e89ccf72e8df07e35618"
+      }
+    }
+  ],
+  "config_schema_version": "draft-ai-working-corpus-v1",
+  "corpus_id": "m4a-tier1-tier2-2022q1-2026q1-working-v1",
+  "expected_aggregate": {
+    "excluded_rows": 1763,
+    "grouping": {
+      "cross_component_match_groups": 0,
+      "multi_patch_match_groups": 3,
+      "side_assignment_change_match_groups": 5421
+    },
+    "identity": {
+      "duplicate_match_game_index_pairs": 0,
+      "duplicate_match_source_game_pairs": 0,
+      "unique_game_keys": 23123,
+      "unique_sample_ids": 23123
+    },
+    "maximum_match_start_utc": "2026-03-31T15:15:00Z",
+    "minimum_match_start_utc": "2022-01-03T04:55:00Z",
+    "null_counts": {
+      "patch": 249,
+      "series": 595
+    },
+    "radiant_win_false": 11361,
+    "radiant_win_true": 11762,
+    "scope": {
+      "end_utc_exclusive": "2026-04-01T00:00:00Z",
+      "start_utc_inclusive": "2022-01-01T00:00:00Z"
+    },
+    "source_match_groups": 11664,
+    "training_rows": 23123,
+    "year_row_counts": {
+      "2022": 3070,
+      "2023": 4120,
+      "2024": 7410,
+      "2025": 6576,
+      "2026": 1947
+    }
+  },
+  "group_column": "source_match_id",
+  "sort_columns": [
+    "match_start_utc",
+    "source_match_id",
+    "game_index"
+  ],
+  "supervised_schema": {
+    "columns": [
+      "sample_id",
+      "game_key",
+      "source_game_id",
+      "game_index",
+      "source_match_id",
+      "match_start_utc",
+      "patch",
+      "liquipedia_tier",
+      "tournament",
+      "series",
+      "radiant_team_key",
+      "dire_team_key",
+      "radiant_pick_slot_1",
+      "radiant_pick_slot_2",
+      "radiant_pick_slot_3",
+      "radiant_pick_slot_4",
+      "radiant_pick_slot_5",
+      "dire_pick_slot_1",
+      "dire_pick_slot_2",
+      "dire_pick_slot_3",
+      "dire_pick_slot_4",
+      "dire_pick_slot_5",
+      "radiant_ban_slot_1",
+      "radiant_ban_slot_2",
+      "radiant_ban_slot_3",
+      "radiant_ban_slot_4",
+      "radiant_ban_slot_5",
+      "radiant_ban_slot_6",
+      "radiant_ban_slot_7",
+      "dire_ban_slot_1",
+      "dire_ban_slot_2",
+      "dire_ban_slot_3",
+      "dire_ban_slot_4",
+      "dire_ban_slot_5",
+      "dire_ban_slot_6",
+      "dire_ban_slot_7",
+      "radiant_win"
+    ],
+    "schema_sha256": "4bae8474d0d982c0356bda042ab15739572e97f97b63548e3685c028480872b4",
+    "schema_version": "dota-draft-supervised-v1"
+  },
+  "target_column": "radiant_win"
+}

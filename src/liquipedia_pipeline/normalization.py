@@ -31,6 +31,9 @@ OFFSET_PATTERN = re.compile(r"^(?P<sign>[+-])(?P<hours>\d{1,2}):(?P<minutes>\d{2
 
 DURATION_COMPATIBILITY_UNUSED_SLOT = "unplayed_game_slot_placeholder"
 DURATION_COMPATIBILITY_SOURCE_ANOMALY = "source_duration_7m04_anomaly"
+DURATION_COMPATIBILITY_SOURCE_ANOMALY_21M38 = (
+    "source_duration_21m38_anomaly"
+)
 DURATION_COMPATIBILITY_INELIGIBLE_ANOMALY = (
     "unsupported_duration_on_preexisting_ineligible_game"
 )
@@ -46,6 +49,43 @@ _APPROVED_UNUSED_GAME_SLOTS = {
 _APPROVED_DURATION_SOURCE_ANOMALIES = {
     ("D8VM7QJos8_R05-M002", "3", "7m04"): (3, 1, (2, 1)),
 }
+_APPROVED_DURATION_SOURCE_ANOMALY_21M38 = (
+    "ubD8YXh91K_R02-M001",
+    "2",
+    "21m38",
+)
+_APPROVED_21M38_TEAM1_PICKS = (
+    (1, "Vengeful Spirit"),
+    (2, "Beastmaster"),
+    (3, "Bane"),
+    (4, "Lifestealer"),
+    (5, "Tiny"),
+)
+_APPROVED_21M38_TEAM2_PICKS = (
+    (1, "Disruptor"),
+    (2, "Jakiro"),
+    (3, "Centaur Warrunner"),
+    (4, "Invoker"),
+    (5, "Juggernaut"),
+)
+_APPROVED_21M38_TEAM1_BANS = (
+    (1, "Phoenix"),
+    (2, "Templar Assassin"),
+    (3, "Weaver"),
+    (4, "Winter Wyvern"),
+    (5, "Shadow Fiend"),
+    (6, "Gyrocopter"),
+    (7, "Troll Warlord"),
+)
+_APPROVED_21M38_TEAM2_BANS = (
+    (1, "Storm Spirit"),
+    (2, "Chen"),
+    (3, "Night Stalker"),
+    (4, "Axe"),
+    (5, "Venomancer"),
+    (6, "Slardar"),
+    (7, "Outworld Destroyer"),
+)
 # Fail-closed copy of the existing pre-duration eligibility contract. If the
 # feature policy gains a new reason, unsupported durations continue to raise
 # until that reason is deliberately reviewed for this fallback.
@@ -169,6 +209,115 @@ def _source_anomaly_context_is_exact(
     )
 
 
+def _draft_signature(
+    values: Iterable[ParsedDraftValue],
+    *,
+    kind: DraftKind,
+    team_slot: int,
+) -> tuple[tuple[int, str], ...]:
+    """Return an ordered slot/name signature for an exact reviewed context."""
+    return tuple(
+        sorted(
+            (
+                (value.slot, value.hero_source_name)
+                for value in values
+                if value.kind == kind and value.team_slot == team_slot
+            ),
+            key=lambda item: item[0],
+        )
+    )
+
+
+def _source_anomaly_21m38_context_is_exact(
+    game: ParsedGame,
+    *,
+    match: ParsedMatch,
+) -> bool:
+    """Verify the one reviewed otherwise-eligible ``21m38`` occurrence."""
+    completed_games = sum(
+        nested.winner_team_slot in (1, 2)
+        for nested in match.games
+    )
+    team_signature = tuple(
+        sorted(
+            (
+                (team.team_slot, team.source_name, team.score)
+                for team in match.teams
+            ),
+            key=lambda item: item[0],
+        )
+    )
+    return (
+        match.finished
+        and match.date_text == "2024-06-08 03:00:00"
+        and match.timestamp == 1717815600
+        and match.timezone_offset == "+8:00"
+        and match.patch == "7.36b"
+        and match.liquipedia_tier == "1"
+        and match.tournament
+        == "The International 2024: China Open Qualifier #2"
+        and match.parent == "The_International/2024/China/Open_Qualifier/2"
+        and match.series == "The International"
+        and match.best_of == 2
+        and match.winner_team_slot == 1
+        and _team_scores(match) == (2, 0)
+        and team_signature
+        == (
+            (1, "ToLight Team", 2),
+            (2, "PAL Gaming", 0),
+        )
+        and len(match.games) == 2
+        and completed_games == 2
+        and tuple(
+            (
+                nested.source_game_id,
+                nested.winner_team_slot,
+                nested.duration_text,
+            )
+            for nested in match.games
+        )
+        == (
+            ("1", 1, "19m44s"),
+            ("2", 1, "21m38"),
+        )
+        and game.game_index == 1
+        and game.source_game_id == "2"
+        and game.date_text == "2024-06-08 03:00:00"
+        and game.timestamp == 1717815600
+        and game.patch == "7.36b"
+        and game.winner_team_slot == 1
+        and game.team1_side == "radiant"
+        and game.team2_side == "dire"
+        and game.status is None
+        and game.result_type is None
+        and game.walkover is None
+        and _draft_signature(
+            game.picks,
+            kind=DraftKind.PICK,
+            team_slot=1,
+        )
+        == _APPROVED_21M38_TEAM1_PICKS
+        and _draft_signature(
+            game.picks,
+            kind=DraftKind.PICK,
+            team_slot=2,
+        )
+        == _APPROVED_21M38_TEAM2_PICKS
+        and _draft_signature(
+            game.bans,
+            kind=DraftKind.BAN,
+            team_slot=1,
+        )
+        == _APPROVED_21M38_TEAM1_BANS
+        and _draft_signature(
+            game.bans,
+            kind=DraftKind.BAN,
+            team_slot=2,
+        )
+        == _APPROVED_21M38_TEAM2_BANS
+    )
+
+
 def pre_duration_ineligibility_reason(
     game: ParsedGame,
     *,
@@ -241,8 +390,8 @@ def classify_duration_compatibility(
 
     Returning a code authorizes normalization to a missing duration without
     adding a format to the duration grammar. A reviewed occurrence with
-    mismatched context, or any anomaly on an otherwise-eligible record,
-    remains an error.
+    mismatched context, or any unreviewed anomaly on an otherwise-eligible
+    record, remains an error.
     """
     value = game.duration_text
     key = (match.source_match_id, game.source_game_id, value)
@@ -272,6 +421,15 @@ def classify_duration_compatibility(
             scores=anomaly_context[2],
         ):
             return DURATION_COMPATIBILITY_SOURCE_ANOMALY
+        raise NormalizationError(
+            "Unapproved or context-mismatched duration compatibility value "
+            f"{value!r} for match {match.source_match_id!r}, "
+            f"game {game.source_game_id!r}."
+        )
+
+    if key == _APPROVED_DURATION_SOURCE_ANOMALY_21M38:
+        if _source_anomaly_21m38_context_is_exact(game, match=match):
+            return DURATION_COMPATIBILITY_SOURCE_ANOMALY_21M38
         raise NormalizationError(
             "Unapproved or context-mismatched duration compatibility value "
             f"{value!r} for match {match.source_match_id!r}, "
@@ -386,9 +544,20 @@ def normalize_hero(value: ParsedDraftValue) -> NormalizedDraftValue:
 def normalize_player(player: ParsedPlayer) -> NormalizedPlayer:
     """Normalize a player identity without merging aliases."""
     identity = player.source_name or player.display_name
+    player_key = None
+    if identity:
+        try:
+            player_key = identity_key(identity)
+        except NormalizationError:
+            # Dota handles may consist entirely of punctuation.  The source
+            # text remains lossless and the official publisher ID remains the
+            # stable identity; do not fabricate a text-derived alias.  Without
+            # that source identity, retain the existing fail-closed behavior.
+            if player.publisher_id is None:
+                raise
     return NormalizedPlayer(
         player_slot=player.player_slot,
-        player_key=identity_key(identity) if identity else None,
+        player_key=player_key,
         source_name=player.source_name,
         display_name=player.display_name,
         flag=player.flag.casefold() if player.flag else None,
