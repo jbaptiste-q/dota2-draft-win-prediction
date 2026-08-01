@@ -1,0 +1,37 @@
+{
+  "schema_version": "draft-assistant-snapshot-export-v1",
+  "artifact_id": "b1-full-uniform-c0p01-raw-demo-v0",
+  "status": "development_candidate",
+  "output_path": "src/draft_ai_assistant/resources/development_candidate_v0.json",
+  "source": {
+    "bundle_manifest_path": "models/m4b3/build_3f768bb13f0b447bcf6704086f00c28f4652a21e467089d3549060ad3ab64a5c/bundle/model_bundle.json",
+    "bundle_manifest_sha256": "043646136f4034b62cf08679ce15c406e6c4c132a7d6c64afc248599785991f4",
+    "trusted_bundle_root": "models/m4b3",
+    "experiment_manifest_path": "models/m4b3/build_3f768bb13f0b447bcf6704086f00c28f4652a21e467089d3549060ad3ab64a5c/experiment_manifest.json",
+    "experiment_manifest_sha256": "5a968b5d0d1b9e09e3ba31d16c09454078f4b2ec0d7ba99fa4d9a8018de9cd15",
+    "readiness_path": "models/m4b3/build_3f768bb13f0b447bcf6704086f00c28f4652a21e467089d3549060ad3ab64a5c/readiness_gate.json",
+    "readiness_sha256": "a5c3ea0dadb59cffc7e4b2a79fd1227e105eaa22c5cd3f8865338761b443891b",
+    "hero_catalog_path": "data/training/dota_draft_supervised/build_d713108e4408046e/hero_vocabulary.parquet",
+    "hero_catalog_sha256": "273cc7fc94fd3e6ade0a7393d6183404699a5eae31ac09a6f884e4df66d4d709"
+  },
+  "product_contract": {
+    "representation": "unordered_side_relative_completed_picks",
+    "picks_per_side": 5,
+    "unique_heroes_required": true,
+    "out_of_vocabulary_policy": "reject",
+    "probability_method": "raw_logistic",
+    "explanation_surface": "base_estimator_log_odds",
+    "first_pick_supported": false,
+    "global_draft_order_supported": false,
+    "bans_used": false,
+    "recommendations_available": false
+  },
+  "limitations": [
+    "Experimental development candidate: the 2025-Q4 readiness gate failed.",
+    "The sealed 2026-Q1 test set has not been evaluated.",
+    "The model uses completed Radiant and Dire hero picks only.",
+    "Bans, pick order, first pick, patch, teams, and player context are not model inputs.",
+    "Hero contributions are associative logistic coefficients, not causal effects.",
+    "Recommendations and partial-draft scoring are not available in this slice."
+  ]
+}

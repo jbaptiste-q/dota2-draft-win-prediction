@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Draft Lab analyzes completed professional Dota 2 drafts with an experimental, explainable development model."
+    >
+    <title>Draft Lab — Completed Draft Analysis</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#draft-workspace">Skip to draft builder</a>
+
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="Draft Lab home">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </span>
+          <span class="brand-copy">
+            <strong>Draft Lab</strong>
+            <small>Dota 2 Draft AI</small>
+          </span>
+        </a>
+
+        <div class="header-status" aria-label="Model status">
+          <span class="status-dot" aria-hidden="true"></span>
+          Experimental development candidate
+        </div>
+      </header>
+
+      <main>
+        <section class="hero-section" aria-labelledby="page-title">
+          <div class="eyebrow">Completed-draft analyzer</div>
+          <h1 id="page-title">
+            Read the draft.
+            <span>Respect the uncertainty.</span>
+          </h1>
+          <p class="hero-copy">
+            Compare a complete five-versus-five professional draft using a
+            leakage-safe, side-relative model. Every result includes the exact
+            hero contributions behind its probability.
+          </p>
+
+          <div class="scope-strip" aria-label="Analysis scope">
+            <span>Picks only</span>
+            <span>Completed drafts</span>
+            <span>No hero recommendations</span>
+            <span>No live Liquipedia calls</span>
+          </div>
+
+          <div class="example-cta">
+            <button id="try-example" class="example-button" type="button" disabled>
+              <span>
+                <strong>Try example draft</strong>
+                <small>Fill both sides and run the analysis</small>
+              </span>
+              <span aria-hidden="true">→</span>
+            </button>
+            <p>
+              Fixed workflow example for demonstrating the interface.
+              <strong>It is not a hero recommendation.</strong>
+            </p>
+          </div>
+        </section>
+
+        <section
+          class="model-evidence-panel"
+          aria-labelledby="evidence-panel-title"
+          aria-describedby="model-card-status"
+        >
+          <div class="evidence-panel-heading">
+            <div>
+              <div class="section-kicker">Published model evidence</div>
+              <h2 id="evidence-panel-title">Why this result stays experimental</h2>
+            </div>
+            <p id="model-card-status" class="model-card-status" aria-live="polite">
+              Loading evaluation evidence
+            </p>
+          </div>
+
+          <div class="evidence-panel-body">
+            <div class="metric-comparison">
+              <div class="metric-context">
+                <strong>2025-Q4 calibration period</strong>
+                <span>Lower is better</span>
+              </div>
+              <table>
+                <caption class="visually-hidden">
+                  Development candidate and empirical-prior evaluation metrics
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Metric</th>
+                    <th scope="col">Candidate</th>
+                    <th scope="col">Empirical prior</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Log loss</th>
+                    <td id="evidence-candidate-log-loss">—</td>
+                    <td id="evidence-reference-log-loss">—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Brier score</th>
+                    <td id="evidence-candidate-brier">—</td>
+                    <td id="evidence-reference-brier">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <dl class="evidence-facts">
+              <div>
+                <dt>Readiness gate</dt>
+                <dd id="evidence-gate">Loading</dd>
+              </div>
+              <div>
+                <dt>Locked 2026-Q1</dt>
+                <dd id="evidence-locked">Loading</dd>
+              </div>
+              <div>
+                <dt>Fit cutoff</dt>
+                <dd id="evidence-cutoff">Loading</dd>
+              </div>
+            </dl>
+          </div>
+        </section>
+
+        <section
+          id="draft-workspace"
+          class="draft-workspace"
+          aria-labelledby="workspace-title"
+        >
+          <div class="workspace-heading">
+            <div>
+              <div class="section-kicker">Draft input</div>
+              <h2 id="workspace-title">Build both lineups</h2>
+            </div>
+            <div class="draft-actions">
+              <p id="draft-progress" class="draft-progress" aria-live="polite">
+                0 of 10 heroes selected
+              </p>
+              <button id="reset-draft" class="text-button" type="button">
+                Reset draft
+              </button>
+            </div>
+          </div>
+
+          <div class="draft-grid">
+            <section
+              class="team-panel radiant-panel"
+              aria-labelledby="radiant-title"
+            >
+              <div class="team-heading">
+                <div>
+                  <span class="team-label">The Radiant</span>
+                  <h3 id="radiant-title">Radiant picks</h3>
+                </div>
+                <span id="radiant-count" class="team-count">0 / 5</span>
+              </div>
+              <div
+                id="radiant-slots"
+                class="pick-list"
+                aria-label="Radiant hero picks"
+              ></div>
+            </section>
+
+            <section class="analysis-console" aria-labelledby="analysis-title">
+              <div class="console-topline">
+                <span class="console-index">Required input: 10 heroes</span>
+                <span id="hero-data-status" class="data-status" aria-live="polite">
+                  Loading hero catalog
+                </span>
+              </div>
+
+              <div class="versus-mark" aria-hidden="true">
+                <span>R</span>
+                <strong>VS</strong>
+                <span>D</span>
+              </div>
+
+              <h3 id="analysis-title">Completed picks in. Probability out.</h3>
+              <p>
+                Pick order, bans, teams, patch, and first-pick status are not
+                model inputs. Draft slots are collected only to make each side
+                complete.
+              </p>
+
+              <button
+                id="analyze-draft"
+                class="primary-button"
+                type="button"
+                disabled
+              >
+                <span>Analyze completed draft</span>
+                <span aria-hidden="true">→</span>
+              </button>
+              <p id="analysis-error" class="error-message" role="alert"></p>
+            </section>
+
+            <section class="team-panel dire-panel" aria-labelledby="dire-title">
+              <div class="team-heading">
+                <div>
+                  <span class="team-label">The Dire</span>
+                  <h3 id="dire-title">Dire picks</h3>
+                </div>
+                <span id="dire-count" class="team-count">0 / 5</span>
+              </div>
+              <div
+                id="dire-slots"
+                class="pick-list"
+                aria-label="Dire hero picks"
+              ></div>
+            </section>
+          </div>
+        </section>
+
+        <section
+          id="result-section"
+          class="result-section"
+          aria-labelledby="result-title"
+          aria-live="polite"
+        >
+          <div id="result-empty" class="result-empty">
+            <div class="empty-grid" aria-hidden="true"></div>
+            <div>
+              <div class="section-kicker">Analysis output</div>
+              <h2 id="result-title">Your result will appear here</h2>
+              <p>
+                Complete both lineups to unlock the probability and faithful
+                contribution breakdown.
+              </p>
+            </div>
+          </div>
+
+          <div id="result-loading" class="result-loading" hidden>
+            <div class="loading-orbit" aria-hidden="true"></div>
+            <div>
+              <strong>Evaluating the completed draft</strong>
+              <span>Transforming ten side-relative hero picks</span>
+            </div>
+          </div>
+
+          <div id="result-content" hidden>
+            <div class="result-header">
+              <div>
+                <div class="section-kicker">Model result</div>
+                <h2 id="completed-result-title" tabindex="-1">
+                  Completed draft outlook
+                </h2>
+              </div>
+              <span class="experimental-badge">
+                Experimental · not readiness-approved
+              </span>
+            </div>
+
+            <div class="result-grid">
+              <article class="probability-card">
+                <div class="probability-labels">
+                  <span>Radiant</span>
+                  <span>Dire</span>
+                </div>
+                <div
+                  id="probability-bar"
+                  class="probability-bar"
+                  role="img"
+                  aria-label="Radiant and Dire win probability"
+                >
+                  <span class="radiant-share"></span>
+                  <span class="probability-midpoint" aria-hidden="true"></span>
+                </div>
+                <div class="probability-values">
+                  <strong id="radiant-probability">—</strong>
+                  <span>Estimated win probability</span>
+                  <strong id="dire-probability">—</strong>
+                </div>
+                <p class="probability-note">
+                  This is a raw development-model estimate, not a promise,
+                  betting signal, or readiness-approved forecast.
+                </p>
+              </article>
+
+              <article class="model-card" aria-labelledby="model-card-title">
+                <div class="card-heading">
+                  <div>
+                    <span class="card-index">Model evidence</span>
+                    <h3 id="model-card-title">What produced this result</h3>
+                  </div>
+                  <span id="model-status" class="model-status">Experimental</span>
+                </div>
+                <dl class="model-facts">
+                  <div>
+                    <dt>Candidate</dt>
+                    <dd id="model-candidate">—</dd>
+                  </div>
+                  <div>
+                    <dt>Fit cutoff</dt>
+                    <dd id="model-cutoff">—</dd>
+                  </div>
+                  <div>
+                    <dt>Readiness gate</dt>
+                    <dd id="model-readiness">—</dd>
+                  </div>
+                  <div>
+                    <dt>Locked test</dt>
+                    <dd id="model-locked-test">—</dd>
+                  </div>
+                </dl>
+              </article>
+            </div>
+
+            <section
+              id="replacement-explorer"
+              class="replacement-explorer"
+              aria-labelledby="replacement-title"
+            >
+              <div class="replacement-heading">
+                <div>
+                  <span class="card-index">User-directed comparison</span>
+                  <h3 id="replacement-title">What-if replacement</h3>
+                </div>
+                <span class="non-recommendation-badge">
+                  Not a recommendation
+                </span>
+              </div>
+              <p class="replacement-intro">
+                Choose one current hero and one supported, unselected hero to
+                compare two completed drafts. The tool does not rank heroes or
+                choose a replacement for you.
+              </p>
+
+              <div class="replacement-controls">
+                <label for="replacement-side">
+                  <span>Side</span>
+                  <select id="replacement-side" disabled>
+                    <option value="radiant">Radiant</option>
+                    <option value="dire">Dire</option>
+                  </select>
+                </label>
+                <label for="replacement-outgoing">
+                  <span>Hero to replace</span>
+                  <select id="replacement-outgoing" disabled></select>
+                </label>
+                <label for="replacement-incoming">
+                  <span>Compare with</span>
+                  <select id="replacement-incoming" disabled>
+                    <option value="">Choose an unselected hero</option>
+                  </select>
+                </label>
+                <button
+                  id="compare-replacement"
+                  class="comparison-button"
+                  type="button"
+                  disabled
+                >
+                  <span>Compare what-if</span>
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+
+              <p
+                id="replacement-status"
+                class="replacement-status"
+                aria-live="polite"
+              >
+                Analyze a completed draft to enable this comparison.
+              </p>
+
+              <div id="replacement-output" class="replacement-output" hidden>
+                <p class="replacement-route">
+                  <strong id="replacement-outgoing-name">—</strong>
+                  <span aria-hidden="true">→</span>
+                  <strong id="replacement-incoming-name">—</strong>
+                  <span id="replacement-side-label">—</span>
+                </p>
+                <dl class="replacement-metrics">
+                  <div>
+                    <dt>Baseline</dt>
+                    <dd id="replacement-baseline-probability">—</dd>
+                  </div>
+                  <div>
+                    <dt>Replacement scenario</dt>
+                    <dd id="replacement-scenario-probability">—</dd>
+                  </div>
+                  <div>
+                    <dt>Change in model output</dt>
+                    <dd id="replacement-probability-delta">—</dd>
+                  </div>
+                </dl>
+              </div>
+
+              <aside class="replacement-guardrail" aria-label="Comparison limits">
+                <strong>User-directed completed-draft comparison only.</strong>
+                <p>
+                  This is an associative model comparison, not a causal claim.
+                  The additive model ignores synergy, counters, roles, lanes,
+                  bans, order, patch, teams, and players. Q4 readiness failed;
+                  the locked Q1 test remains sealed and unevaluated.
+                </p>
+              </aside>
+            </section>
+
+            <div class="evidence-grid">
+              <article
+                class="contribution-card"
+                aria-labelledby="contribution-title"
+              >
+                <div class="card-heading">
+                  <div>
+                    <span class="card-index">Faithful explanation</span>
+                    <h3 id="contribution-title">Hero contributions</h3>
+                  </div>
+                  <span class="sort-label">
+                    Largest absolute contribution first
+                  </span>
+                </div>
+                <p class="card-intro">
+                  Positive log-odds move the estimate toward Radiant; negative
+                  values move it toward Dire. Association is not causation.
+                </p>
+                <ol id="contribution-list" class="contribution-list"></ol>
+              </article>
+
+              <aside class="limitation-card" aria-labelledby="limitations-title">
+                <div class="card-heading">
+                  <div>
+                    <span class="card-index">Use with care</span>
+                    <h3 id="limitations-title">Known limitations</h3>
+                  </div>
+                </div>
+                <ul id="limitations-list" class="limitations-list"></ul>
+              </aside>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div>
+          <strong>Draft Lab</strong>
+          <p>An auditable Applied AI portfolio product.</p>
+        </div>
+        <p>
+          Official Liquipedia data is used offline for training provenance.
+          This interface makes no authenticated or live data requests.
+        </p>
+      </footer>
+    </div>
+
+    <dialog id="hero-picker" class="hero-picker">
+      <div class="picker-shell">
+        <div class="picker-header">
+          <div>
+            <span id="picker-kicker" class="section-kicker">Choose hero</span>
+            <h2 id="picker-title">Select a hero</h2>
+          </div>
+          <button
+            id="close-picker"
+            class="icon-button"
+            type="button"
+            aria-label="Close hero picker"
+          >
+            ×
+          </button>
+        </div>
+
+        <label class="search-field" for="hero-search">
+          <span>Search hero name</span>
+          <input
+            id="hero-search"
+            type="search"
+            inputmode="search"
+            autocomplete="off"
+            placeholder="Try “Puck” or “Earth Spirit”"
+          >
+        </label>
+
+        <p id="picker-summary" class="picker-summary" aria-live="polite"></p>
+        <div
+          id="hero-options"
+          class="hero-options"
+          aria-label="Available heroes"
+        ></div>
+
+        <div id="picker-empty" class="picker-empty" hidden>
+          No heroes match that search.
+        </div>
+      </div>
+    </dialog>
+
+    <noscript>
+      <div class="noscript-message">
+        Draft Lab requires JavaScript to build and analyze a draft.
+      </div>
+    </noscript>
+  </body>
+</html>

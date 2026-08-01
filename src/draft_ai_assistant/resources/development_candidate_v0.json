@@ -1,0 +1,799 @@
+{
+  "artifact_fingerprint": "69730a62f42cda234337e8cbf152fb50fcb7ae02faf38367955c267fbe714442",
+  "artifact_id": "b1-full-uniform-c0p01-raw-demo-v0",
+  "evidence": {
+    "candidate_brier_score": 0.2524500613459483,
+    "candidate_log_loss": 0.6982455480507083,
+    "export_parity_examples": 3,
+    "export_parity_max_abs_probability_error": 5.551115123125783e-17,
+    "locked_test_evaluated": false,
+    "q4_rows": 1089,
+    "readiness_gate_passed": false,
+    "readiness_reference": "train_tuning_empirical_prior",
+    "reference_brier_score": 0.24998372976923464,
+    "reference_log_loss": 0.6931146429704167
+  },
+  "heroes": [
+    {
+      "display_name": "Abaddon",
+      "hero_key": "abaddon"
+    },
+    {
+      "display_name": "Alchemist",
+      "hero_key": "alchemist"
+    },
+    {
+      "display_name": "Ancient Apparition",
+      "hero_key": "ancient-apparition"
+    },
+    {
+      "display_name": "Anti-Mage",
+      "hero_key": "anti-mage"
+    },
+    {
+      "display_name": "Arc Warden",
+      "hero_key": "arc-warden"
+    },
+    {
+      "display_name": "Axe",
+      "hero_key": "axe"
+    },
+    {
+      "display_name": "Bane",
+      "hero_key": "bane"
+    },
+    {
+      "display_name": "Batrider",
+      "hero_key": "batrider"
+    },
+    {
+      "display_name": "Beastmaster",
+      "hero_key": "beastmaster"
+    },
+    {
+      "display_name": "Bloodseeker",
+      "hero_key": "bloodseeker"
+    },
+    {
+      "display_name": "Bounty Hunter",
+      "hero_key": "bounty-hunter"
+    },
+    {
+      "display_name": "Brewmaster",
+      "hero_key": "brewmaster"
+    },
+    {
+      "display_name": "Bristleback",
+      "hero_key": "bristleback"
+    },
+    {
+      "display_name": "Broodmother",
+      "hero_key": "broodmother"
+    },
+    {
+      "display_name": "Centaur Warrunner",
+      "hero_key": "centaur-warrunner"
+    },
+    {
+      "display_name": "Chaos Knight",
+      "hero_key": "chaos-knight"
+    },
+    {
+      "display_name": "Chen",
+      "hero_key": "chen"
+    },
+    {
+      "display_name": "Clinkz",
+      "hero_key": "clinkz"
+    },
+    {
+      "display_name": "Clockwerk",
+      "hero_key": "clockwerk"
+    },
+    {
+      "display_name": "Crystal Maiden",
+      "hero_key": "crystal-maiden"
+    },
+    {
+      "display_name": "Dark Seer",
+      "hero_key": "dark-seer"
+    },
+    {
+      "display_name": "Dark Willow",
+      "hero_key": "dark-willow"
+    },
+    {
+      "display_name": "Dawnbreaker",
+      "hero_key": "dawnbreaker"
+    },
+    {
+      "display_name": "Dazzle",
+      "hero_key": "dazzle"
+    },
+    {
+      "display_name": "Death Prophet",
+      "hero_key": "death-prophet"
+    },
+    {
+      "display_name": "Disruptor",
+      "hero_key": "disruptor"
+    },
+    {
+      "display_name": "Doom",
+      "hero_key": "doom"
+    },
+    {
+      "display_name": "Dragon Knight",
+      "hero_key": "dragon-knight"
+    },
+    {
+      "display_name": "Drow Ranger",
+      "hero_key": "drow-ranger"
+    },
+    {
+      "display_name": "Earth Spirit",
+      "hero_key": "earth-spirit"
+    },
+    {
+      "display_name": "Earthshaker",
+      "hero_key": "earthshaker"
+    },
+    {
+      "display_name": "Elder Titan",
+      "hero_key": "elder-titan"
+    },
+    {
+      "display_name": "Ember Spirit",
+      "hero_key": "ember-spirit"
+    },
+    {
+      "display_name": "Enchantress",
+      "hero_key": "enchantress"
+    },
+    {
+      "display_name": "Enigma",
+      "hero_key": "enigma"
+    },
+    {
+      "display_name": "Faceless Void",
+      "hero_key": "faceless-void"
+    },
+    {
+      "display_name": "Grimstroke",
+      "hero_key": "grimstroke"
+    },
+    {
+      "display_name": "Gyrocopter",
+      "hero_key": "gyrocopter"
+    },
+    {
+      "display_name": "Hoodwink",
+      "hero_key": "hoodwink"
+    },
+    {
+      "display_name": "Huskar",
+      "hero_key": "huskar"
+    },
+    {
+      "display_name": "Invoker",
+      "hero_key": "invoker"
+    },
+    {
+      "display_name": "Io",
+      "hero_key": "io"
+    },
+    {
+      "display_name": "Jakiro",
+      "hero_key": "jakiro"
+    },
+    {
+      "display_name": "Juggernaut",
+      "hero_key": "juggernaut"
+    },
+    {
+      "display_name": "Keeper of the Light",
+      "hero_key": "keeper-of-the-light"
+    },
+    {
+      "display_name": "Kunkka",
+      "hero_key": "kunkka"
+    },
+    {
+      "display_name": "Legion Commander",
+      "hero_key": "legion-commander"
+    },
+    {
+      "display_name": "Leshrac",
+      "hero_key": "leshrac"
+    },
+    {
+      "display_name": "Lich",
+      "hero_key": "lich"
+    },
+    {
+      "display_name": "Lifestealer",
+      "hero_key": "lifestealer"
+    },
+    {
+      "display_name": "Lina",
+      "hero_key": "lina"
+    },
+    {
+      "display_name": "Lion",
+      "hero_key": "lion"
+    },
+    {
+      "display_name": "Lone Druid",
+      "hero_key": "lone-druid"
+    },
+    {
+      "display_name": "Luna",
+      "hero_key": "luna"
+    },
+    {
+      "display_name": "Lycan",
+      "hero_key": "lycan"
+    },
+    {
+      "display_name": "Magnus",
+      "hero_key": "magnus"
+    },
+    {
+      "display_name": "Marci",
+      "hero_key": "marci"
+    },
+    {
+      "display_name": "Mars",
+      "hero_key": "mars"
+    },
+    {
+      "display_name": "Medusa",
+      "hero_key": "medusa"
+    },
+    {
+      "display_name": "Meepo",
+      "hero_key": "meepo"
+    },
+    {
+      "display_name": "Mirana",
+      "hero_key": "mirana"
+    },
+    {
+      "display_name": "Monkey King",
+      "hero_key": "monkey-king"
+    },
+    {
+      "display_name": "Morphling",
+      "hero_key": "morphling"
+    },
+    {
+      "display_name": "Muerta",
+      "hero_key": "muerta"
+    },
+    {
+      "display_name": "Naga Siren",
+      "hero_key": "naga-siren"
+    },
+    {
+      "display_name": "Nature's Prophet",
+      "hero_key": "nature-s-prophet"
+    },
+    {
+      "display_name": "Necrophos",
+      "hero_key": "necrophos"
+    },
+    {
+      "display_name": "Night Stalker",
+      "hero_key": "night-stalker"
+    },
+    {
+      "display_name": "Nyx Assassin",
+      "hero_key": "nyx-assassin"
+    },
+    {
+      "display_name": "Ogre Magi",
+      "hero_key": "ogre-magi"
+    },
+    {
+      "display_name": "Omniknight",
+      "hero_key": "omniknight"
+    },
+    {
+      "display_name": "Oracle",
+      "hero_key": "oracle"
+    },
+    {
+      "display_name": "Outworld Destroyer",
+      "hero_key": "outworld-destroyer"
+    },
+    {
+      "display_name": "Pangolier",
+      "hero_key": "pangolier"
+    },
+    {
+      "display_name": "Phantom Assassin",
+      "hero_key": "phantom-assassin"
+    },
+    {
+      "display_name": "Phantom Lancer",
+      "hero_key": "phantom-lancer"
+    },
+    {
+      "display_name": "Phoenix",
+      "hero_key": "phoenix"
+    },
+    {
+      "display_name": "Primal Beast",
+      "hero_key": "primal-beast"
+    },
+    {
+      "display_name": "Puck",
+      "hero_key": "puck"
+    },
+    {
+      "display_name": "Pudge",
+      "hero_key": "pudge"
+    },
+    {
+      "display_name": "Pugna",
+      "hero_key": "pugna"
+    },
+    {
+      "display_name": "Queen of Pain",
+      "hero_key": "queen-of-pain"
+    },
+    {
+      "display_name": "Razor",
+      "hero_key": "razor"
+    },
+    {
+      "display_name": "Riki",
+      "hero_key": "riki"
+    },
+    {
+      "display_name": "Ringmaster",
+      "hero_key": "ringmaster"
+    },
+    {
+      "display_name": "Rubick",
+      "hero_key": "rubick"
+    },
+    {
+      "display_name": "Sand King",
+      "hero_key": "sand-king"
+    },
+    {
+      "display_name": "Shadow Demon",
+      "hero_key": "shadow-demon"
+    },
+    {
+      "display_name": "Shadow Fiend",
+      "hero_key": "shadow-fiend"
+    },
+    {
+      "display_name": "Shadow Shaman",
+      "hero_key": "shadow-shaman"
+    },
+    {
+      "display_name": "Silencer",
+      "hero_key": "silencer"
+    },
+    {
+      "display_name": "Skywrath Mage",
+      "hero_key": "skywrath-mage"
+    },
+    {
+      "display_name": "Slardar",
+      "hero_key": "slardar"
+    },
+    {
+      "display_name": "Slark",
+      "hero_key": "slark"
+    },
+    {
+      "display_name": "Snapfire",
+      "hero_key": "snapfire"
+    },
+    {
+      "display_name": "Sniper",
+      "hero_key": "sniper"
+    },
+    {
+      "display_name": "Spectre",
+      "hero_key": "spectre"
+    },
+    {
+      "display_name": "Spirit Breaker",
+      "hero_key": "spirit-breaker"
+    },
+    {
+      "display_name": "Storm Spirit",
+      "hero_key": "storm-spirit"
+    },
+    {
+      "display_name": "Sven",
+      "hero_key": "sven"
+    },
+    {
+      "display_name": "Techies",
+      "hero_key": "techies"
+    },
+    {
+      "display_name": "Templar Assassin",
+      "hero_key": "templar-assassin"
+    },
+    {
+      "display_name": "Terrorblade",
+      "hero_key": "terrorblade"
+    },
+    {
+      "display_name": "Tidehunter",
+      "hero_key": "tidehunter"
+    },
+    {
+      "display_name": "Timbersaw",
+      "hero_key": "timbersaw"
+    },
+    {
+      "display_name": "Tinker",
+      "hero_key": "tinker"
+    },
+    {
+      "display_name": "Tiny",
+      "hero_key": "tiny"
+    },
+    {
+      "display_name": "Treant Protector",
+      "hero_key": "treant-protector"
+    },
+    {
+      "display_name": "Troll Warlord",
+      "hero_key": "troll-warlord"
+    },
+    {
+      "display_name": "Tusk",
+      "hero_key": "tusk"
+    },
+    {
+      "display_name": "Underlord",
+      "hero_key": "underlord"
+    },
+    {
+      "display_name": "Undying",
+      "hero_key": "undying"
+    },
+    {
+      "display_name": "Ursa",
+      "hero_key": "ursa"
+    },
+    {
+      "display_name": "Vengeful Spirit",
+      "hero_key": "vengeful-spirit"
+    },
+    {
+      "display_name": "Venomancer",
+      "hero_key": "venomancer"
+    },
+    {
+      "display_name": "Viper",
+      "hero_key": "viper"
+    },
+    {
+      "display_name": "Visage",
+      "hero_key": "visage"
+    },
+    {
+      "display_name": "Void Spirit",
+      "hero_key": "void-spirit"
+    },
+    {
+      "display_name": "Warlock",
+      "hero_key": "warlock"
+    },
+    {
+      "display_name": "Weaver",
+      "hero_key": "weaver"
+    },
+    {
+      "display_name": "Windranger",
+      "hero_key": "windranger"
+    },
+    {
+      "display_name": "Winter Wyvern",
+      "hero_key": "winter-wyvern"
+    },
+    {
+      "display_name": "Witch Doctor",
+      "hero_key": "witch-doctor"
+    },
+    {
+      "display_name": "Wraith King",
+      "hero_key": "wraith-king"
+    },
+    {
+      "display_name": "Zeus",
+      "hero_key": "zeus"
+    }
+  ],
+  "limitations": [
+    "Experimental development candidate: the 2025-Q4 readiness gate failed.",
+    "The sealed 2026-Q1 test set has not been evaluated.",
+    "The model uses completed Radiant and Dire hero picks only.",
+    "Bans, pick order, first pick, patch, teams, and player context are not model inputs.",
+    "Hero contributions are associative logistic coefficients, not causal effects.",
+    "Recommendations and partial-draft scoring are not available in this slice."
+  ],
+  "model": {
+    "dire_hero_log_odds": {
+      "abaddon": 0.09649583397554869,
+      "alchemist": -0.0713854064155949,
+      "ancient-apparition": 0.05276755660139754,
+      "anti-mage": -0.008684699944909016,
+      "arc-warden": 0.04963955512528972,
+      "axe": 0.13715118357716216,
+      "bane": -0.18741369993224263,
+      "batrider": 0.00412813430043517,
+      "beastmaster": -0.07523576621710457,
+      "bloodseeker": -0.03439858990388193,
+      "bounty-hunter": 0.0031349119229906594,
+      "brewmaster": -0.0049232295817543004,
+      "bristleback": -0.11488963528265204,
+      "broodmother": -0.00404065306162253,
+      "centaur-warrunner": 0.037325900890291294,
+      "chaos-knight": -0.07002013475144689,
+      "chen": -0.30845869782673235,
+      "clinkz": -0.044338717207330035,
+      "clockwerk": -0.01956165920953404,
+      "crystal-maiden": -0.015870528568621287,
+      "dark-seer": -0.04115808621810013,
+      "dark-willow": 0.11871329403046643,
+      "dawnbreaker": 0.10480109348178492,
+      "dazzle": -0.07396860641164134,
+      "death-prophet": -0.0256876726935065,
+      "disruptor": -0.10590597774348606,
+      "doom": -0.07754495738598861,
+      "dragon-knight": -0.0022712673959134257,
+      "drow-ranger": 0.10800665569096707,
+      "earth-spirit": 0.027498442542794512,
+      "earthshaker": -0.028932083591415327,
+      "elder-titan": -0.0813243707790307,
+      "ember-spirit": -0.00960551714612522,
+      "enchantress": -0.07174231538376712,
+      "enigma": -0.23653649826610645,
+      "faceless-void": -0.08663360868102767,
+      "grimstroke": 0.17526747733547982,
+      "gyrocopter": -0.03704661947757799,
+      "hoodwink": 0.0757282158483571,
+      "huskar": -0.028413675431835064,
+      "invoker": 0.026912817170883577,
+      "io": -0.04089484227181149,
+      "jakiro": 0.1818627006517871,
+      "juggernaut": 0.05015329219271115,
+      "keeper-of-the-light": -0.07505945148668378,
+      "kunkka": -0.002982889009377719,
+      "legion-commander": 0.03211420606095045,
+      "leshrac": -0.09804778518365594,
+      "lich": 0.06711516450822592,
+      "lifestealer": -0.01340978517101233,
+      "lina": -0.003697727083100392,
+      "lion": 0.03284624855357169,
+      "lone-druid": -0.05744894902299171,
+      "luna": 0.013929204318981878,
+      "lycan": -0.09828584159371553,
+      "magnus": 0.002423011488044413,
+      "marci": -0.02899670470551787,
+      "mars": 0.08590722909373376,
+      "medusa": -0.03753318894548863,
+      "meepo": 0.0822480781683061,
+      "mirana": -0.14720020694902977,
+      "monkey-king": -0.09783572984247099,
+      "morphling": 0.003660923634813448,
+      "muerta": 0.11559080874893499,
+      "naga-siren": -0.1820465205188128,
+      "nature-s-prophet": -0.08935330502506907,
+      "necrophos": 0.03978920230076328,
+      "night-stalker": 0.07397483095866994,
+      "nyx-assassin": 0.009845113383042592,
+      "ogre-magi": 0.06177338335971033,
+      "omniknight": -0.047971388412207855,
+      "oracle": -0.03128953489376542,
+      "outworld-destroyer": 0.019173511762716127,
+      "pangolier": 0.04434074135878385,
+      "phantom-assassin": 0.0773549717775153,
+      "phantom-lancer": 0.022545330439347856,
+      "phoenix": 0.08866991329758686,
+      "primal-beast": 0.0008500983664509604,
+      "puck": -0.11748409319918654,
+      "pudge": 0.08423977134347872,
+      "pugna": -0.007041779209038045,
+      "queen-of-pain": 0.14501168870802755,
+      "razor": 0.08121034749345586,
+      "riki": -0.08994869040745077,
+      "ringmaster": 0.03435815701670086,
+      "rubick": 0.04746875696489537,
+      "sand-king": 0.0482532373652728,
+      "shadow-demon": 0.00870573436378667,
+      "shadow-fiend": 0.005172295298133409,
+      "shadow-shaman": 0.003121449280862108,
+      "silencer": 0.1558605779719662,
+      "skywrath-mage": 0.10115284424058525,
+      "slardar": 0.05145922246220904,
+      "slark": -0.1176441697770674,
+      "snapfire": 0.04927361462520083,
+      "sniper": -0.011576182676042128,
+      "spectre": 0.10925631145829456,
+      "spirit-breaker": 0.026917023271255485,
+      "storm-spirit": -0.08944352198731251,
+      "sven": -0.003126726881071488,
+      "techies": 0.07549284754673923,
+      "templar-assassin": -0.07262185882997409,
+      "terrorblade": 0.014722130605798054,
+      "tidehunter": -0.009705286861021754,
+      "timbersaw": -0.0016263695523021998,
+      "tinker": -0.02603930585176784,
+      "tiny": -0.02664123253906586,
+      "treant-protector": -0.10087559641655632,
+      "troll-warlord": -0.018114594794556644,
+      "tusk": 0.053219728169516034,
+      "underlord": 0.09733931637932368,
+      "undying": -0.07088195518119565,
+      "ursa": 0.07845268557493812,
+      "vengeful-spirit": 0.22457065195651757,
+      "venomancer": -0.06496958377588917,
+      "viper": 0.022667537936470968,
+      "visage": -0.04548612347054153,
+      "void-spirit": 0.06248612043478537,
+      "warlock": 0.046239069686172696,
+      "weaver": -0.019034913515380055,
+      "windranger": 0.20969897563487533,
+      "winter-wyvern": -0.022048325034720928,
+      "witch-doctor": -0.032379924807259805,
+      "wraith-king": 0.07284921221609843,
+      "zeus": 0.07472638609642422
+    },
+    "intercept_log_odds": 0.04858559432632899,
+    "probability_method": "raw_logistic",
+    "radiant_hero_log_odds": {
+      "abaddon": 0.04325769313630308,
+      "alchemist": 0.12674687662625347,
+      "ancient-apparition": 0.07596246346060659,
+      "anti-mage": 0.08740294890353699,
+      "arc-warden": -0.023376117408860617,
+      "axe": -0.09475104144934933,
+      "bane": 0.07969239341811718,
+      "batrider": 0.046039696338727065,
+      "beastmaster": 0.05325343571874699,
+      "bloodseeker": -0.015857406220000633,
+      "bounty-hunter": 0.11355866017543137,
+      "brewmaster": 0.006642563313972751,
+      "bristleback": 0.08656626229526614,
+      "broodmother": 0.08628351563934439,
+      "centaur-warrunner": 0.04430811051365286,
+      "chaos-knight": 0.017366211016767778,
+      "chen": 0.207637510435905,
+      "clinkz": 0.04037676879999672,
+      "clockwerk": 0.0133575826074329,
+      "crystal-maiden": 0.06288968853541502,
+      "dark-seer": 0.04412007024381179,
+      "dark-willow": -0.011320710230525216,
+      "dawnbreaker": -0.17347249866829426,
+      "dazzle": -0.04981785618429914,
+      "death-prophet": -0.15194949102571015,
+      "disruptor": 0.0850550711898542,
+      "doom": 0.012034118659552336,
+      "dragon-knight": -0.030600475190102595,
+      "drow-ranger": -0.15023758271748214,
+      "earth-spirit": -0.06261274564197597,
+      "earthshaker": -0.024771116058122204,
+      "elder-titan": 0.09302328221947202,
+      "ember-spirit": -0.04633691825343659,
+      "enchantress": 0.09174535769505059,
+      "enigma": 0.1759462235525789,
+      "faceless-void": 0.09803055535522086,
+      "grimstroke": -0.08276768875357833,
+      "gyrocopter": -0.012765875606422096,
+      "hoodwink": -0.18003686964994184,
+      "huskar": 0.02946829231779151,
+      "invoker": 0.01467346532518572,
+      "io": 0.05902113098620017,
+      "jakiro": -0.06683530423352499,
+      "juggernaut": -0.0878892008675433,
+      "keeper-of-the-light": -0.02067797726464419,
+      "kunkka": -0.015620208481085024,
+      "legion-commander": -0.038993412774057,
+      "leshrac": 0.06735999397420936,
+      "lich": -0.12604787071819715,
+      "lifestealer": 0.01676117035044792,
+      "lina": -0.04111643867741473,
+      "lion": -0.07053690326125078,
+      "lone-druid": 0.07375003637096093,
+      "luna": 0.04101666834837554,
+      "lycan": 0.08729714675823927,
+      "magnus": 0.1050154512091157,
+      "marci": -0.0945795079362889,
+      "mars": -0.12459933357567482,
+      "medusa": -0.028062427011857613,
+      "meepo": 0.08881916438661594,
+      "mirana": 0.03745330963613812,
+      "monkey-king": 0.15125579831873498,
+      "morphling": -0.031805500959149344,
+      "muerta": -0.007425781118455803,
+      "naga-siren": 0.2159207722063898,
+      "nature-s-prophet": 0.0597621541778271,
+      "necrophos": -0.05755197647492725,
+      "night-stalker": -0.026880841239488192,
+      "nyx-assassin": 0.0968570995771671,
+      "ogre-magi": 0.008108733802659404,
+      "omniknight": 0.030483357428835702,
+      "oracle": 0.0018872614922076556,
+      "outworld-destroyer": -0.04384209934073045,
+      "pangolier": 0.039148291538781146,
+      "phantom-assassin": 0.004436880681127773,
+      "phantom-lancer": -0.0655337692900863,
+      "phoenix": -0.10400255891181578,
+      "primal-beast": 0.029369731078375243,
+      "puck": 0.02129494529682722,
+      "pudge": 0.029356279145190123,
+      "pugna": 0.047763446044167754,
+      "queen-of-pain": -0.04681867526123907,
+      "razor": -0.05131825779981488,
+      "riki": 0.042766586943751246,
+      "ringmaster": 0.06467568595258914,
+      "rubick": -0.10976337668906365,
+      "sand-king": -0.001000368767263823,
+      "shadow-demon": 0.02974692810017892,
+      "shadow-fiend": 0.038165457213981034,
+      "shadow-shaman": 0.012215599151889094,
+      "silencer": -0.11275273622853053,
+      "skywrath-mage": -0.03831333198894721,
+      "slardar": 0.0040528016437040605,
+      "slark": -0.029991804582388024,
+      "snapfire": -0.12638871186929476,
+      "sniper": -0.041009147356988344,
+      "spectre": -0.031305572281551626,
+      "spirit-breaker": -0.1115061330165736,
+      "storm-spirit": 0.07136581618619789,
+      "sven": 0.0013238550518277624,
+      "techies": -0.02252294494718987,
+      "templar-assassin": 0.10122259618329933,
+      "terrorblade": 0.051059217565884496,
+      "tidehunter": -0.03484203315345349,
+      "timbersaw": -0.006794336314997589,
+      "tinker": -0.08349231026645888,
+      "tiny": -0.12034309960062173,
+      "treant-protector": 0.07895072180387286,
+      "troll-warlord": -0.01486178928391517,
+      "tusk": -0.0903163189063218,
+      "underlord": 0.0038275581230631196,
+      "undying": -0.05957816919606688,
+      "ursa": 0.01888481311643509,
+      "vengeful-spirit": 0.03368001506717473,
+      "venomancer": -0.019528762798131434,
+      "viper": 0.06334800242480841,
+      "visage": 0.09521347719298262,
+      "void-spirit": -0.052055408755541044,
+      "warlock": 0.04885153499952686,
+      "weaver": -0.03968646978515833,
+      "windranger": -0.021789063478565292,
+      "winter-wyvern": -0.07966540654348767,
+      "witch-doctor": -0.021847208025664464,
+      "wraith-king": -0.023196564130438427,
+      "zeus": -0.11063682917255199
+    }
+  },
+  "schema_version": "draft-ai-inference-snapshot-v1",
+  "source": {
+    "candidate_fingerprint": "cc74f23fbd16e6ff6f5a3e2598cd9d326b78abee860bfceeb569154c0c77837e",
+    "candidate_id": "b1_full_uniform_c0p01",
+    "experiment_build_fingerprint": "3f768bb13f0b447bcf6704086f00c28f4652a21e467089d3549060ad3ab64a5c",
+    "fit_cutoff_utc_exclusive": "2025-10-01T00:00:00Z",
+    "fit_rows": 20087,
+    "hero_catalog_sha256": "273cc7fc94fd3e6ade0a7393d6183404699a5eae31ac09a6f884e4df66d4d709",
+    "source_bundle_fingerprint": "d89104b0688a68b0c708b2719d616786d752d0880f8e9662384f9769c38aadb6",
+    "source_bundle_manifest_sha256": "043646136f4034b62cf08679ce15c406e6c4c132a7d6c64afc248599785991f4",
+    "source_experiment_manifest_sha256": "5a968b5d0d1b9e09e3ba31d16c09454078f4b2ec0d7ba99fa4d9a8018de9cd15",
+    "source_feature_fingerprint": "f651eb86302489110e9af72ea03ef3ffdc790f13b73531a893d3a7bdd4d5401a",
+    "source_split_fingerprint": "dcb1227db92e585d3faab3a435a02aac2e9cb81da44d79bbcf3d7c353cc06fd1"
+  },
+  "status": "development_candidate"
+}
