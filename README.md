@@ -1,177 +1,198 @@
 # Dota 2 Draft AI
 
-A production-oriented Applied AI portfolio project built from the official
-Liquipedia API.
+An end-to-end Applied AI portfolio product built from professional Dota 2
+matches obtained through the official Liquipedia API.
 
-The flagship product is an interactive Draft Assistant that will estimate
-Radiant win probability from validated pregame draft information, recommend
-legal candidate heroes, and explain the evidence behind its output. The final
-deliverable is a deployed web application, not only a dataset or model.
+Draft Lab lets a user assemble a completed 5v5 draft, inspect the model's
+Radiant and Dire win-probability estimates, trace every hero's exact additive
+contribution, and compare one user-selected hero replacement. The current
+model is published as an **experimental development candidate**, with its
+failed readiness result shown directly in the product.
 
-## Product architecture
+![Draft Lab product preview](site/public/og.png)
 
-```text
-Official Liquipedia API
-  -> immutable acquisition and provenance
-  -> normalized and versioned datasets
-  -> canonical supervised training dataset
-  -> drift-aware probability modeling
-  -> recommendation and explanation engine
-  -> inference API
-  -> interactive web application
+## Try the product
+
+| Experience | Location |
+| --- | --- |
+| Public Draft Lab | **Pending M6 deployment — URL will be recorded after verification** |
+| Local application | `python scripts/run_draft_assistant.py` |
+| Local OpenAPI documentation | `http://127.0.0.1:8000/docs` |
+
+The one-click **Try example draft** control produces a real response from the
+same inference service used for manually assembled drafts. It is not a mocked
+demo and requires no API credential, training dataset, or live Liquipedia
+connection.
+
+## What the product does
+
+- Validates exactly five unique supported Radiant picks and five unique
+  supported Dire picks.
+- Returns complementary Radiant and Dire model-estimated probabilities.
+- Explains the result with all ten exact signed hero log-odds contributions.
+- Compares an original completed draft with one completed draft after the user
+  chooses both the outgoing and incoming hero.
+- Publishes the model cutoff, lineage, failed 2025-Q4 readiness gate, and
+  unevaluated 2026-Q1 locked-test status before the result is trusted.
+
+Draft Assistant v1 does **not** rank heroes, recommend a next pick, analyze
+partial drafts, or claim causal effects. It does not model bans, draft order,
+first pick, roles, lanes, synergy, counters, patch, team, player, or tournament
+context. These are frozen product boundaries, not hidden future capabilities.
+
+## Product walkthrough
+
+1. Select **Try example draft**, or choose ten heroes manually.
+2. Select **Analyze completed draft** to see the probability, exact
+   contributions, model evidence, and limitations.
+3. In **What-if replacement**, choose one selected hero and one unselected
+   supported hero. Draft Lab runs the same analyzer on both completed drafts
+   and reports the change in model output.
+
+The replacement result is explicitly marked
+`associative_model_comparison_not_causal` and `recommendation: false`.
+
+## As-built architecture
+
+```mermaid
+flowchart LR
+    LP["Official Liquipedia API"] -->|"guarded offline acquisition"| RAW["Immutable local responses<br/>request ledger + provenance"]
+    RAW --> NORM["Typed parsing and normalization<br/>versioned relational Parquet"]
+    NORM --> SUP["Canonical supervised dataset<br/>dota-draft-supervised-v1"]
+    SUP --> EXP["Closed temporal modeling experiments<br/>leakage-safe evaluation"]
+    EXP --> SNAP["Reviewed JSON inference snapshot<br/>coefficients + lineage + model evidence"]
+    SNAP --> SERVICE["Framework-independent<br/>DraftAssistantService"]
+    SERVICE --> API["Canonical FastAPI adapter<br/>local + contract reference"]
+    API --> PARITY["Cross-runtime golden parity tests"]
+    SNAP --> WORKER["Deployment Worker<br/>same frozen contracts"]
+    PARITY --> WORKER
+    WORKER --> WEB["Interactive Draft Lab"]
 ```
 
-The API is an offline data source. The future browser application will never
-receive the API credential or call Liquipedia directly.
+The runtime boundary begins at the tracked JSON snapshot. The deployed product
+does not read the Liquipedia credential, call Liquipedia, load authenticated
+responses, access ignored training data, or deserialize an executable model
+binary.
 
-## Current status
+## Evidence, not just a demo
 
-| Stage | Status | Result |
-| --- | --- | --- |
-| Gate 0: repository consolidation | Complete | The official pipeline is canonical; the earlier Kaggle experiment is preserved under `archive/` and removed from active execution paths. |
-| Milestone 1: product and data contract | Complete | Official fields, payload shapes, edge cases, and unavailable semantics were validated with bounded requests. |
-| Milestone 2: deterministic data pipeline | Complete | Immutable JSON is parsed into typed objects, normalized, and exported to versioned Parquet datasets. |
-| Milestone 3: historical acquisition pilot | Complete | Rate-safe acquisition, caching, checkpoints, deduplication, lineage, coverage, and the supervised contract were proven. |
-| Milestone 3.5: bounded historical expansion | Provisional publication complete | The verified contiguous prefix covers 2022-Q1 through 2024-Q1 and contains 9,700 eligible games. |
-| Milestone 3.6: dataset completion | Next | Resume the existing campaign through the fixed 2026-07-27 boundary. |
-| Milestone 4+: model and product | Planned | Modeling, recommendations, serving, frontend, and deployment have not been implemented. |
+The working corpus contains **23,123 eligible professional games** grouped into
+**11,664 matches**, with contiguous validated coverage from 2022-Q1 through
+2026-Q1. The frozen model was fit on 20,087 games before
+`2025-10-01T00:00:00Z`.
 
-The current release is deliberately **provisional**, not the final training
-corpus:
+The candidate did not beat the empirical-prior reference on the 2025-Q4
+readiness period:
 
-```text
-m3.5-tier1-tier2-2022q1-2024q1-provisional-v1
-  -> release a485f713ffaf94f784ea1c770478be5c172d60285eb8369e294d34d9d447e7da
-  -> normalized 6f44f771e75eabffb393f2a3a2bbe27097d4c882d38fbfd10b476fa66dfcae1f
-  -> supervised c1ea1d31968eb4c9c6fc4cd8dd7812ca2189694ca94ace48b1aae676e146acd9
-```
+| 2025-Q4 metric | Draft candidate | Empirical prior | Better |
+| --- | ---: | ---: | --- |
+| Log loss | 0.69825 | 0.69311 | Empirical prior |
+| Brier score | 0.25245 | 0.24998 | Empirical prior |
 
-It contains 4,977 accepted matches, 10,014 normalized games, 9,700 eligible
-supervised games, and 314 explicit exclusions. Milestone 3.6 will complete the
-approved historical window before final model selection.
+Lower is better for both metrics. The candidate was therefore not promoted and
+the sealed 2026-Q1 evaluation was not opened. The portfolio deployment is a
+transparent engineering demonstration, not a production-quality forecasting,
+betting, coaching, or recommendation service.
 
-## Canonical packages
+## Why this is an Applied AI engineering project
 
-| Path | Responsibility |
-| --- | --- |
-| `src/liquipedia_pipeline/` | Immutable loading, typed parsing, deterministic normalization, relational tables, quality observations, and Parquet export. |
-| `src/liquipedia_backfill/` | Request planning, guarded API access, immutable cache, SQLite ledger, checkpoints, deduplication, campaign coordination, coverage, and publication. |
-| `src/draft_training_dataset/` | Independent `dota-draft-supervised-v1` schema and builder using normalized Parquet only. |
+- **Official-data integration:** guarded, rate-safe acquisition with immutable
+  caching, checkpoints, request accounting, and no HTML scraping.
+- **Reproducible data contracts:** raw responses, typed normalization,
+  versioned Parquet, a canonical supervised schema, fingerprints, and lineage.
+- **Leakage-aware modeling:** grouped temporal evaluation, train-only feature
+  fitting, locked periods, fixed readiness gates, and documented negative
+  results.
+- **Faithful inference:** the product snapshot reproduces the selected
+  estimator with deterministic prediction identities and exact explanation
+  reconstruction.
+- **Product delivery:** strict Pydantic contracts, framework-independent
+  service logic, FastAPI reference endpoints, a parity-tested deployment
+  adapter, an accessible browser workflow, offline tests, and repository
+  hygiene safeguards.
 
-These packages are separate architectural layers, not competing
-implementations. `dota-draft-supervised-v1` is the canonical boundary between
-data engineering and future model-specific features.
+## Run locally
 
-## Canonical entry points
-
-### Offline commands
-
-| Command | Purpose |
-| --- | --- |
-| `scripts/build_liquipedia_dataset.py` | Build normalized Parquet from saved immutable responses. |
-| `scripts/build_draft_training_dataset.py` | Build the canonical supervised release from normalized Parquet. |
-| `scripts/plan_liquipedia_history_campaign.py` | Produce and verify credential-free campaign plans and reports. |
-| `scripts/publish_historical_dataset.py` | Verify and publish a content-addressed historical release. |
-| `scripts/check_repository_hygiene.py` | Reject tracked credentials, raw state, caches, generated builds, and high-confidence secret signatures. |
-
-### Guarded authenticated commands
-
-| Command | Purpose |
-| --- | --- |
-| `scripts/discover_liquipedia_samples.py` | Bounded representative-sample discovery. |
-| `scripts/validate_liquipedia_api.py` | Bounded exact-ID field validation. |
-| `scripts/backfill_liquipedia_history.py` | Planned, budget-confirmed historical acquisition and offline finalization. |
-
-Authenticated commands require explicit execution flags and local credentials.
-They are never run by tests or CI.
-
-## Quick start
-
-Python 3.12 is the validated local and CI runtime.
+Python 3.12 is the validated runtime.
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python scripts/check_repository_hygiene.py
-python -m pytest -q
+python scripts/run_draft_assistant.py
 ```
 
-Build a normalized dataset from a previously saved response:
+Open `http://127.0.0.1:8000`.
+
+Run the complete active offline validation suite:
 
 ```bash
-python scripts/build_liquipedia_dataset.py \
-  --input data/validation/liquipedia/runs/<run-id>/response.json
+env LIQUIPEDIA_API_KEY= NO_NETWORK_TESTS=1 python -m pytest -q
+python -m compileall -q src scripts tests
+python -m pip check
+python scripts/check_repository_hygiene.py
+node --check src/draft_ai_assistant/web/app.js
+cd site
+npm ci
+npm test
 ```
 
-The build command is offline: it neither reads the API key nor makes a
-request.
+Tests block outbound sockets and DNS resolution. They neither require nor read
+Liquipedia credentials.
 
-## Data and credential policy
+## Repository map
 
-- `.secrets/`, `.env*`, authenticated responses, raw caches, SQLite state,
-  checkpoints, normalized builds, supervised builds, and model artifacts are
-  ignored.
-- The Liquipedia key remains only in
-  `.secrets/liquipedia_api_key`, outside Git.
-- Credential-free campaign plans, fingerprints, release manifests, aliases,
-  and compact coverage evidence are versioned.
-- Saved API responses are immutable inputs. Parser and normalizer stages never
-  rewrite them.
-- Missing fields remain missing; first pick and global draft order are never
-  inferred.
+| Path | Responsibility |
+| --- | --- |
+| `src/liquipedia_pipeline/` | Typed parsing, deterministic normalization, quality observations, and Parquet export |
+| `src/liquipedia_backfill/` | Request planning, guarded acquisition, cache, checkpoints, ledger, deduplication, coverage, and publication |
+| `src/draft_training_dataset/` | Independent canonical supervised-dataset contract and builder |
+| `src/draft_ai_modeling/` | Temporal splits, feature transforms, fixed experiments, evaluation gates, and artifact lineage |
+| `src/draft_ai_assistant/` | Frozen product contracts, JSON snapshot, inference service, FastAPI adapter, and Draft Lab |
+| `site/` | Public portfolio deployment package |
+| `tests/` | Active offline contract, lineage, service, API, frontend, and no-network tests |
+| `archive/kaggle_baseline/` | Preserved historical experiment; excluded from the official pipeline and active CI |
 
-See [`data/README.md`](data/README.md) for the exact public/local boundary.
+## Data and security boundary
 
-## Offline validation
+The repository versions credential-free request plans, fingerprints, compact
+coverage summaries, schemas, source code, tests, and the reviewed 22 KB
+inference snapshot. API keys, authenticated responses, raw caches, SQLite
+state, checkpoints, generated datasets, model binaries, and local environments
+remain ignored.
 
-The root test suite contains only the active official pipeline. An autouse
-pytest policy blocks DNS resolution and outbound sockets, including future
-tests accidentally attempting network access. CI runs:
+See [Data Boundaries](data/README.md) for the exact public/local split and the
+[validated field contract](docs/MILESTONE_1_LIQUIPEDIA_FIELD_CONTRACT.md) for
+which official draft fields are available and unavailable.
 
-1. dependency consistency;
-2. Python compilation;
-3. repository and credential hygiene;
-4. the complete offline test suite.
+## Release roadmap
 
-A formatter or linter is not yet configured. Gate 0 intentionally did not add
-an unreviewed style tool merely to create another CI dependency.
+| Milestone | Status | Outcome |
+| --- | --- | --- |
+| M5.3 — Product Contract Freeze | **Complete** | Completed-draft probability, exact explanations, and user-directed replacement comparison are the frozen v1 scope. |
+| M6 — Production Release and Deployment | **In progress** | Deploy and verify the frozen experimental product without changing its model or claims. |
+| M7 — Portfolio Release and Final Acceptance | **Pending M6** | Publish the reviewed release identity, live walkthrough, acceptance evidence, and final repository narrative. |
 
-## Historical Kaggle baseline
+Modeling research is closed. A context-sensitive recommendation engine is
+optional, outside v1, and will not be added without explicit approval.
 
-The original Kaggle-based experiment is preserved under
-[`archive/kaggle_baseline/`](archive/kaggle_baseline/README.md). It remains
-useful project history, but it is deprecated, excluded from root CI, and must
-not be used by the official Draft AI pipeline.
+## Selected documentation
 
-## Product roadmap
-
-1. **Milestone 3.6 — Dataset completion:** finish the fixed official campaign
-   through 2026-07-27 and publish a non-provisional release.
-2. **Milestone 4 — Draft probability modeling:** compare chronological,
-   patch-aware, and recency-aware policies; calibrate and qualify the model on
-   recent professional matches.
-3. **Milestone 5 — Recommendation and explanations:** score legal candidates
-   for a user-declared side-relative draft state without inventing global draft
-   order.
-4. **Milestone 6 — Inference API:** expose versioned prediction,
-   recommendation, hero, model, and health contracts.
-5. **Milestone 7 — Interactive application:** build the draft board,
-   probability display, recommendation explorer, evidence panels, and
-   uncertainty warnings.
-6. **Milestone 8 — Deployment:** containerize, deploy, observe, document, and
-   demonstrate the complete product.
-
-## Documentation
-
+- [Product contract freeze](docs/milestones/MILESTONE_5_3_PRODUCT_CONTRACT_FREEZE.md)
+- [Draft Assistant vertical slice](docs/milestones/MILESTONE_5_DRAFT_ASSISTANT_VERTICAL_SLICE.md)
+- [Completed-draft replacement explorer](docs/milestones/MILESTONE_5_2_COMPLETED_DRAFT_REPLACEMENT_EXPLORER.md)
+- [Modeling infrastructure](docs/milestones/MILESTONE_4A_MODELING_INFRASTRUCTURE.md)
+- [Historical data publication](docs/milestones/MILESTONE_3_5_BOUNDED_HISTORICAL_DATASET_PUBLICATION.md)
 - [Product and data architecture](docs/MILESTONE_1_PRODUCT_DATA_ARCHITECTURE.md)
-- [Validated Liquipedia field contract](docs/MILESTONE_1_LIQUIPEDIA_FIELD_CONTRACT.md)
-- [Milestone 2 data pipeline](docs/MILESTONE_2_DATA_PIPELINE.md)
-- [Milestone 3 historical backfill](docs/MILESTONE_3_HISTORICAL_BACKFILL.md)
-- [Milestone 3.5 design](docs/MILESTONE_3_5_HISTORICAL_EXPANSION_DESIGN.md)
-- [Milestone 3.5 bounded publication](docs/milestones/MILESTONE_3_5_BOUNDED_HISTORICAL_DATASET_PUBLICATION.md)
-- [Milestone 4 modeling plan](docs/MILESTONE_4_DRAFT_AI_MODELING_PLAN.md)
-- [Gate 0 consolidation report](docs/milestones/GATE_0_REPOSITORY_CONSOLIDATION.md)
+- [M6 production deployment record](docs/milestones/MILESTONE_6_PRODUCTION_DEPLOYMENT.md)
+- [M7 portfolio release record](docs/milestones/MILESTONE_7_PORTFOLIO_RELEASE.md)
 
-Every completed milestone or sub-milestone receives a Markdown report under
-`docs/milestones/`.
+Historical milestone reports preserve the decision context that existed when
+they were written. This README and the M5.3 contract define the active product
+scope.
+
+## License
+
+No open-source license is currently granted. Unless a later license file states
+otherwise, all rights are reserved by the repository owner. Public visibility
+does not grant permission to copy, modify, or redistribute this work.

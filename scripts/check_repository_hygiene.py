@@ -22,10 +22,16 @@ FORBIDDEN_PREFIXES = (
     "data/validation/liquipedia/discovery/",
     "data/validation/liquipedia/runs/",
     "models/",
+    "site/.next/",
+    "site/.vinext/",
+    "site/.wrangler/",
+    "site/dist/",
+    "site/node_modules/",
 )
 FORBIDDEN_PARTS = (
     "/__pycache__/",
     "/.pytest_cache/",
+    "/node_modules/",
 )
 FORBIDDEN_SUFFIXES = (
     ".key",
@@ -60,6 +66,11 @@ IGNORE_PROBES = (
     "data/training/dota_draft_supervised/build_example/manifest.json",
     "data/validation/liquipedia/runs/example/response.json",
     "models/example.pkl",
+    "site/.next/server/app.js",
+    "site/.vinext/cache/example",
+    "site/.wrangler/state/example",
+    "site/dist/server/index.js",
+    "site/node_modules/example/package.json",
 )
 
 

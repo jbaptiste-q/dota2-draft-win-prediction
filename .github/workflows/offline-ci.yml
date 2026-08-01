@@ -40,3 +40,47 @@ jobs:
 
       - name: Run offline test suite
         run: python -m pytest -q
+
+  deployment-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      LIQUIPEDIA_API_KEY: ""
+      NO_NETWORK_TESTS: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.13.0"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install Python contract dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Install deployment dependencies
+        working-directory: site
+        run: npm ci
+
+      - name: Verify deployment contract
+        working-directory: site
+        run: npm test
+
+      - name: Type-check deployment adapter
+        working-directory: site
+        run: npm run typecheck
+
+      - name: Lint deployment adapter
+        working-directory: site
+        run: npm run lint
