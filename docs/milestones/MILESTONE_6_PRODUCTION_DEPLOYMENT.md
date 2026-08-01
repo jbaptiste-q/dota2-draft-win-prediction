@@ -1,6 +1,6 @@
 # Milestone 6: Production Release and Deployment
 
-Status: **in progress — deployment evidence pending**
+Status: **complete — public deployment verified**
 
 Milestone 6 packages and deploys the frozen Draft Assistant v1 contract. It
 does not change the model, reopen evaluation, add recommendations, acquire
@@ -41,20 +41,22 @@ state. They must not be inferred from local plans.
 
 | Field | Verified value |
 | --- | --- |
-| Public Draft Lab URL | **Pending successful production deployment** |
-| Deployment provider | **Pending observed deployment record** |
-| Deployment/project ID | **Pending observed deployment record** |
-| Deployment version ID | **Pending observed deployment record** |
-| Source commit SHA | **Pending reviewed release commit** |
-| Source branch | **Pending reviewed release commit** |
-| Deployment timestamp | **Pending successful production deployment** |
-| Product release version | **Pending M7 release decision** |
+| Public Draft Lab URL | `https://dota2-draft-ai.qinxuwwi.chatgpt.site/` |
+| Deployment provider | OpenAI Sites, Cloudflare Worker runtime |
+| Deployment/project ID | `appgprj_6a6dcba596ec819185d607d19b7ea658` |
+| Deployment version | `1` |
+| Deployment version ID | `appgprj_6a6dcba596ec819185d607d19b7ea658~appgver_d7737cc3032081918da9c8522432aa5a` |
+| Deployment ID | `appgdep_6a6dcf52b1c48191a344a103630da56f` |
+| Source commit SHA | `831b0e2e60f44f7fc993665f72dc1c54a49ce913` |
+| Source branch | `codex/portfolio-v1-release` |
+| Deployment timestamp | `2026-08-01T10:54:58.465594+00:00` |
+| Product release version | `v1.0.0` prepared for M7 publication |
 | Inference snapshot SHA-256 | `bfb7fc8d907e77057cafaef8109a4aec8085915c9215f0dc43cc15ff61dc1a61` |
 | Inference artifact fingerprint | `69730a62f42cda234337e8cbf152fb50fcb7ae02faf38367955c267fbe714442` |
 
-The deployment URL, IDs, commit, and timestamp remain pending until the
-production result is inspected. A saved plan or local preview is not
-deployment evidence.
+The recorded Sites deployment reached terminal status `succeeded` with public
+access. The URL was then opened in the in-app browser and reported the expected
+`Draft Lab — Completed Draft Analysis` title.
 
 ## Deployment adapter
 
@@ -73,40 +75,43 @@ new product capability is introduced.
 
 | Check | Result |
 | --- | --- |
-| Production deployment reached a terminal successful state | **Pending** |
-| Public URL loads without authentication | **Pending** |
-| Root HTML and versioned static assets are served | **Pending** |
-| Health, hero catalog, and model-card routes return their frozen schemas | **Pending** |
-| Example completed-draft API request succeeds | **Pending** |
-| User-directed replacement API request succeeds | **Pending** |
-| Probability and contribution values match the reviewed local contract | **Pending** |
-| Failed readiness and sealed-test disclosures remain visible | **Pending** |
-| `recommendation: false` and non-causal replacement semantics remain visible | **Pending** |
-| Security headers preserve same-origin runtime access | **Pending** |
-| Product-specific 1200×630 social preview is served | **Pending** |
-| No Liquipedia credential is included in the deployment | **Pending** |
-| No authenticated payload, local database, or generated training data is included | **Pending** |
-| No runtime request is made to Liquipedia | **Pending** |
+| Production deployment reached a terminal successful state | **Passed** |
+| Public URL loads without authentication | **Passed — HTTP 200** |
+| Root HTML and versioned static assets are served | **Passed — HTML, CSS, JavaScript, and social image** |
+| Health, hero catalog, and model-card routes return their frozen schemas | **Passed — exact payload parity** |
+| Example completed-draft API request succeeds | **Passed — exact canonical response** |
+| User-directed replacement API request succeeds | **Passed — exact canonical response** |
+| Probability and contribution values match the reviewed local contract | **Passed** |
+| Failed readiness and sealed-test disclosures remain visible | **Passed** |
+| `recommendation: false` and non-causal replacement semantics remain visible | **Passed** |
+| Security headers preserve same-origin runtime access | **Passed — CSP, referrer, content-type, and framing policies** |
+| Product-specific 1200×630 social preview is served | **Passed** |
+| No Liquipedia credential is included in the deployment | **Passed** |
+| No authenticated payload, local database, or generated training data is included | **Passed** |
+| No runtime request is made to Liquipedia | **Passed** |
 
-Observed commands, response values, and deployment inspection results should
-be recorded when these checks run. Browser visual QA is not part of this
-release gate because it was not requested; the canonical frontend's existing
-offline accessibility and interaction assertions remain in force.
+The production smoke test compared all three GET JSON contracts, one completed
+draft analysis, one replacement comparison, and the stable unsupported-hero
+error with responses from the canonical local Python service. It observed 125
+supported heroes and all five published schema versions. Browser visual QA was
+not part of this release gate because it was not requested; the canonical
+frontend's existing offline accessibility and interaction assertions remain
+in force.
 
 ## Offline release validation
 
 | Check | Result |
 | --- | --- |
-| Complete active offline test suite | **Pending final observed run** |
-| Python compilation | **Pending final observed run** |
-| Dependency consistency | **Pending final observed run** |
-| Repository hygiene | **Pending final observed run** |
-| Credential-pattern review | **Pending final observed run** |
-| JavaScript or site build checks | **Pending final observed run** |
-| Working-tree whitespace validation | **Pending final observed run** |
-| Authenticated Liquipedia requests | **0 authorized for M6** |
-| Model training or optimization | **0 authorized for M6** |
-| Locked 2026-Q1 evaluation access | **0 authorized for M6** |
+| Complete active offline test suite | **410 passed; 16 known Joblib/NumPy deprecation warnings** |
+| Python compilation | **Passed** |
+| Dependency consistency | **Passed — no broken requirements** |
+| Repository hygiene | **Passed** |
+| Credential-pattern review | **Passed** |
+| JavaScript or site build checks | **10/10 parity tests passed; type-check and lint passed** |
+| Working-tree whitespace validation | **Passed** |
+| Authenticated Liquipedia requests | **0** |
+| Model training or optimization | **0** |
+| Locked 2026-Q1 evaluation access | **0** |
 
 Test counts and warnings must be copied from the final command output rather
 than carried forward from an earlier milestone.
@@ -132,9 +137,9 @@ browser or deployed-runtime dependency.
 
 | Item | Record |
 | --- | --- |
-| Deployment deviations | **Pending deployment; none recorded yet** |
-| Compatibility findings | **Pending deployment; none recorded yet** |
-| Non-blocking warnings | **Pending final validation** |
+| Deployment deviations | None from the frozen product contract |
+| Compatibility findings | The hosting runtime does not execute Python; the thin Worker is guarded by full golden-response parity |
+| Non-blocking warnings | 16 existing Joblib/NumPy deprecation warnings; one initial local production client connection timed out before the successful 60-second smoke run |
 | Known product limitations | Frozen in M5.3 and shown in the product |
 
 An implementation detail should be added here only if it affects

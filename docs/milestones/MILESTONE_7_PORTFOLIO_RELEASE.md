@@ -1,6 +1,6 @@
 # Milestone 7: Portfolio Release and Final Acceptance
 
-Status: **pending Milestone 6 acceptance**
+Status: **in progress — GitHub publication pending**
 
 Milestone 7 turns the verified deployment and repository into one finished,
 recruiter-readable Applied AI case study. It adds no product capability and
@@ -31,15 +31,16 @@ production-quality forecasting and does not rank or recommend heroes.
 
 | Artifact | Status |
 | --- | --- |
-| Recruiter-first repository README | **Prepared; deployment URL and release identity pending** |
+| Recruiter-first repository README | **Complete with verified live URL** |
 | Accurate as-built architecture diagram | **Prepared in README** |
 | Concise product walkthrough | **Prepared in README** |
-| Product preview image | **Pending verified `site/public/og.png` artifact** |
-| Public deployment record | **Pending M6 completion** |
-| Final acceptance evidence | **Pending M6 completion and final validation** |
-| Versioned source commit | **Pending reviewed commit** |
+| Product preview image | **Verified 1200×630 `site/public/og.png`** |
+| Public deployment record | **Complete in M6** |
+| Final acceptance evidence | **Complete except GitHub publication identity** |
+| Deployed source commit | `831b0e2e60f44f7fc993665f72dc1c54a49ce913` |
+| Portfolio release/evidence commit | **Pending reviewed GitHub publication commit** |
 | Git tag | **Pending reviewed release commit** |
-| GitHub release notes | **Pending reviewed release commit and tag** |
+| GitHub release notes | **Prepared at `docs/releases/v1.0.0.md`; publication pending** |
 
 Historical milestone reports remain chronological engineering records. The
 README, M5.3 contract, M6 deployment record, and this report define the final
@@ -51,11 +52,11 @@ Values in this table must come from the exact reviewed and deployed revision.
 
 | Field | Final value |
 | --- | --- |
-| Product version | **Pending release decision** |
+| Product version | `v1.0.0` |
 | Git tag | **Pending successful tag creation** |
 | Release commit SHA | **Pending reviewed release commit** |
-| Public Draft Lab URL | **Pending verified M6 deployment** |
-| Deployment version ID | **Pending verified M6 deployment** |
+| Public Draft Lab URL | `https://dota2-draft-ai.qinxuwwi.chatgpt.site/` |
+| Deployment version ID | `appgprj_6a6dcba596ec819185d607d19b7ea658~appgver_d7737cc3032081918da9c8522432aa5a` |
 | Release date | **Pending release publication** |
 | API version | `0.3.0` |
 | Analysis schema | `draft-assistant-analysis-v1` |
@@ -71,20 +72,20 @@ substitute for the product release tag.
 
 | Gate | Final result |
 | --- | --- |
-| M5.3 product contract remains unchanged | **Pending final diff review** |
-| Public deployment verified | **Pending M6 completion** |
-| Production root, assets, and frozen API routes verified | **Pending M6 completion** |
-| Example completed-draft API response verified | **Pending M6 completion** |
-| User-directed replacement API response verified | **Pending M6 completion** |
-| Product limitations and failed readiness evidence visible | **Pending M6 completion** |
-| Full offline suite | **Pending final observed result** |
-| Site build, golden parity, type, and lint checks | **Pending final observed result** |
-| Canonical frontend interaction and accessibility assertions | **Pending final observed result** |
-| Repository hygiene and credential checks | **Pending final observed result** |
-| Reviewed release diff contains no local-only data | **Pending final Git review** |
-| Authenticated Liquipedia requests during M5.3–M7 | **Pending final ledger statement; none authorized** |
-| Model fits or optimization during M5.3–M7 | **Pending final audit; none authorized** |
-| Locked 2026-Q1 access during M5.3–M7 | **Pending final audit; none authorized** |
+| M5.3 product contract remains unchanged | **Passed** |
+| Public deployment verified | **Passed** |
+| Production root, assets, and frozen API routes verified | **Passed** |
+| Example completed-draft API response verified | **Passed — exact Python parity** |
+| User-directed replacement API response verified | **Passed — exact Python parity** |
+| Product limitations and failed readiness evidence visible | **Passed** |
+| Full offline suite | **410 passed; 16 known deprecation warnings** |
+| Site build, golden parity, type, and lint checks | **Passed — 10/10 parity tests** |
+| Canonical frontend interaction and accessibility assertions | **Passed in active offline suite** |
+| Repository hygiene and credential checks | **Passed** |
+| Reviewed release diff contains no local-only data | **Passed** |
+| Authenticated Liquipedia requests during M5.3–M7 | **0** |
+| Model fits or optimization during M5.3–M7 | **0** |
+| Locked 2026-Q1 access during M5.3–M7 | **0** |
 
 Exact test counts, warnings, commands, and production observations belong here
 only after they have been run against the release candidate.

@@ -15,7 +15,7 @@ failed readiness result shown directly in the product.
 
 | Experience | Location |
 | --- | --- |
-| Public Draft Lab | **Pending M6 deployment — URL will be recorded after verification** |
+| Public Draft Lab | **[Open the live product](https://dota2-draft-ai.qinxuwwi.chatgpt.site/)** |
 | Local application | `python scripts/run_draft_assistant.py` |
 | Local OpenAPI documentation | `http://127.0.0.1:8000/docs` |
 
@@ -170,8 +170,8 @@ which official draft fields are available and unavailable.
 | Milestone | Status | Outcome |
 | --- | --- | --- |
 | M5.3 — Product Contract Freeze | **Complete** | Completed-draft probability, exact explanations, and user-directed replacement comparison are the frozen v1 scope. |
-| M6 — Production Release and Deployment | **In progress** | Deploy and verify the frozen experimental product without changing its model or claims. |
-| M7 — Portfolio Release and Final Acceptance | **Pending M6** | Publish the reviewed release identity, live walkthrough, acceptance evidence, and final repository narrative. |
+| M6 — Production Release and Deployment | **Complete** | The frozen experimental product is public and its static assets and five API contracts match the reviewed local service. |
+| M7 — Portfolio Release and Final Acceptance | **In progress** | The repository release is prepared; GitHub publication remains. |
 
 Modeling research is closed. A context-sensitive recommendation engine is
 optional, outside v1, and will not be added without explicit approval.
@@ -186,6 +186,7 @@ optional, outside v1, and will not be added without explicit approval.
 - [Product and data architecture](docs/MILESTONE_1_PRODUCT_DATA_ARCHITECTURE.md)
 - [M6 production deployment record](docs/milestones/MILESTONE_6_PRODUCTION_DEPLOYMENT.md)
 - [M7 portfolio release record](docs/milestones/MILESTONE_7_PORTFOLIO_RELEASE.md)
+- [v1.0.0 release notes](docs/releases/v1.0.0.md)
 
 Historical milestone reports preserve the decision context that existed when
 they were written. This README and the M5.3 contract define the active product
