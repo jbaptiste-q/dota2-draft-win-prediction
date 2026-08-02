@@ -66,6 +66,8 @@ interface ReplacementRequest extends AnalyzeRequest {
 
 const SNAPSHOT_SHA256 =
   "bfb7fc8d907e77057cafaef8109a4aec8085915c9215f0dc43cc15ff61dc1a61";
+const HERO_PORTRAIT_KEY_PATTERN = /^[a-z0-9-]+\.webp$/;
+const BRAND_ASSET_PATTERN = /^dota2-logo-symbol\.png$/;
 const SECURITY_HEADERS: Record<string, string> = {
   "content-security-policy":
     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; " +
@@ -232,13 +234,13 @@ function socialMetadata(origin: string): string {
   return [
     "    <!-- deployment-social-metadata -->",
     '    <meta property="og:type" content="website">',
-    '    <meta property="og:title" content="Draft Lab — Completed Draft Analysis">',
-    '    <meta property="og:description" content="Experimental, explainable completed-draft probability analysis for professional Dota 2.">',
+    '    <meta property="og:title" content="Dota 2 Draft Lab — Radiant vs Dire">',
+    '    <meta property="og:description" content="Build two completed Dota 2 lineups and reveal an explainable battle forecast.">',
     `    <meta property="og:url" content="${home}">`,
     `    <meta property="og:image" content="${image}">`,
     '    <meta name="twitter:card" content="summary_large_image">',
-    '    <meta name="twitter:title" content="Draft Lab — Completed Draft Analysis">',
-    '    <meta name="twitter:description" content="Experimental, explainable completed-draft probability analysis for professional Dota 2.">',
+    '    <meta name="twitter:title" content="Dota 2 Draft Lab — Radiant vs Dire">',
+    '    <meta name="twitter:description" content="Build two completed Dota 2 lineups and reveal an explainable battle forecast.">',
     `    <meta name="twitter:image" content="${image}">`,
   ].join("\n");
 }
@@ -253,6 +255,7 @@ function renderHtml(origin: string): string {
 async function assetResponse(
   request: Request,
   env: Env,
+  contentType = "image/png",
 ): Promise<Response> {
   if (!env.ASSETS) {
     return jsonResponse(
@@ -274,12 +277,18 @@ async function assetResponse(
     headers.set(key, value);
   }
   headers.set("cache-control", "public, max-age=86400");
-  headers.set("content-type", "image/png");
+  headers.set("content-type", contentType);
   return new Response(asset.body, {
     status: asset.status,
     statusText: asset.statusText,
     headers,
   });
+}
+
+function remapAssetRequest(request: Request, pathname: string): Request {
+  const assetUrl = new URL(request.url);
+  assetUrl.pathname = pathname;
+  return new Request(assetUrl.toString(), request);
 }
 
 function jsonResponse(body: unknown, status = 200): Response {
@@ -736,7 +745,40 @@ const worker = {
     if (request.method === "GET" && url.pathname === "/og.png") {
       return assetResponse(request, env);
     }
-
+    if (
+      request.method === "GET" &&
+      url.pathname.startsWith("/static/heroes/")
+    ) {
+      const file = url.pathname.slice("/static/heroes/".length);
+      if (!HERO_PORTRAIT_KEY_PATTERN.test(file)) {
+        return jsonResponse(
+          { detail: { code: "not_found", message: "Route not found." } },
+          404,
+        );
+      }
+      return assetResponse(
+        remapAssetRequest(request, `/heroes/${file}`),
+        env,
+        "image/webp",
+      );
+    }
+    if (
+      request.method === "GET" &&
+      url.pathname.startsWith("/static/brand/")
+    ) {
+      const file = url.pathname.slice("/static/brand/".length);
+      if (!BRAND_ASSET_PATTERN.test(file)) {
+        return jsonResponse(
+          { detail: { code: "not_found", message: "Route not found." } },
+          404,
+        );
+      }
+      return assetResponse(
+        remapAssetRequest(request, `/brand/${file}`),
+        env,
+        "image/png",
+      );
+    }
     let snapshot: Snapshot;
     try {
       snapshot = await loadVerifiedSnapshot();

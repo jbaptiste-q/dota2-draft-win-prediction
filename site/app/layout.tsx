@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Draft Lab — Completed Draft Analysis",
+  title: "Dota 2 Draft Lab — Radiant vs Dire",
   description:
-    "Experimental, explainable completed-draft probability analysis for professional Dota 2.",
+    "Build two completed Dota 2 lineups and reveal an explainable battle forecast.",
 };
 
 export default function RootLayout({

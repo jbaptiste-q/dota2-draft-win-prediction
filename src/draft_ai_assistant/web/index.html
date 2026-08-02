@@ -5,130 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="Draft Lab analyzes completed professional Dota 2 drafts with an experimental, explainable development model."
+      content="Draft Lab is a premium Dota 2 companion for completed-draft win probability and hero-level explanations."
     >
-    <title>Draft Lab — Completed Draft Analysis</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <script src="/static/app.js" defer></script>
+    <title>Draft Lab — Dota 2 Draft Assistant</title>
+    <link
+      rel="stylesheet"
+      href="/static/styles.css?v=20260802-dota-stage-4"
+    >
+    <script src="/static/app.js?v=20260802-dota-stage-4" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#draft-workspace">Skip to draft builder</a>
 
     <div class="site-shell">
       <header class="site-header">
-        <a class="brand" href="/" aria-label="Draft Lab home">
-          <span class="brand-mark" aria-hidden="true">
-            <span></span>
-            <span></span>
+        <a class="brand" href="/" aria-label="Dota 2 Draft Lab home">
+          <span class="brand-relic" aria-hidden="true">
+            <span class="brand-relic-corners"></span>
+            <span class="brand-relic-stone">
+              <img
+                src="/static/brand/dota2-logo-symbol.png"
+                alt=""
+                width="64"
+                height="60"
+              >
+            </span>
           </span>
           <span class="brand-copy">
-            <strong>Draft Lab</strong>
-            <small>Dota 2 Draft AI</small>
+            <strong>Dota 2</strong>
+            <small>Draft Lab companion</small>
           </span>
         </a>
 
-        <div class="header-status" aria-label="Model status">
-          <span class="status-dot" aria-hidden="true"></span>
-          Experimental development candidate
+        <div class="badge badge--warning" aria-label="Model status">
+          <span class="badge-dot" aria-hidden="true"></span>
+          Experimental model
         </div>
       </header>
 
       <main>
         <section class="hero-section" aria-labelledby="page-title">
-          <div class="eyebrow">Completed-draft analyzer</div>
-          <h1 id="page-title">
-            Read the draft.
-            <span>Respect the uncertainty.</span>
-          </h1>
-          <p class="hero-copy">
-            Compare a complete five-versus-five professional draft using a
-            leakage-safe, side-relative model. Every result includes the exact
-            hero contributions behind its probability.
-          </p>
-
-          <div class="scope-strip" aria-label="Analysis scope">
-            <span>Picks only</span>
-            <span>Completed drafts</span>
-            <span>No hero recommendations</span>
-            <span>No live Liquipedia calls</span>
-          </div>
-
-          <div class="example-cta">
-            <button id="try-example" class="example-button" type="button" disabled>
-              <span>
-                <strong>Try example draft</strong>
-                <small>Fill both sides and run the analysis</small>
-              </span>
-              <span aria-hidden="true">→</span>
-            </button>
-            <p>
-              Fixed workflow example for demonstrating the interface.
-              <strong>It is not a hero recommendation.</strong>
-            </p>
-          </div>
-        </section>
-
-        <section
-          class="model-evidence-panel"
-          aria-labelledby="evidence-panel-title"
-          aria-describedby="model-card-status"
-        >
-          <div class="evidence-panel-heading">
-            <div>
-              <div class="section-kicker">Published model evidence</div>
-              <h2 id="evidence-panel-title">Why this result stays experimental</h2>
+          <div class="opening-hero opening-hero--radiant" aria-hidden="true">
+            <div class="opening-hero-frame">
+              <img
+                src="/static/heroes/anti-mage.webp"
+                alt=""
+                width="320"
+                height="320"
+              >
             </div>
-            <p id="model-card-status" class="model-card-status" aria-live="polite">
-              Loading evaluation evidence
-            </p>
+            <span>Anti-Mage</span>
           </div>
 
-          <div class="evidence-panel-body">
-            <div class="metric-comparison">
-              <div class="metric-context">
-                <strong>2025-Q4 calibration period</strong>
-                <span>Lower is better</span>
-              </div>
-              <table>
-                <caption class="visually-hidden">
-                  Development candidate and empirical-prior evaluation metrics
-                </caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Metric</th>
-                    <th scope="col">Candidate</th>
-                    <th scope="col">Empirical prior</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Log loss</th>
-                    <td id="evidence-candidate-log-loss">—</td>
-                    <td id="evidence-reference-log-loss">—</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Brier score</th>
-                    <td id="evidence-candidate-brier">—</td>
-                    <td id="evidence-reference-brier">—</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="hero-lockup">
+            <div class="eyebrow">Dota 2 · Completed-draft companion</div>
+            <h1 id="page-title">
+              <span class="title-radiant">Radiant</span>
+              <span class="title-versus">versus</span>
+              <span class="title-dire">Dire</span>
+            </h1>
+            <p class="hero-deck">Draft intelligence for the fight ahead.</p>
+            <p class="hero-copy">
+              Set both five-hero lineups to reveal an explainable
+              win-probability forecast and the contribution of every pick.
+            </p>
+
+            <div class="scope-strip" aria-label="Analysis scope">
+              <span>Completed drafts only · 5v5</span>
+              <span>Hero-level explanations</span>
+              <span>No hero recommendations</span>
             </div>
 
-            <dl class="evidence-facts">
-              <div>
-                <dt>Readiness gate</dt>
-                <dd id="evidence-gate">Loading</dd>
-              </div>
-              <div>
-                <dt>Locked 2026-Q1</dt>
-                <dd id="evidence-locked">Loading</dd>
-              </div>
-              <div>
-                <dt>Fit cutoff</dt>
-                <dd id="evidence-cutoff">Loading</dd>
-              </div>
-            </dl>
+            <div class="example-cta">
+              <button
+                id="try-example"
+                class="btn btn--secondary btn--lg"
+                type="button"
+                disabled
+              >
+                <span>
+                  <strong>Enter example battle</strong>
+                  <small>Load two fixed lineups and reveal the forecast</small>
+                </span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </button>
+              <p>
+                Fixed workflow example for demonstrating the interface.
+                <strong>It is not a hero recommendation.</strong>
+              </p>
+            </div>
+          </div>
+
+          <div class="opening-hero opening-hero--dire" aria-hidden="true">
+            <div class="opening-hero-frame">
+              <img
+                src="/static/heroes/invoker.webp"
+                alt=""
+                width="320"
+                height="320"
+              >
+            </div>
+            <span>Invoker</span>
           </div>
         </section>
 
@@ -139,14 +116,14 @@
         >
           <div class="workspace-heading">
             <div>
-              <div class="section-kicker">Draft input</div>
-              <h2 id="workspace-title">Build both lineups</h2>
+              <div class="section-kicker">Lineup builder</div>
+              <h2 id="workspace-title">The draft battlefield</h2>
             </div>
             <div class="draft-actions">
               <p id="draft-progress" class="draft-progress" aria-live="polite">
                 0 of 10 heroes selected
               </p>
-              <button id="reset-draft" class="text-button" type="button">
+              <button id="reset-draft" class="btn btn--text" type="button">
                 Reset draft
               </button>
             </div>
@@ -165,6 +142,25 @@
                 <span id="radiant-count" class="team-count">0 / 5</span>
               </div>
               <div
+                id="radiant-showcase"
+                class="faction-showcase is-preview"
+                aria-hidden="true"
+              >
+                <img
+                  id="radiant-featured-art"
+                  class="hero-art-img"
+                  src="/static/heroes/anti-mage.webp"
+                  alt=""
+                  width="480"
+                  height="280"
+                >
+                <span class="faction-showcase-grid"></span>
+                <span class="faction-showcase-copy">
+                  <small id="radiant-featured-kicker">Faction art preview</small>
+                  <strong id="radiant-featured-name">Anti-Mage</strong>
+                </span>
+              </div>
+              <div
                 id="radiant-slots"
                 class="pick-list"
                 aria-label="Radiant hero picks"
@@ -173,10 +169,27 @@
 
             <section class="analysis-console" aria-labelledby="analysis-title">
               <div class="console-topline">
-                <span class="console-index">Required input: 10 heroes</span>
+                <span class="console-index">Completed 5v5 only</span>
                 <span id="hero-data-status" class="data-status" aria-live="polite">
                   Loading hero catalog
                 </span>
+              </div>
+
+              <div
+                class="pick-tally"
+                role="img"
+                aria-label="0 of 10 heroes selected"
+              >
+                <span class="tally-dot" data-side="radiant"></span>
+                <span class="tally-dot" data-side="radiant"></span>
+                <span class="tally-dot" data-side="radiant"></span>
+                <span class="tally-dot" data-side="radiant"></span>
+                <span class="tally-dot" data-side="radiant"></span>
+                <span class="tally-dot" data-side="dire"></span>
+                <span class="tally-dot" data-side="dire"></span>
+                <span class="tally-dot" data-side="dire"></span>
+                <span class="tally-dot" data-side="dire"></span>
+                <span class="tally-dot" data-side="dire"></span>
               </div>
 
               <div class="versus-mark" aria-hidden="true">
@@ -185,8 +198,8 @@
                 <span>D</span>
               </div>
 
-              <h3 id="analysis-title">Completed picks in. Probability out.</h3>
-              <p>
+              <h3 id="analysis-title">Two lineups. One forecast.</h3>
+              <p class="console-note">
                 Pick order, bans, teams, patch, and first-pick status are not
                 model inputs. Draft slots are collected only to make each side
                 complete.
@@ -194,12 +207,12 @@
 
               <button
                 id="analyze-draft"
-                class="primary-button"
+                class="btn btn--battle btn--block"
                 type="button"
                 disabled
               >
-                <span>Analyze completed draft</span>
-                <span aria-hidden="true">→</span>
+                <span>Resolve the draft</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
               </button>
               <p id="analysis-error" class="error-message" role="alert"></p>
             </section>
@@ -211,6 +224,25 @@
                   <h3 id="dire-title">Dire picks</h3>
                 </div>
                 <span id="dire-count" class="team-count">0 / 5</span>
+              </div>
+              <div
+                id="dire-showcase"
+                class="faction-showcase is-preview"
+                aria-hidden="true"
+              >
+                <img
+                  id="dire-featured-art"
+                  class="hero-art-img"
+                  src="/static/heroes/invoker.webp"
+                  alt=""
+                  width="480"
+                  height="280"
+                >
+                <span class="faction-showcase-grid"></span>
+                <span class="faction-showcase-copy">
+                  <small id="dire-featured-kicker">Faction art preview</small>
+                  <strong id="dire-featured-name">Invoker</strong>
+                </span>
               </div>
               <div
                 id="dire-slots"
@@ -250,40 +282,75 @@
           <div id="result-content" hidden>
             <div class="result-header">
               <div>
-                <div class="section-kicker">Model result</div>
+                <div class="section-kicker">Draft outcome</div>
                 <h2 id="completed-result-title" tabindex="-1">
-                  Completed draft outlook
+                  Battle forecast
                 </h2>
               </div>
-              <span class="experimental-badge">
+              <span class="badge badge--warning">
                 Experimental · not readiness-approved
               </span>
             </div>
 
             <div class="result-grid">
-              <article class="probability-card">
-                <div class="probability-labels">
-                  <span>Radiant</span>
-                  <span>Dire</span>
+              <article class="probability-card" aria-labelledby="outcome-verdict">
+                <div class="outcome-hero outcome-hero--radiant" aria-hidden="true">
+                  <img
+                    id="outcome-radiant-art"
+                    class="hero-art-img"
+                    src="/static/heroes/axe.webp"
+                    alt=""
+                    width="320"
+                    height="420"
+                  >
+                  <span id="outcome-radiant-name">Radiant lineup</span>
                 </div>
-                <div
-                  id="probability-bar"
-                  class="probability-bar"
-                  role="img"
-                  aria-label="Radiant and Dire win probability"
-                >
-                  <span class="radiant-share"></span>
-                  <span class="probability-midpoint" aria-hidden="true"></span>
+
+                <div class="outcome-core">
+                  <div class="outcome-verdict">
+                    <span>Projected advantage</span>
+                    <strong id="outcome-verdict">Awaiting result</strong>
+                  </div>
+                  <div class="probability-labels">
+                    <span>Radiant</span>
+                    <span>Dire</span>
+                  </div>
+                  <div
+                    id="probability-bar"
+                    class="probability-bar"
+                    role="img"
+                    aria-label="Radiant and Dire win probability"
+                  >
+                    <span class="radiant-share"></span>
+                    <span
+                      class="probability-midpoint"
+                      aria-hidden="true"
+                    ></span>
+                  </div>
+                  <div class="probability-values">
+                    <strong id="radiant-probability">—</strong>
+                    <span>Estimated win probability</span>
+                    <strong id="dire-probability">—</strong>
+                  </div>
+                  <p class="probability-note">
+                    This is a raw development-model estimate, not a promise,
+                    betting signal, or readiness-approved forecast.
+                  </p>
                 </div>
-                <div class="probability-values">
-                  <strong id="radiant-probability">—</strong>
-                  <span>Estimated win probability</span>
-                  <strong id="dire-probability">—</strong>
+
+                <span class="outcome-clash" aria-hidden="true"></span>
+
+                <div class="outcome-hero outcome-hero--dire" aria-hidden="true">
+                  <img
+                    id="outcome-dire-art"
+                    class="hero-art-img"
+                    src="/static/heroes/doom.webp"
+                    alt=""
+                    width="320"
+                    height="420"
+                  >
+                  <span id="outcome-dire-name">Dire lineup</span>
                 </div>
-                <p class="probability-note">
-                  This is a raw development-model estimate, not a promise,
-                  betting signal, or readiness-approved forecast.
-                </p>
               </article>
 
               <article class="model-card" aria-labelledby="model-card-title">
@@ -292,7 +359,7 @@
                     <span class="card-index">Model evidence</span>
                     <h3 id="model-card-title">What produced this result</h3>
                   </div>
-                  <span id="model-status" class="model-status">Experimental</span>
+                  <span id="model-status" class="badge badge--warning badge--sm">Experimental</span>
                 </div>
                 <dl class="model-facts">
                   <div>
@@ -325,7 +392,7 @@
                   <span class="card-index">User-directed comparison</span>
                   <h3 id="replacement-title">What-if replacement</h3>
                 </div>
-                <span class="non-recommendation-badge">
+                <span class="badge badge--warning badge--sm">
                   Not a recommendation
                 </span>
               </div>
@@ -355,12 +422,12 @@
                 </label>
                 <button
                   id="compare-replacement"
-                  class="comparison-button"
+                  class="btn btn--quiet"
                   type="button"
                   disabled
                 >
                   <span>Compare what-if</span>
-                  <span aria-hidden="true">→</span>
+                  <span class="btn-arrow" aria-hidden="true">→</span>
                 </button>
               </div>
 
@@ -439,16 +506,80 @@
             </div>
           </div>
         </section>
+
+        <details class="model-evidence-panel" id="evidence-details">
+          <summary class="evidence-summary">
+            <span class="evidence-summary-text">
+              <span class="section-kicker">Published model evidence</span>
+              <span class="evidence-summary-title">Why this result stays experimental</span>
+            </span>
+            <span
+              id="model-card-status"
+              class="model-card-status"
+              aria-live="polite"
+            >Loading evaluation evidence</span>
+            <span class="evidence-disclosure-icon" aria-hidden="true"></span>
+          </summary>
+
+          <div class="evidence-panel-body">
+            <div class="metric-comparison">
+              <div class="metric-context">
+                <strong>2025-Q4 calibration period</strong>
+                <span>Lower is better</span>
+              </div>
+              <table>
+                <caption class="visually-hidden">
+                  Development candidate and empirical-prior evaluation metrics
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Metric</th>
+                    <th scope="col">Candidate</th>
+                    <th scope="col">Empirical prior</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Log loss</th>
+                    <td id="evidence-candidate-log-loss">—</td>
+                    <td id="evidence-reference-log-loss">—</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Brier score</th>
+                    <td id="evidence-candidate-brier">—</td>
+                    <td id="evidence-reference-brier">—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <dl class="evidence-facts">
+              <div>
+                <dt>Readiness gate</dt>
+                <dd id="evidence-gate">Loading</dd>
+              </div>
+              <div>
+                <dt>Locked 2026-Q1</dt>
+                <dd id="evidence-locked">Loading</dd>
+              </div>
+              <div>
+                <dt>Fit cutoff</dt>
+                <dd id="evidence-cutoff">Loading</dd>
+              </div>
+            </dl>
+          </div>
+        </details>
       </main>
 
       <footer class="site-footer">
         <div>
           <strong>Draft Lab</strong>
-          <p>An auditable Applied AI portfolio product.</p>
+          <p>A focused Dota 2 draft companion.</p>
         </div>
         <p>
-          Official Liquipedia data is used offline for training provenance.
-          This interface makes no authenticated or live data requests.
+          Built from official Liquipedia match data. This interface makes no
+          authenticated or live data requests. Hero artwork may evolve without
+          changing the drafting experience.
         </p>
       </footer>
     </div>
@@ -480,6 +611,27 @@
             placeholder="Try “Puck” or “Earth Spirit”"
           >
         </label>
+
+        <div
+          id="attribute-filters"
+          class="attribute-filters"
+          role="group"
+          aria-label="Filter by primary attribute"
+        >
+          <button type="button" class="attr-filter is-active" data-attr="all" aria-pressed="true">All</button>
+          <button type="button" class="attr-filter" data-attr="str" aria-pressed="false">
+            <span class="attr-dot" data-attr-dot="str" aria-hidden="true"></span>Strength
+          </button>
+          <button type="button" class="attr-filter" data-attr="agi" aria-pressed="false">
+            <span class="attr-dot" data-attr-dot="agi" aria-hidden="true"></span>Agility
+          </button>
+          <button type="button" class="attr-filter" data-attr="int" aria-pressed="false">
+            <span class="attr-dot" data-attr-dot="int" aria-hidden="true"></span>Intelligence
+          </button>
+          <button type="button" class="attr-filter" data-attr="universal" aria-pressed="false">
+            <span class="attr-dot" data-attr-dot="universal" aria-hidden="true"></span>Universal
+          </button>
+        </div>
 
         <p id="picker-summary" class="picker-summary" aria-live="polite"></p>
         <div

@@ -5,12 +5,67 @@
   const ANALYZE_ENDPOINT = "/api/v1/analyze";
   const REPLACEMENT_ENDPOINT = "/api/v1/replacement-comparisons";
   const MODEL_CARD_ENDPOINT = "/api/v1/model-card";
+  // Replaceable presentation-only artwork path. Every art set follows the
+  // frozen hero_key filename contract and retains an accessible initials
+  // fallback, so artwork can change without touching product or inference.
+  const HERO_PORTRAIT_BASE_PATH = "/static/heroes";
   const PICKS_PER_SIDE = 5;
   const SIDES = ["radiant", "dire"];
+  const ATTRIBUTE_FILTERS = ["all", "str", "agi", "int", "universal"];
   const EXAMPLE_DRAFT = Object.freeze({
     radiant: Object.freeze(["axe", "puck", "lina", "tusk", "luna"]),
     dire: Object.freeze(["doom", "invoker", "tiny", "phoenix", "slark"]),
   });
+  const FACTION_ART_PREVIEWS = Object.freeze({
+    radiant: Object.freeze({
+      hero_key: "anti-mage",
+      display_name: "Anti-Mage",
+    }),
+    dire: Object.freeze({
+      hero_key: "invoker",
+      display_name: "Invoker",
+    }),
+  });
+
+  // Local, frontend-only presentation metadata (primary attribute per hero).
+  // Not part of the API contract — used purely for portrait accent color and
+  // the hero-picker attribute filter. Keyed by the frozen catalog hero_key.
+  const HERO_ATTRIBUTES = Object.freeze({
+    "abaddon":"universal","alchemist":"str","ancient-apparition":"int","anti-mage":"agi",
+    "arc-warden":"universal","axe":"str","bane":"universal","batrider":"universal",
+    "beastmaster":"universal","bloodseeker":"agi","bounty-hunter":"agi",
+    "brewmaster":"universal","bristleback":"str","broodmother":"agi","centaur-warrunner":"str",
+    "chaos-knight":"str","chen":"int","clinkz":"agi","clockwerk":"str","crystal-maiden":"int",
+    "dark-seer":"int","dark-willow":"int","dawnbreaker":"str","dazzle":"universal",
+    "death-prophet":"universal","disruptor":"int","doom":"str","dragon-knight":"str",
+    "drow-ranger":"agi","earth-spirit":"str","earthshaker":"str","elder-titan":"str",
+    "ember-spirit":"agi","enchantress":"int","enigma":"universal","faceless-void":"agi",
+    "grimstroke":"int","gyrocopter":"agi","hoodwink":"agi","huskar":"str","invoker":"int",
+    "io":"universal","jakiro":"int","juggernaut":"agi","keeper-of-the-light":"int",
+    "kunkka":"str","legion-commander":"str","leshrac":"int","lich":"int","lifestealer":"str",
+    "lina":"int","lion":"int","lone-druid":"agi","luna":"agi","lycan":"str",
+    "magnus":"universal","marci":"universal","mars":"str","medusa":"agi","meepo":"agi",
+    "mirana":"agi","monkey-king":"agi","morphling":"agi","muerta":"int","naga-siren":"agi",
+    "nature-s-prophet":"universal","necrophos":"int","night-stalker":"str",
+    "nyx-assassin":"universal","ogre-magi":"str","omniknight":"str","oracle":"int",
+    "outworld-destroyer":"int","pangolier":"universal","phantom-assassin":"agi",
+    "phantom-lancer":"agi","phoenix":"str","primal-beast":"str","puck":"int","pudge":"str",
+    "pugna":"int","queen-of-pain":"int","razor":"agi","riki":"agi","ringmaster":"int",
+    "rubick":"int","sand-king":"universal","shadow-demon":"int","shadow-fiend":"agi",
+    "shadow-shaman":"int","silencer":"int","skywrath-mage":"int","slardar":"str","slark":"agi",
+    "snapfire":"universal","sniper":"agi","spectre":"agi","spirit-breaker":"str",
+    "storm-spirit":"int","sven":"str","techies":"universal","templar-assassin":"agi",
+    "terrorblade":"agi","tidehunter":"str","timbersaw":"str","tinker":"int","tiny":"str",
+    "treant-protector":"str","troll-warlord":"agi","tusk":"str","underlord":"str",
+    "undying":"str","ursa":"agi","vengeful-spirit":"agi","venomancer":"universal","viper":"agi",
+    "visage":"universal","void-spirit":"universal","warlock":"int","weaver":"agi",
+    "windranger":"universal","winter-wyvern":"int","witch-doctor":"int","wraith-king":"str",
+    "zeus":"int",
+  });
+
+  function heroAttribute(heroKey) {
+    return HERO_ATTRIBUTES[heroKey] || "";
+  }
 
   const state = {
     heroes: [],
@@ -19,6 +74,7 @@
       dire: Array(PICKS_PER_SIDE).fill(null),
     },
     activeSlot: null,
+    attributeFilter: "all",
     analyzing: false,
     comparing: false,
     draftRevision: 0,
@@ -29,9 +85,25 @@
   const elements = {
     radiantSlots: document.querySelector("#radiant-slots"),
     direSlots: document.querySelector("#dire-slots"),
+    factionShowcases: {
+      radiant: {
+        root: document.querySelector("#radiant-showcase"),
+        art: document.querySelector("#radiant-featured-art"),
+        kicker: document.querySelector("#radiant-featured-kicker"),
+        name: document.querySelector("#radiant-featured-name"),
+      },
+      dire: {
+        root: document.querySelector("#dire-showcase"),
+        art: document.querySelector("#dire-featured-art"),
+        kicker: document.querySelector("#dire-featured-kicker"),
+        name: document.querySelector("#dire-featured-name"),
+      },
+    },
     radiantCount: document.querySelector("#radiant-count"),
     direCount: document.querySelector("#dire-count"),
     draftProgress: document.querySelector("#draft-progress"),
+    pickTally: document.querySelector(".pick-tally"),
+    tallyDots: Array.from(document.querySelectorAll(".tally-dot")),
     resetDraft: document.querySelector("#reset-draft"),
     tryExample: document.querySelector("#try-example"),
     analyzeDraft: document.querySelector("#analyze-draft"),
@@ -45,6 +117,7 @@
     closePicker: document.querySelector("#close-picker"),
     heroSearch: document.querySelector("#hero-search"),
     heroOptions: document.querySelector("#hero-options"),
+    attributeFilters: document.querySelector("#attribute-filters"),
     resultEmpty: document.querySelector("#result-empty"),
     resultLoading: document.querySelector("#result-loading"),
     resultContent: document.querySelector("#result-content"),
@@ -52,6 +125,17 @@
     probabilityBar: document.querySelector("#probability-bar"),
     radiantProbability: document.querySelector("#radiant-probability"),
     direProbability: document.querySelector("#dire-probability"),
+    outcomeVerdict: document.querySelector("#outcome-verdict"),
+    outcomeHeroes: {
+      radiant: {
+        art: document.querySelector("#outcome-radiant-art"),
+        name: document.querySelector("#outcome-radiant-name"),
+      },
+      dire: {
+        art: document.querySelector("#outcome-dire-art"),
+        name: document.querySelector("#outcome-dire-name"),
+      },
+    },
     contributionList: document.querySelector("#contribution-list"),
     limitationsList: document.querySelector("#limitations-list"),
     modelStatus: document.querySelector("#model-status"),
@@ -129,6 +213,44 @@
     return `${words[0][0]}${words.at(-1)[0]}`.toUpperCase();
   }
 
+  function heroPortraitSource(heroKey) {
+    return (
+      `${HERO_PORTRAIT_BASE_PATH}/` +
+      `${encodeURIComponent(heroKey)}.webp`
+    );
+  }
+
+  function heroPortraitMarkup(hero) {
+    const attribute = heroAttribute(hero.hero_key);
+    const initials = escapeHtml(heroInitials(hero.display_name));
+    const source = heroPortraitSource(hero.hero_key);
+    return `
+      <span class="hero-portrait" data-attr="${escapeHtml(attribute)}">
+        <img
+          class="hero-portrait-img"
+          src="${source}"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          width="72"
+          height="72"
+        >
+        <span class="hero-portrait-fallback" aria-hidden="true">${initials}</span>
+      </span>
+    `;
+  }
+
+  function handlePortraitLoadError(event) {
+    const target = event.target;
+    if (target instanceof HTMLImageElement &&
+        (
+          target.classList.contains("hero-portrait-img") ||
+          target.classList.contains("hero-art-img")
+        )) {
+      target.hidden = true;
+    }
+  }
+
   function selectedHeroKeys(exceptSlot = null) {
     const selected = new Set();
     for (const side of SIDES) {
@@ -162,7 +284,6 @@
     if (!hero) {
       return `
         <div class="pick-slot" data-side="${side}" data-index="${index}">
-          <span class="slot-number" aria-hidden="true">${number}</span>
           <button
             class="slot-select"
             type="button"
@@ -171,10 +292,12 @@
             aria-label="Choose ${sideName} hero ${index + 1}"
             ${disabled}
           >
-            <strong>Choose a hero</strong>
-            <span>Empty ${side} pick</span>
+            <span class="slot-number" aria-hidden="true">${number}</span>
+            <span class="slot-copy">
+              <strong>Choose hero</strong>
+              <span>Empty ${side} pick</span>
+            </span>
           </button>
-          <span aria-hidden="true"></span>
         </div>
       `;
     }
@@ -187,9 +310,6 @@
         data-side="${side}"
         data-index="${index}"
       >
-        <span class="hero-monogram" aria-hidden="true">
-          ${escapeHtml(heroInitials(hero.display_name))}
-        </span>
         <button
           class="slot-select"
           type="button"
@@ -198,8 +318,11 @@
           aria-label="Change ${sideName} hero ${index + 1}, currently ${displayName}"
           ${disabled}
         >
-          <strong>${displayName}</strong>
-          <span>${heroKey}</span>
+          ${heroPortraitMarkup(hero)}
+          <span class="slot-copy">
+            <strong>${displayName}</strong>
+            <span>${heroKey}</span>
+          </span>
         </button>
         <button
           class="clear-pick"
@@ -212,6 +335,33 @@
     `;
   }
 
+  function renderPickTally() {
+    const order = [...state.picks.radiant, ...state.picks.dire];
+    elements.tallyDots.forEach((dot, index) => {
+      dot.classList.toggle("is-filled", Boolean(order[index]));
+    });
+    const filled = order.filter(Boolean).length;
+    if (elements.pickTally) {
+      elements.pickTally.setAttribute(
+        "aria-label",
+        `${filled} of ${PICKS_PER_SIDE * 2} heroes selected`,
+      );
+    }
+  }
+
+  function renderFactionShowcase(side) {
+    const showcase = elements.factionShowcases[side];
+    const selected = [...state.picks[side]].reverse().find(Boolean);
+    const hero = selected || FACTION_ART_PREVIEWS[side];
+    showcase.root.classList.toggle("is-preview", !selected);
+    showcase.art.hidden = false;
+    showcase.art.src = heroPortraitSource(hero.hero_key);
+    showcase.kicker.textContent = selected
+      ? "Lineup focus"
+      : "Faction art preview";
+    showcase.name.textContent = hero.display_name;
+  }
+
   function renderDraft() {
     elements.radiantSlots.innerHTML = state.picks.radiant
       .map((hero, index) => renderSlot("radiant", hero, index))
@@ -219,6 +369,8 @@
     elements.direSlots.innerHTML = state.picks.dire
       .map((hero, index) => renderSlot("dire", hero, index))
       .join("");
+    renderFactionShowcase("radiant");
+    renderFactionShowcase("dire");
 
     const radiantCount = selectedCount("radiant");
     const direCount = selectedCount("dire");
@@ -227,6 +379,7 @@
     elements.direCount.textContent = `${direCount} / ${PICKS_PER_SIDE}`;
     elements.draftProgress.textContent =
       `${total} of ${PICKS_PER_SIDE * 2} heroes selected`;
+    renderPickTally();
     elements.analyzeDraft.disabled =
       !completeDraft() ||
       state.analyzing ||
@@ -315,6 +468,20 @@
     openHeroPicker(side, index);
   }
 
+  function setAttributeFilter(attribute) {
+    state.attributeFilter = attribute;
+    if (elements.attributeFilters) {
+      elements.attributeFilters
+        .querySelectorAll(".attr-filter")
+        .forEach((button) => {
+          const isActive = button.dataset.attr === attribute;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", String(isActive));
+        });
+    }
+    renderHeroOptions();
+  }
+
   function openHeroPicker(side, index) {
     if (state.heroes.length === 0) {
       elements.analysisError.textContent =
@@ -327,7 +494,7 @@
     elements.pickerTitle.textContent =
       `Choose ${titleCase(side)} pick ${index + 1}`;
     elements.heroSearch.value = "";
-    renderHeroOptions();
+    setAttributeFilter("all");
     elements.picker.showModal();
     window.requestAnimationFrame(() => elements.heroSearch.focus());
   }
@@ -342,6 +509,12 @@
     const query = elements.heroSearch.value.trim().toLocaleLowerCase();
     const selected = selectedHeroKeys(state.activeSlot);
     const filtered = state.heroes.filter((hero) => {
+      if (
+        state.attributeFilter !== "all" &&
+        heroAttribute(hero.hero_key) !== state.attributeFilter
+      ) {
+        return false;
+      }
       if (!query) {
         return true;
       }
@@ -370,9 +543,7 @@
                 : `Select ${displayName}`
             }"
           >
-            <span class="hero-monogram" aria-hidden="true">
-              ${escapeHtml(heroInitials(hero.display_name))}
-            </span>
+            ${heroPortraitMarkup(hero)}
             <span>
               <strong>${displayName}</strong>
               <span>${escapeHtml(
@@ -383,6 +554,58 @@
         `;
       })
       .join("");
+  }
+
+  function heroOptionGridColumns() {
+    const template = window
+      .getComputedStyle(elements.heroOptions)
+      .gridTemplateColumns.trim();
+    if (!template) {
+      return 1;
+    }
+    return template.split(/\s+/).length;
+  }
+
+  function navigateHeroOptions(event) {
+    const options = Array.from(
+      elements.heroOptions.querySelectorAll(
+        "button.hero-option:not(:disabled)",
+      ),
+    );
+    if (options.length === 0) {
+      return;
+    }
+    const focused = document.activeElement;
+    const currentIndex = options.indexOf(focused);
+    const columns = heroOptionGridColumns();
+    let nextIndex = null;
+
+    switch (event.key) {
+      case "ArrowRight":
+        nextIndex = currentIndex === -1 ? 0 : currentIndex + 1;
+        break;
+      case "ArrowLeft":
+        nextIndex = currentIndex === -1 ? 0 : currentIndex - 1;
+        break;
+      case "ArrowDown":
+        nextIndex = currentIndex === -1 ? 0 : currentIndex + columns;
+        break;
+      case "ArrowUp":
+        nextIndex = currentIndex === -1 ? 0 : currentIndex - columns;
+        break;
+      case "Home":
+        nextIndex = 0;
+        break;
+      case "End":
+        nextIndex = options.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    nextIndex = Math.max(0, Math.min(options.length - 1, nextIndex));
+    options[nextIndex]?.focus();
   }
 
   function chooseHero(event) {
@@ -585,8 +808,8 @@
     state.analyzing = value;
     elements.analyzeDraft.classList.toggle("is-loading", value);
     elements.analyzeDraft.querySelector("span:first-child").textContent = value
-      ? "Analyzing completed draft"
-      : "Analyze completed draft";
+      ? "Resolving the draft"
+      : "Resolve the draft";
     if (value) {
       elements.resultEmpty.hidden = true;
       elements.resultLoading.hidden = false;
@@ -611,6 +834,46 @@
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
     }).format(value);
+  }
+
+  function renderOutcomeBattle(
+    contributions,
+    analyzedDraft,
+    radiant,
+    dire,
+  ) {
+    for (const side of SIDES) {
+      const featured = contributions.find((item) => item.side === side);
+      const fallbackKey =
+        analyzedDraft[`${side}_picks`][0];
+      const heroKey = featured?.hero_key || fallbackKey;
+      const hero = state.heroes.find((item) => item.hero_key === heroKey);
+      const displayName =
+        featured?.display_name || hero?.display_name || titleCase(heroKey);
+      const outcomeHero = elements.outcomeHeroes[side];
+      outcomeHero.art.hidden = false;
+      outcomeHero.art.src = heroPortraitSource(heroKey);
+      outcomeHero.name.textContent = displayName;
+    }
+
+    const difference = radiant - dire;
+    const leadingSide =
+      Math.abs(difference) < 0.001
+        ? null
+        : difference > 0
+          ? "radiant"
+          : "dire";
+    elements.outcomeVerdict.textContent = leadingSide
+      ? `${titleCase(leadingSide)} advantage`
+      : "Even draft";
+    elements.outcomeVerdict.classList.toggle(
+      "is-radiant",
+      leadingSide === "radiant",
+    );
+    elements.outcomeVerdict.classList.toggle(
+      "is-dire",
+      leadingSide === "dire",
+    );
   }
 
   function currentDraftRequest() {
@@ -768,9 +1031,10 @@
             data-impact="${impact}"
             style="--impact-width: ${width.toFixed(2)}%"
           >
-            <span class="hero-monogram" aria-hidden="true">
-              ${escapeHtml(heroInitials(item.display_name))}
-            </span>
+            ${heroPortraitMarkup({
+              hero_key: item.hero_key,
+              display_name: item.display_name,
+            })}
             <span class="contribution-hero">
               <strong>${escapeHtml(item.display_name)}</strong>
               <span>${titleCase(item.side)} pick · ${escapeHtml(
@@ -1190,6 +1454,7 @@
       "aria-label",
       `Radiant ${formatProbability(radiant)}, Dire ${formatProbability(dire)}`,
     );
+    renderOutcomeBattle(contributions, analyzedDraft, radiant, dire);
     renderContributions(contributions);
     renderModel(payload?.model || payload);
     renderLimitations(payload?.limitations);
@@ -1348,15 +1613,26 @@
     elements.closePicker.addEventListener("click", closeHeroPicker);
     elements.heroSearch.addEventListener("input", renderHeroOptions);
     elements.heroOptions.addEventListener("click", chooseHero);
+    elements.heroOptions.addEventListener("keydown", navigateHeroOptions);
     elements.heroSearch.addEventListener("keydown", (event) => {
       if (event.key === "ArrowDown") {
         event.preventDefault();
         elements.heroOptions.querySelector("button:not(:disabled)")?.focus();
       }
     });
+    if (elements.attributeFilters) {
+      elements.attributeFilters.addEventListener("click", (event) => {
+        const button = event.target.closest(".attr-filter");
+        if (!button || !ATTRIBUTE_FILTERS.includes(button.dataset.attr)) {
+          return;
+        }
+        setAttributeFilter(button.dataset.attr);
+      });
+    }
     elements.picker.addEventListener("close", () => {
       state.activeSlot = null;
     });
+    document.addEventListener("error", handlePortraitLoadError, true);
   }
 
   bindEvents();

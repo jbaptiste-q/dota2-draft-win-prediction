@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
 
@@ -167,6 +167,123 @@ test("serves the packaged social preview through the asset binding", async () =>
   assert.equal(response.status, 200);
   assert.equal(response.headers.get("content-type"), "image/png");
   assert.deepEqual(Buffer.from(await response.arrayBuffer()), image);
+});
+
+test("maps the public hero portrait route to the packaged asset path", async () => {
+  const requestedPaths = [];
+  const response = await fetchWorker(
+    "/static/heroes/axe.webp",
+    {},
+    {
+      ASSETS: {
+        async fetch(request) {
+          requestedPaths.push(new URL(request.url).pathname);
+          return new Response(new Uint8Array([82, 73, 70, 70]), {
+            headers: { "content-type": "application/octet-stream" },
+          });
+        },
+      },
+    },
+  );
+  const invalid = await fetchWorker(
+    "/static/heroes/not-a-portrait.png",
+    {},
+    {
+      ASSETS: {
+        async fetch() {
+          assert.fail("Invalid portrait paths must not reach the asset binding.");
+        },
+      },
+    },
+  );
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(requestedPaths, ["/heroes/axe.webp"]);
+  assert.equal(response.headers.get("content-type"), "image/webp");
+  assert.deepEqual(
+    Buffer.from(await response.arrayBuffer()),
+    Buffer.from([82, 73, 70, 70]),
+  );
+  assert.equal(invalid.status, 404);
+});
+
+test("maps the official Dota mark to the packaged brand asset", async () => {
+  const requestedPaths = [];
+  const logoBytes = new Uint8Array([137, 80, 78, 71]);
+  const response = await fetchWorker(
+    "/static/brand/dota2-logo-symbol.png",
+    {},
+    {
+      ASSETS: {
+        async fetch(request) {
+          requestedPaths.push(new URL(request.url).pathname);
+          return new Response(logoBytes, {
+            headers: { "content-type": "application/octet-stream" },
+          });
+        },
+      },
+    },
+  );
+  const invalid = await fetchWorker(
+    "/static/brand/unapproved-logo.png",
+    {},
+    {
+      ASSETS: {
+        async fetch() {
+          assert.fail("Unknown brand assets must not reach the asset binding.");
+        },
+      },
+    },
+  );
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(requestedPaths, ["/brand/dota2-logo-symbol.png"]);
+  assert.equal(response.headers.get("content-type"), "image/png");
+  assert.deepEqual(
+    Buffer.from(await response.arrayBuffer()),
+    Buffer.from(logoBytes),
+  );
+  assert.equal(invalid.status, 404);
+});
+
+test("packages one valid WebP portrait for every frozen catalog hero", async () => {
+  const portraitDirectory = new URL(
+    "../dist/client/heroes/",
+    import.meta.url,
+  );
+  const expectedFiles = golden.heroes.heroes
+    .map((hero) => `${hero.hero_key}.webp`)
+    .sort();
+  const actualFiles = (await readdir(portraitDirectory))
+    .filter((name) => name.endsWith(".webp"))
+    .sort();
+
+  assert.deepEqual(actualFiles, expectedFiles);
+  for (const name of actualFiles) {
+    const portrait = await readFile(new URL(name, portraitDirectory));
+    assert.ok(portrait.length > 12, `${name} must contain image data`);
+    assert.equal(portrait.subarray(0, 4).toString("ascii"), "RIFF");
+    assert.equal(portrait.subarray(8, 12).toString("ascii"), "WEBP");
+  }
+});
+
+test("packages the official Dota mark without transforming its source bytes", async () => {
+  const sourceLogo = await readFile(
+    new URL(
+      "../../src/draft_ai_assistant/web/brand/dota2-logo-symbol.png",
+      import.meta.url,
+    ),
+  );
+  const packagedLogo = await readFile(
+    new URL("../dist/client/brand/dota2-logo-symbol.png", import.meta.url),
+  );
+
+  assert.ok(sourceLogo.length > 12);
+  assert.deepEqual(
+    sourceLogo.subarray(0, 8),
+    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
+  );
+  assert.deepEqual(packagedLogo, sourceLogo);
 });
 
 test("mirrors the frozen health, hero, and model-card contracts", async () => {
@@ -353,14 +470,17 @@ test("matches FastAPI method-not-allowed behavior on known API routes", async ()
 });
 
 test("build packages credential-free hosting metadata", async () => {
-  const [source, packaged] = await Promise.all([
+  const [source, packaged, workerConfigSource] = await Promise.all([
     readFile(new URL(".openai/hosting.json", siteRoot), "utf8"),
     readFile(new URL("dist/.openai/hosting.json", siteRoot), "utf8"),
+    readFile(new URL("dist/server/wrangler.json", siteRoot), "utf8"),
   ]);
   const sourceMetadata = JSON.parse(source);
+  const workerConfig = JSON.parse(workerConfigSource);
   assert.deepEqual(JSON.parse(packaged), sourceMetadata);
   assert.equal(sourceMetadata.d1, null);
   assert.equal(sourceMetadata.r2, null);
+  assert.equal(workerConfig.assets.binding, "ASSETS");
   if ("project_id" in sourceMetadata) {
     assert.equal(typeof sourceMetadata.project_id, "string");
     assert.ok(sourceMetadata.project_id.length > 0);
