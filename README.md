@@ -191,9 +191,3 @@ optional, outside v1, and will not be added without explicit approval.
 Historical milestone reports preserve the decision context that existed when
 they were written. This README and the M5.3 contract define the active product
 scope.
-
-## License
-
-No open-source license is currently granted. Unless a later license file states
-otherwise, all rights are reserved by the repository owner. Public visibility
-does not grant permission to copy, modify, or redistribute this work.
