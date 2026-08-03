@@ -11,16 +11,25 @@ win log-odds are:
         - sum_{i in R, j in D} v[i].v[j]
 
 The pair sums use the identity
-``sum_{i<j} v[i].v[j] = (||sum v||^2 - sum ||v||^2) / 2`` so prediction and
-gradients are fully vectorized.  Fitting minimizes mean binary cross-entropy
-plus L2 penalties on ``w`` and ``v`` with hand-derived gradients and a
-full-batch deterministic Adam loop: identical inputs produce bit-identical
-parameters.  With ``embedding_dim = 0`` every interaction term vanishes and
-the model reduces exactly to the additive B1 side-relative pick-presence
-logistic regression.
+``sum_{i<j} v[i].v[j] = (||sum v||^2 - sum ||v||^2) / 2`` and every heavy
+computation is expressed through fixed sparse hero-membership matrices, so
+prediction and gradients are fully vectorized.  Fitting minimizes mean
+binary cross-entropy plus L2 penalties on ``w`` and ``v`` with hand-derived
+gradients and a full-batch deterministic Adam loop: identical inputs
+produce bit-identical parameters.  With ``embedding_dim = 0`` every
+interaction term vanishes and the model reduces exactly to the additive B1
+side-relative pick-presence logistic regression.
 
-This module is self-contained numpy.  It does not load data, read any
-split period, or depend on acquisition code.
+An optional ``unknown_index`` designates one reserved hero index that may
+appear more than once in a game (multiple unseen heroes collapse onto it).
+A duplicated index contributes with its slot multiplicity through the same
+pair identity.  Combined with ``zero_init_hero_indices``, a reserved index
+that never occurs in training keeps an exactly zero main effect and
+embedding: its data gradient is zero by absence and its L2 gradient is zero
+at zero, so deterministic Adam never moves it.
+
+This module uses only numpy and scipy.sparse.  It does not load data, read
+any split period, or depend on acquisition code.
 """
 
 from __future__ import annotations
@@ -28,6 +37,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
+from scipy.sparse import csr_matrix
 
 
 HERO_EMBEDDING_MODEL_VERSION = "draft-ai-hero-embeddings-v1"
@@ -97,8 +107,23 @@ class HeroEmbeddingFitResult:
     objective_history: tuple[float, ...]
 
 
+@dataclass(frozen=True, slots=True)
+class _DraftDesign:
+    """Fixed sparse per-side hero-membership matrices for one set of games."""
+
+    games: int
+    radiant: csr_matrix
+    dire: csr_matrix
+    radiant_transpose: csr_matrix
+    dire_transpose: csr_matrix
+
+
 def _validate_draft_indices(
-    radiant: np.ndarray, dire: np.ndarray, hero_count: int
+    radiant: np.ndarray,
+    dire: np.ndarray,
+    hero_count: int,
+    *,
+    unknown_index: int | None = None,
 ) -> tuple[np.ndarray, np.ndarray]:
     radiant = np.asarray(radiant)
     dire = np.asarray(dire)
@@ -113,13 +138,22 @@ def _validate_draft_indices(
         raise HeroEmbeddingError(
             "radiant and dire must describe the same games."
         )
+    if unknown_index is not None and not (
+        0 <= unknown_index < hero_count
+    ):
+        raise HeroEmbeddingError(
+            "unknown_index must lie in [0, hero_count)."
+        )
     combined = np.concatenate([radiant, dire], axis=1)
     if combined.size and (
         combined.min() < 0 or combined.max() >= hero_count
     ):
         raise HeroEmbeddingError("hero indices must lie in [0, hero_count).")
     sorted_rows = np.sort(combined, axis=1)
-    if combined.size and (sorted_rows[:, 1:] == sorted_rows[:, :-1]).any():
+    duplicated = sorted_rows[:, 1:] == sorted_rows[:, :-1]
+    if unknown_index is not None:
+        duplicated &= sorted_rows[:, 1:] != unknown_index
+    if combined.size and duplicated.any():
         raise HeroEmbeddingError(
             "each game must contain ten unique hero indices."
         )
@@ -135,6 +169,22 @@ def _validate_targets(targets: np.ndarray, games: int) -> np.ndarray:
     return targets
 
 
+def _validate_parameter_shapes(
+    parameters: HeroEmbeddingParameters,
+    config: HeroEmbeddingConfig,
+) -> None:
+    if parameters.main_effects.shape != (
+        config.hero_count,
+    ) or parameters.embeddings.shape != (
+        config.hero_count,
+        config.embedding_dim,
+    ):
+        raise HeroEmbeddingError(
+            "parameters do not match the configured hero count and"
+            " embedding dimension."
+        )
+
+
 def _stable_sigmoid(z: np.ndarray) -> np.ndarray:
     positive = z >= 0.0
     result = np.empty_like(z)
@@ -144,19 +194,92 @@ def _stable_sigmoid(z: np.ndarray) -> np.ndarray:
     return result
 
 
+def _side_membership(indices: np.ndarray, hero_count: int) -> csr_matrix:
+    games = indices.shape[0]
+    rows = np.repeat(np.arange(games, dtype=np.int64), PICKS_PER_SIDE)
+    matrix = csr_matrix(
+        (
+            np.ones(indices.size, dtype=np.float64),
+            (rows, indices.ravel().astype(np.int64)),
+        ),
+        shape=(games, hero_count),
+    )
+    matrix.sum_duplicates()
+    matrix.sort_indices()
+    return matrix
+
+
+def _draft_design(
+    radiant: np.ndarray,
+    dire: np.ndarray,
+    hero_count: int,
+) -> _DraftDesign:
+    radiant_matrix = _side_membership(radiant, hero_count)
+    dire_matrix = _side_membership(dire, hero_count)
+    return _DraftDesign(
+        games=radiant.shape[0],
+        radiant=radiant_matrix,
+        dire=dire_matrix,
+        radiant_transpose=radiant_matrix.T.tocsr(),
+        dire_transpose=dire_matrix.T.tocsr(),
+    )
+
+
+def _log_odds(
+    design: _DraftDesign,
+    bias: float,
+    main_effects: np.ndarray,
+    embeddings: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    sum_radiant = design.radiant @ embeddings
+    sum_dire = design.dire @ embeddings
+    squared_norms = (embeddings**2).sum(axis=1)
+    within_radiant = 0.5 * (
+        (sum_radiant**2).sum(axis=1) - design.radiant @ squared_norms
+    )
+    within_dire = 0.5 * (
+        (sum_dire**2).sum(axis=1) - design.dire @ squared_norms
+    )
+    cross = (sum_radiant * sum_dire).sum(axis=1)
+    z = (
+        bias
+        + design.radiant @ main_effects
+        - design.dire @ main_effects
+        + within_radiant
+        - within_dire
+        - cross
+    )
+    return z, sum_radiant, sum_dire
+
+
 def initialize_parameters(
     config: HeroEmbeddingConfig,
+    *,
+    zero_init_hero_indices: tuple[int, ...] = (),
 ) -> HeroEmbeddingParameters:
-    """Seeded deterministic initialization: zero ``b``/``w``, Gaussian ``v``."""
+    """Seeded deterministic initialization: zero ``b``/``w``, Gaussian ``v``.
 
+    Indices in ``zero_init_hero_indices`` start with an exactly zero
+    embedding row.  A hero that also never occurs in the training games
+    then stays exactly zero through the whole deterministic fit.
+    """
+
+    for index in zero_init_hero_indices:
+        if not 0 <= index < config.hero_count:
+            raise HeroEmbeddingError(
+                "zero_init_hero_indices must lie in [0, hero_count)."
+            )
     rng = np.random.default_rng(config.seed)
     embeddings = config.init_scale * rng.standard_normal(
         (config.hero_count, config.embedding_dim)
     )
+    embeddings = embeddings.astype(np.float64)
+    for index in zero_init_hero_indices:
+        embeddings[index] = 0.0
     return HeroEmbeddingParameters(
         bias=0.0,
         main_effects=np.zeros(config.hero_count, dtype=np.float64),
-        embeddings=embeddings.astype(np.float64),
+        embeddings=embeddings,
     )
 
 
@@ -164,42 +287,90 @@ def predict_log_odds(
     parameters: HeroEmbeddingParameters,
     radiant: np.ndarray,
     dire: np.ndarray,
+    *,
+    unknown_index: int | None = None,
 ) -> np.ndarray:
     """Exact Radiant-win log-odds for completed drafts."""
 
     hero_count = parameters.main_effects.shape[0]
-    radiant, dire = _validate_draft_indices(radiant, dire, hero_count)
-    w = parameters.main_effects
-    v = parameters.embeddings
-    v_radiant = v[radiant]
-    v_dire = v[dire]
-    sum_radiant = v_radiant.sum(axis=1)
-    sum_dire = v_dire.sum(axis=1)
-    within_radiant = 0.5 * (
-        (sum_radiant**2).sum(axis=1) - (v_radiant**2).sum(axis=(1, 2))
+    radiant, dire = _validate_draft_indices(
+        radiant,
+        dire,
+        hero_count,
+        unknown_index=unknown_index,
     )
-    within_dire = 0.5 * (
-        (sum_dire**2).sum(axis=1) - (v_dire**2).sum(axis=(1, 2))
+    design = _draft_design(radiant, dire, hero_count)
+    z, _, _ = _log_odds(
+        design,
+        parameters.bias,
+        parameters.main_effects,
+        parameters.embeddings,
     )
-    cross = (sum_radiant * sum_dire).sum(axis=1)
-    return (
-        parameters.bias
-        + w[radiant].sum(axis=1)
-        - w[dire].sum(axis=1)
-        + within_radiant
-        - within_dire
-        - cross
-    )
+    return z
 
 
 def predict_probabilities(
     parameters: HeroEmbeddingParameters,
     radiant: np.ndarray,
     dire: np.ndarray,
+    *,
+    unknown_index: int | None = None,
 ) -> np.ndarray:
     """Radiant-win probabilities via a numerically stable sigmoid."""
 
-    return _stable_sigmoid(predict_log_odds(parameters, radiant, dire))
+    return _stable_sigmoid(
+        predict_log_odds(
+            parameters,
+            radiant,
+            dire,
+            unknown_index=unknown_index,
+        )
+    )
+
+
+def _objective_and_gradients(
+    design: _DraftDesign,
+    bias: float,
+    main_effects: np.ndarray,
+    embeddings: np.ndarray,
+    targets: np.ndarray,
+    config: HeroEmbeddingConfig,
+) -> tuple[float, float, np.ndarray, np.ndarray]:
+    games = design.games
+    z, sum_radiant, sum_dire = _log_odds(
+        design,
+        bias,
+        main_effects,
+        embeddings,
+    )
+    cross_entropy = np.logaddexp(0.0, z) - targets * z
+    objective = (
+        float(cross_entropy.mean())
+        + config.l2_main * float((main_effects**2).sum())
+        + config.l2_embedding * float((embeddings**2).sum())
+    )
+
+    residual = _stable_sigmoid(z) - targets
+    grad_bias = float(residual.mean())
+
+    radiant_residual_totals = design.radiant_transpose @ residual
+    dire_residual_totals = design.dire_transpose @ residual
+    grad_main = (
+        radiant_residual_totals - dire_residual_totals
+    ) / games + 2.0 * config.l2_main * main_effects
+
+    grad_embeddings = (
+        design.radiant_transpose
+        @ (residual[:, None] * (sum_radiant - sum_dire))
+        - radiant_residual_totals[:, None] * embeddings
+        + dire_residual_totals[:, None] * embeddings
+        - design.dire_transpose
+        @ (residual[:, None] * (sum_radiant + sum_dire))
+    )
+    grad_embeddings /= games
+    grad_embeddings += 2.0 * config.l2_embedding * embeddings
+
+    return objective, grad_bias, grad_main, grad_embeddings
 
 
 def compute_objective_and_gradients(
@@ -208,6 +379,8 @@ def compute_objective_and_gradients(
     dire: np.ndarray,
     targets: np.ndarray,
     config: HeroEmbeddingConfig,
+    *,
+    unknown_index: int | None = None,
 ) -> tuple[float, float, np.ndarray, np.ndarray]:
     """Mean penalized cross-entropy and its exact analytic gradients.
 
@@ -215,80 +388,36 @@ def compute_objective_and_gradients(
         mean_i [softplus(z_i) - y_i z_i]
         + l2_main * sum(w**2) + l2_embedding * sum(v**2)
 
-    Hand-derived gradients with ``g_i = sigmoid(z_i) - y_i``:
+    Hand-derived gradients with ``g_i = sigmoid(z_i) - y_i`` and slot
+    multiplicity ``m`` (one for every real hero, possibly larger for a
+    duplicated unknown index):
         d/db      = mean(g)
-        d/dw[h]   = mean over games of (+g if h Radiant, -g if h Dire)
+        d/dw[h]   = mean over games of (+m g if h Radiant, -m g if h Dire)
                     + 2 * l2_main * w[h]
         d/dv[h]   = mean over games of
-                    g * (s_R - v[h] - s_D)   when h is Radiant,
-                    g * (v[h] - s_D - s_R)   when h is Dire,
+                    m g * (s_R - s_D) - m g * v[h]   when h is Radiant,
+                    m g * v[h] - m g * (s_R + s_D)   when h is Dire,
                     + 2 * l2_embedding * v[h]
     where ``s_R`` and ``s_D`` are the per-game embedding sums.
     """
 
-    radiant, dire = _validate_draft_indices(radiant, dire, config.hero_count)
-    games = radiant.shape[0]
-    targets = _validate_targets(targets, games)
-    w = parameters.main_effects
-    v = parameters.embeddings
-    if w.shape != (config.hero_count,) or v.shape != (
+    radiant, dire = _validate_draft_indices(
+        radiant,
+        dire,
         config.hero_count,
-        config.embedding_dim,
-    ):
-        raise HeroEmbeddingError(
-            "parameters do not match the configured hero count and"
-            " embedding dimension."
-        )
-
-    z = predict_log_odds(parameters, radiant, dire)
-    cross_entropy = np.logaddexp(0.0, z) - targets * z
-    objective = (
-        float(cross_entropy.mean())
-        + config.l2_main * float((w**2).sum())
-        + config.l2_embedding * float((v**2).sum())
+        unknown_index=unknown_index,
     )
-
-    residual = _stable_sigmoid(z) - targets
-    grad_bias = float(residual.mean())
-
-    repeated_residual = np.repeat(residual, PICKS_PER_SIDE)
-    grad_main = np.bincount(
-        radiant.ravel(),
-        weights=repeated_residual,
-        minlength=config.hero_count,
-    ) - np.bincount(
-        dire.ravel(),
-        weights=repeated_residual,
-        minlength=config.hero_count,
+    targets = _validate_targets(targets, radiant.shape[0])
+    _validate_parameter_shapes(parameters, config)
+    design = _draft_design(radiant, dire, config.hero_count)
+    return _objective_and_gradients(
+        design,
+        parameters.bias,
+        parameters.main_effects,
+        parameters.embeddings,
+        targets,
+        config,
     )
-    grad_main /= games
-    grad_main += 2.0 * config.l2_main * w
-
-    v_radiant = v[radiant]
-    v_dire = v[dire]
-    sum_radiant = v_radiant.sum(axis=1)
-    sum_dire = v_dire.sum(axis=1)
-    radiant_weighted = residual[:, None, None] * (
-        (sum_radiant - sum_dire)[:, None, :] - v_radiant
-    )
-    dire_weighted = residual[:, None, None] * (
-        v_dire - (sum_radiant + sum_dire)[:, None, :]
-    )
-    grad_embeddings = np.zeros_like(v)
-    for dim in range(config.embedding_dim):
-        grad_embeddings[:, dim] = np.bincount(
-            radiant.ravel(),
-            weights=radiant_weighted[:, :, dim].ravel(),
-            minlength=config.hero_count,
-        ) + np.bincount(
-            dire.ravel(),
-            weights=dire_weighted[:, :, dim].ravel(),
-            minlength=config.hero_count,
-        )
-    grad_embeddings /= games
-    grad_embeddings += 2.0 * config.l2_embedding * v
-
-    return objective, grad_bias, grad_main, grad_embeddings
 
 
 def fit_hero_embedding_model(
@@ -296,6 +425,8 @@ def fit_hero_embedding_model(
     radiant: np.ndarray,
     dire: np.ndarray,
     targets: np.ndarray,
+    *,
+    zero_init_hero_indices: tuple[int, ...] = (),
 ) -> HeroEmbeddingFitResult:
     """Full-batch deterministic Adam fit of the penalized objective.
 
@@ -306,8 +437,12 @@ def fit_hero_embedding_model(
 
     radiant, dire = _validate_draft_indices(radiant, dire, config.hero_count)
     targets = _validate_targets(targets, radiant.shape[0])
+    design = _draft_design(radiant, dire, config.hero_count)
 
-    parameters = initialize_parameters(config)
+    parameters = initialize_parameters(
+        config,
+        zero_init_hero_indices=zero_init_hero_indices,
+    )
     bias = parameters.bias
     w = parameters.main_effects.copy()
     v = parameters.embeddings.copy()
@@ -325,13 +460,8 @@ def fit_hero_embedding_model(
     iterations_run = 0
 
     for iteration in range(1, config.max_iterations + 1):
-        current = HeroEmbeddingParameters(
-            bias=bias, main_effects=w, embeddings=v
-        )
-        objective, grad_bias, grad_w, grad_v = (
-            compute_objective_and_gradients(
-                current, radiant, dire, targets, config
-            )
+        objective, grad_bias, grad_w, grad_v = _objective_and_gradients(
+            design, bias, w, v, targets, config
         )
         history.append(objective)
         iterations_run = iteration
@@ -363,8 +493,8 @@ def fit_hero_embedding_model(
         v = v - step * moment_v / (np.sqrt(curvature_v) + ADAM_EPSILON)
 
     final = HeroEmbeddingParameters(bias=bias, main_effects=w, embeddings=v)
-    final_objective, grad_bias, grad_w, grad_v = (
-        compute_objective_and_gradients(final, radiant, dire, targets, config)
+    final_objective, grad_bias, grad_w, grad_v = _objective_and_gradients(
+        design, bias, w, v, targets, config
     )
     gradient_norm = max(
         abs(grad_bias),
