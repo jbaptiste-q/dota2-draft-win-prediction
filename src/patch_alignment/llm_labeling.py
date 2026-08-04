@@ -32,7 +32,15 @@ ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages"
 ANTHROPIC_VERSION = "2023-06-01"
 DEFAULT_API_KEY_ENV_VAR = "ANTHROPIC_API_KEY"
 DEFAULT_TIMEOUT_SECONDS = 60.0
-DEFAULT_MAX_TOKENS = 64
+# Some model generations (e.g. claude-sonnet-5, claude-fable-5) default to
+# adaptive extended thinking that cannot be disabled (no
+# thinking.type=disabled option) and is billed out of the same max_tokens
+# budget as the answer. When the budget is tight, thinking can consume it
+# entirely and the call never reaches the JSON answer -- observed thinking
+# usage up to the full 64-token budget in practice. 1024 leaves comfortable
+# headroom; the on-disk label cache means this cost is paid once per
+# change_uid/model_id/prompt_version regardless.
+DEFAULT_MAX_TOKENS = 2048
 LABELING_TEMPERATURE = 0.0
 
 # Bump manually whenever SYSTEM_PROMPT or USER_PROMPT_TEMPLATE changes.
@@ -133,6 +141,17 @@ class AnthropicMessagesClient:
         return cls(api_key=api_key)
 
     def complete(self, *, model_id: str, system: str, user: str) -> RawLLMResponse:
+        body = {
+            "model": model_id,
+            "max_tokens": self.max_tokens,
+            "temperature": LABELING_TEMPERATURE,
+            "system": system,
+            "messages": [{"role": "user", "content": user}],
+        }
+        payload = self._post(body, model_id=model_id)
+        return self._parse_response(payload, model_id=model_id)
+
+    def _post(self, body: dict, *, model_id: str) -> dict:
         try:
             response = httpx.post(
                 ANTHROPIC_MESSAGES_URL,
@@ -142,19 +161,32 @@ class AnthropicMessagesClient:
                     "anthropic-version": ANTHROPIC_VERSION,
                     "content-type": "application/json",
                 },
-                json={
-                    "model": model_id,
-                    "max_tokens": self.max_tokens,
-                    "temperature": LABELING_TEMPERATURE,
-                    "system": system,
-                    "messages": [{"role": "user", "content": user}],
-                },
+                json=body,
             )
             response.raise_for_status()
+        except httpx.HTTPStatusError as error:
+            # Some model generations (e.g. claude-sonnet-5, claude-fable-5)
+            # reject `temperature` outright rather than accepting and
+            # ignoring it. Retry once without it rather than hardcoding a
+            # per-model allowlist that would go stale. Determinism is still
+            # guaranteed at the pipeline level by the on-disk label cache
+            # (each change_uid/model_id/prompt_version is only ever called
+            # once, live output is never re-requested), independent of
+            # whether the API honors temperature=0 for a given model.
+            if (
+                error.response.status_code == 400
+                and "temperature" in body
+                and "temperature" in error.response.text
+                and "deprecated" in error.response.text
+            ):
+                retry_body = {key: value for key, value in body.items() if key != "temperature"}
+                return self._post(retry_body, model_id=model_id)
+            raise LLMClientError(f"Anthropic API call failed for {model_id}: {error}") from error
         except httpx.HTTPError as error:
             raise LLMClientError(f"Anthropic API call failed for {model_id}: {error}") from error
+        return response.json()
 
-        payload = response.json()
+    def _parse_response(self, payload: dict, *, model_id: str) -> RawLLMResponse:
         content_blocks = payload.get("content") or []
         text = "".join(
             block.get("text", "") for block in content_blocks if block.get("type") == "text"

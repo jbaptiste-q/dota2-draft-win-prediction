@@ -20,9 +20,21 @@ MODEL_IDS: tuple[str, ...] = (
     "claude-fable-5",
 )
 
-STEP_2A_SAMPLE_SIZE = 80
+STEP_2A_SAMPLE_SIZE = 120
 STEP_2A_SAMPLE_SEED = 20260804
 STEP_2A_SCOPES: tuple[str, ...] = ("hero", "ability", "talent")
+
+# Guarantee at least this many changes labeled 'rework' and 'neutral' by
+# the cheap screening model (Haiku), so the model-selection experiment
+# always has some examples of each even though both are rare in the
+# corpus overall. Since Haiku is itself one of the three compared
+# models, a Haiku-screened hit already satisfies "any model labels it
+# rework/neutral" -- no need to screen with all three models.
+STEP_2A_MIN_REWORK_EXAMPLES = 10
+STEP_2A_MIN_NEUTRAL_EXAMPLES = 10
+STEP_2A_SCREENING_POOL_SIZE = 500
+STEP_2A_SCREENING_SEED = STEP_2A_SAMPLE_SEED + 1
+STEP_2A_INTERLEAVE_SEED = STEP_2A_SAMPLE_SEED + 2
 
 
 def stratified_sample(
@@ -97,10 +109,59 @@ def stratified_sample(
     return sample
 
 
+def draw_screening_pool(
+    changes: Sequence[FlattenedChange],
+    *,
+    exclude_uids: set[str],
+    pool_size: int = STEP_2A_SCREENING_POOL_SIZE,
+    seed: int = STEP_2A_SCREENING_SEED,
+    scopes: tuple[str, ...] = STEP_2A_SCOPES,
+) -> list[FlattenedChange]:
+    """Deterministically draw a bounded candidate pool for targeted top-up.
+
+    Excludes anything already in the main random sample. Sorted by
+    change_uid so scanning the pool in order (with early stopping once
+    quotas are met) is itself deterministic.
+    """
+
+    population = sorted(
+        (
+            change for change in changes
+            if change.scope in scopes and change.change_uid not in exclude_uids
+        ),
+        key=lambda change: change.change_uid,
+    )
+    if not population:
+        return []
+    rng = random.Random(seed)
+    size = min(pool_size, len(population))
+    pool = rng.sample(population, size)
+    pool.sort(key=lambda change: change.change_uid)
+    return pool
+
+
+def interleave(
+    changes: Sequence[FlattenedChange], *, seed: int = STEP_2A_INTERLEAVE_SEED
+) -> list[FlattenedChange]:
+    """Deterministically shuffle so origin (random vs targeted) isn't visible
+    from row order alone."""
+
+    shuffled = sorted(changes, key=lambda change: change.change_uid)
+    random.Random(seed).shuffle(shuffled)
+    return shuffled
+
+
 __all__ = [
     "MODEL_IDS",
+    "STEP_2A_INTERLEAVE_SEED",
+    "STEP_2A_MIN_NEUTRAL_EXAMPLES",
+    "STEP_2A_MIN_REWORK_EXAMPLES",
     "STEP_2A_SAMPLE_SEED",
     "STEP_2A_SAMPLE_SIZE",
     "STEP_2A_SCOPES",
+    "STEP_2A_SCREENING_POOL_SIZE",
+    "STEP_2A_SCREENING_SEED",
+    "draw_screening_pool",
+    "interleave",
     "stratified_sample",
 ]

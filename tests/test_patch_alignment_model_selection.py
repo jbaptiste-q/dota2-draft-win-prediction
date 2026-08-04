@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from src.patch_alignment.change_flattening import FlattenedChange
-from src.patch_alignment.model_selection import stratified_sample
+from src.patch_alignment.model_selection import draw_screening_pool, interleave, stratified_sample
 
 
 def build_population() -> list[FlattenedChange]:
@@ -58,3 +58,43 @@ def test_stratified_sample_rejects_oversized_request() -> None:
 def test_stratified_sample_rejects_empty_population() -> None:
     with pytest.raises(ValueError):
         stratified_sample([], sample_size=5, seed=1)
+
+
+def test_draw_screening_pool_excludes_given_uids() -> None:
+    population = build_population()
+    exclude = {c.change_uid for c in population[:10]}
+    pool = draw_screening_pool(population, exclude_uids=exclude, pool_size=15, seed=1)
+    assert not (exclude & {c.change_uid for c in pool})
+    assert {c.scope for c in pool} <= {"hero", "ability", "talent"}
+
+
+def test_draw_screening_pool_is_deterministic() -> None:
+    population = build_population()
+    exclude = {c.change_uid for c in population[:5]}
+    first = draw_screening_pool(population, exclude_uids=exclude, pool_size=10, seed=7)
+    second = draw_screening_pool(population, exclude_uids=exclude, pool_size=10, seed=7)
+    assert [c.change_uid for c in first] == [c.change_uid for c in second]
+
+
+def test_draw_screening_pool_caps_at_available_population() -> None:
+    population = build_population()
+    exclude = {c.change_uid for c in population}  # exclude everything
+    pool = draw_screening_pool(population, exclude_uids=exclude, pool_size=50, seed=1)
+    assert pool == []
+
+
+def test_interleave_is_deterministic_and_preserves_membership() -> None:
+    population = build_population()
+    sample = stratified_sample(population, sample_size=10, seed=1)
+    first = interleave(sample)
+    second = interleave(sample)
+    assert [c.change_uid for c in first] == [c.change_uid for c in second]
+    assert {c.change_uid for c in first} == {c.change_uid for c in sample}
+
+
+def test_interleave_actually_reorders() -> None:
+    population = build_population()
+    sample = stratified_sample(population, sample_size=15, seed=1)
+    original_order = [c.change_uid for c in sample]
+    shuffled_order = [c.change_uid for c in interleave(sample)]
+    assert shuffled_order != original_order
