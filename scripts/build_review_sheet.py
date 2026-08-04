@@ -15,7 +15,6 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import subprocess
 import sys
 from pathlib import Path
 
@@ -24,6 +23,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.patch_alignment.change_flattening import flatten_patch_changes  # noqa: E402
+from src.patch_alignment.path_guard import assert_path_is_gitignored  # noqa: E402
 
 DEFAULT_LABELS_PATH = Path("data/derived/patch_labels/labels.json")
 DEFAULT_OUTPUT_PATH = Path("data/derived/patch_labels/review/labels_with_text.csv")
@@ -33,25 +33,6 @@ REVIEW_FIELDNAMES = [
     "direction", "magnitude", "change_type", "confidence",
     "model_id", "prompt_version",
 ]
-
-
-class RefusedWritePathError(RuntimeError):
-    """Raised when the requested output path is not covered by .gitignore."""
-
-
-def assert_path_is_gitignored(path: Path) -> None:
-    """Refuse to write raw_text anywhere git could ever end up committing."""
-
-    result = subprocess.run(
-        ["git", "check-ignore", "--quiet", str(path)],
-        cwd=PROJECT_ROOT,
-        check=False,
-    )
-    if result.returncode != 0:
-        raise RefusedWritePathError(
-            f"{path} is not covered by .gitignore. Refusing to write raw "
-            "patch-note text (Valve's content) to a path that could be committed."
-        )
 
 
 def parse_args() -> argparse.Namespace:
