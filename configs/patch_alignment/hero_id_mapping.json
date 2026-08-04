@@ -1,0 +1,636 @@
+{
+  "generated_at_utc": "2026-08-04T10:49:13.446506+00:00",
+  "mapped_count": 125,
+  "mapping": [
+    {
+      "hero_id": 102,
+      "hero_key": "abaddon",
+      "opendota_localized_name": "Abaddon"
+    },
+    {
+      "hero_id": 73,
+      "hero_key": "alchemist",
+      "opendota_localized_name": "Alchemist"
+    },
+    {
+      "hero_id": 68,
+      "hero_key": "ancient-apparition",
+      "opendota_localized_name": "Ancient Apparition"
+    },
+    {
+      "hero_id": 1,
+      "hero_key": "anti-mage",
+      "opendota_localized_name": "Anti-Mage"
+    },
+    {
+      "hero_id": 113,
+      "hero_key": "arc-warden",
+      "opendota_localized_name": "Arc Warden"
+    },
+    {
+      "hero_id": 2,
+      "hero_key": "axe",
+      "opendota_localized_name": "Axe"
+    },
+    {
+      "hero_id": 3,
+      "hero_key": "bane",
+      "opendota_localized_name": "Bane"
+    },
+    {
+      "hero_id": 65,
+      "hero_key": "batrider",
+      "opendota_localized_name": "Batrider"
+    },
+    {
+      "hero_id": 38,
+      "hero_key": "beastmaster",
+      "opendota_localized_name": "Beastmaster"
+    },
+    {
+      "hero_id": 4,
+      "hero_key": "bloodseeker",
+      "opendota_localized_name": "Bloodseeker"
+    },
+    {
+      "hero_id": 62,
+      "hero_key": "bounty-hunter",
+      "opendota_localized_name": "Bounty Hunter"
+    },
+    {
+      "hero_id": 78,
+      "hero_key": "brewmaster",
+      "opendota_localized_name": "Brewmaster"
+    },
+    {
+      "hero_id": 99,
+      "hero_key": "bristleback",
+      "opendota_localized_name": "Bristleback"
+    },
+    {
+      "hero_id": 61,
+      "hero_key": "broodmother",
+      "opendota_localized_name": "Broodmother"
+    },
+    {
+      "hero_id": 96,
+      "hero_key": "centaur-warrunner",
+      "opendota_localized_name": "Centaur Warrunner"
+    },
+    {
+      "hero_id": 81,
+      "hero_key": "chaos-knight",
+      "opendota_localized_name": "Chaos Knight"
+    },
+    {
+      "hero_id": 66,
+      "hero_key": "chen",
+      "opendota_localized_name": "Chen"
+    },
+    {
+      "hero_id": 56,
+      "hero_key": "clinkz",
+      "opendota_localized_name": "Clinkz"
+    },
+    {
+      "hero_id": 51,
+      "hero_key": "clockwerk",
+      "opendota_localized_name": "Clockwerk"
+    },
+    {
+      "hero_id": 5,
+      "hero_key": "crystal-maiden",
+      "opendota_localized_name": "Crystal Maiden"
+    },
+    {
+      "hero_id": 55,
+      "hero_key": "dark-seer",
+      "opendota_localized_name": "Dark Seer"
+    },
+    {
+      "hero_id": 119,
+      "hero_key": "dark-willow",
+      "opendota_localized_name": "Dark Willow"
+    },
+    {
+      "hero_id": 135,
+      "hero_key": "dawnbreaker",
+      "opendota_localized_name": "Dawnbreaker"
+    },
+    {
+      "hero_id": 50,
+      "hero_key": "dazzle",
+      "opendota_localized_name": "Dazzle"
+    },
+    {
+      "hero_id": 43,
+      "hero_key": "death-prophet",
+      "opendota_localized_name": "Death Prophet"
+    },
+    {
+      "hero_id": 87,
+      "hero_key": "disruptor",
+      "opendota_localized_name": "Disruptor"
+    },
+    {
+      "hero_id": 69,
+      "hero_key": "doom",
+      "opendota_localized_name": "Doom"
+    },
+    {
+      "hero_id": 49,
+      "hero_key": "dragon-knight",
+      "opendota_localized_name": "Dragon Knight"
+    },
+    {
+      "hero_id": 6,
+      "hero_key": "drow-ranger",
+      "opendota_localized_name": "Drow Ranger"
+    },
+    {
+      "hero_id": 107,
+      "hero_key": "earth-spirit",
+      "opendota_localized_name": "Earth Spirit"
+    },
+    {
+      "hero_id": 7,
+      "hero_key": "earthshaker",
+      "opendota_localized_name": "Earthshaker"
+    },
+    {
+      "hero_id": 103,
+      "hero_key": "elder-titan",
+      "opendota_localized_name": "Elder Titan"
+    },
+    {
+      "hero_id": 106,
+      "hero_key": "ember-spirit",
+      "opendota_localized_name": "Ember Spirit"
+    },
+    {
+      "hero_id": 58,
+      "hero_key": "enchantress",
+      "opendota_localized_name": "Enchantress"
+    },
+    {
+      "hero_id": 33,
+      "hero_key": "enigma",
+      "opendota_localized_name": "Enigma"
+    },
+    {
+      "hero_id": 41,
+      "hero_key": "faceless-void",
+      "opendota_localized_name": "Faceless Void"
+    },
+    {
+      "hero_id": 121,
+      "hero_key": "grimstroke",
+      "opendota_localized_name": "Grimstroke"
+    },
+    {
+      "hero_id": 72,
+      "hero_key": "gyrocopter",
+      "opendota_localized_name": "Gyrocopter"
+    },
+    {
+      "hero_id": 123,
+      "hero_key": "hoodwink",
+      "opendota_localized_name": "Hoodwink"
+    },
+    {
+      "hero_id": 59,
+      "hero_key": "huskar",
+      "opendota_localized_name": "Huskar"
+    },
+    {
+      "hero_id": 74,
+      "hero_key": "invoker",
+      "opendota_localized_name": "Invoker"
+    },
+    {
+      "hero_id": 91,
+      "hero_key": "io",
+      "opendota_localized_name": "Io"
+    },
+    {
+      "hero_id": 64,
+      "hero_key": "jakiro",
+      "opendota_localized_name": "Jakiro"
+    },
+    {
+      "hero_id": 8,
+      "hero_key": "juggernaut",
+      "opendota_localized_name": "Juggernaut"
+    },
+    {
+      "hero_id": 90,
+      "hero_key": "keeper-of-the-light",
+      "opendota_localized_name": "Keeper of the Light"
+    },
+    {
+      "hero_id": 23,
+      "hero_key": "kunkka",
+      "opendota_localized_name": "Kunkka"
+    },
+    {
+      "hero_id": 104,
+      "hero_key": "legion-commander",
+      "opendota_localized_name": "Legion Commander"
+    },
+    {
+      "hero_id": 52,
+      "hero_key": "leshrac",
+      "opendota_localized_name": "Leshrac"
+    },
+    {
+      "hero_id": 31,
+      "hero_key": "lich",
+      "opendota_localized_name": "Lich"
+    },
+    {
+      "hero_id": 54,
+      "hero_key": "lifestealer",
+      "opendota_localized_name": "Lifestealer"
+    },
+    {
+      "hero_id": 25,
+      "hero_key": "lina",
+      "opendota_localized_name": "Lina"
+    },
+    {
+      "hero_id": 26,
+      "hero_key": "lion",
+      "opendota_localized_name": "Lion"
+    },
+    {
+      "hero_id": 80,
+      "hero_key": "lone-druid",
+      "opendota_localized_name": "Lone Druid"
+    },
+    {
+      "hero_id": 48,
+      "hero_key": "luna",
+      "opendota_localized_name": "Luna"
+    },
+    {
+      "hero_id": 77,
+      "hero_key": "lycan",
+      "opendota_localized_name": "Lycan"
+    },
+    {
+      "hero_id": 97,
+      "hero_key": "magnus",
+      "opendota_localized_name": "Magnus"
+    },
+    {
+      "hero_id": 136,
+      "hero_key": "marci",
+      "opendota_localized_name": "Marci"
+    },
+    {
+      "hero_id": 129,
+      "hero_key": "mars",
+      "opendota_localized_name": "Mars"
+    },
+    {
+      "hero_id": 94,
+      "hero_key": "medusa",
+      "opendota_localized_name": "Medusa"
+    },
+    {
+      "hero_id": 82,
+      "hero_key": "meepo",
+      "opendota_localized_name": "Meepo"
+    },
+    {
+      "hero_id": 9,
+      "hero_key": "mirana",
+      "opendota_localized_name": "Mirana"
+    },
+    {
+      "hero_id": 114,
+      "hero_key": "monkey-king",
+      "opendota_localized_name": "Monkey King"
+    },
+    {
+      "hero_id": 10,
+      "hero_key": "morphling",
+      "opendota_localized_name": "Morphling"
+    },
+    {
+      "hero_id": 138,
+      "hero_key": "muerta",
+      "opendota_localized_name": "Muerta"
+    },
+    {
+      "hero_id": 89,
+      "hero_key": "naga-siren",
+      "opendota_localized_name": "Naga Siren"
+    },
+    {
+      "hero_id": 53,
+      "hero_key": "nature-s-prophet",
+      "opendota_localized_name": "Nature's Prophet"
+    },
+    {
+      "hero_id": 36,
+      "hero_key": "necrophos",
+      "opendota_localized_name": "Necrophos"
+    },
+    {
+      "hero_id": 60,
+      "hero_key": "night-stalker",
+      "opendota_localized_name": "Night Stalker"
+    },
+    {
+      "hero_id": 88,
+      "hero_key": "nyx-assassin",
+      "opendota_localized_name": "Nyx Assassin"
+    },
+    {
+      "hero_id": 84,
+      "hero_key": "ogre-magi",
+      "opendota_localized_name": "Ogre Magi"
+    },
+    {
+      "hero_id": 57,
+      "hero_key": "omniknight",
+      "opendota_localized_name": "Omniknight"
+    },
+    {
+      "hero_id": 111,
+      "hero_key": "oracle",
+      "opendota_localized_name": "Oracle"
+    },
+    {
+      "hero_id": 76,
+      "hero_key": "outworld-destroyer",
+      "opendota_localized_name": "Outworld Destroyer"
+    },
+    {
+      "hero_id": 120,
+      "hero_key": "pangolier",
+      "opendota_localized_name": "Pangolier"
+    },
+    {
+      "hero_id": 44,
+      "hero_key": "phantom-assassin",
+      "opendota_localized_name": "Phantom Assassin"
+    },
+    {
+      "hero_id": 12,
+      "hero_key": "phantom-lancer",
+      "opendota_localized_name": "Phantom Lancer"
+    },
+    {
+      "hero_id": 110,
+      "hero_key": "phoenix",
+      "opendota_localized_name": "Phoenix"
+    },
+    {
+      "hero_id": 137,
+      "hero_key": "primal-beast",
+      "opendota_localized_name": "Primal Beast"
+    },
+    {
+      "hero_id": 13,
+      "hero_key": "puck",
+      "opendota_localized_name": "Puck"
+    },
+    {
+      "hero_id": 14,
+      "hero_key": "pudge",
+      "opendota_localized_name": "Pudge"
+    },
+    {
+      "hero_id": 45,
+      "hero_key": "pugna",
+      "opendota_localized_name": "Pugna"
+    },
+    {
+      "hero_id": 39,
+      "hero_key": "queen-of-pain",
+      "opendota_localized_name": "Queen of Pain"
+    },
+    {
+      "hero_id": 15,
+      "hero_key": "razor",
+      "opendota_localized_name": "Razor"
+    },
+    {
+      "hero_id": 32,
+      "hero_key": "riki",
+      "opendota_localized_name": "Riki"
+    },
+    {
+      "hero_id": 131,
+      "hero_key": "ringmaster",
+      "opendota_localized_name": "Ringmaster"
+    },
+    {
+      "hero_id": 86,
+      "hero_key": "rubick",
+      "opendota_localized_name": "Rubick"
+    },
+    {
+      "hero_id": 16,
+      "hero_key": "sand-king",
+      "opendota_localized_name": "Sand King"
+    },
+    {
+      "hero_id": 79,
+      "hero_key": "shadow-demon",
+      "opendota_localized_name": "Shadow Demon"
+    },
+    {
+      "hero_id": 11,
+      "hero_key": "shadow-fiend",
+      "opendota_localized_name": "Shadow Fiend"
+    },
+    {
+      "hero_id": 27,
+      "hero_key": "shadow-shaman",
+      "opendota_localized_name": "Shadow Shaman"
+    },
+    {
+      "hero_id": 75,
+      "hero_key": "silencer",
+      "opendota_localized_name": "Silencer"
+    },
+    {
+      "hero_id": 101,
+      "hero_key": "skywrath-mage",
+      "opendota_localized_name": "Skywrath Mage"
+    },
+    {
+      "hero_id": 28,
+      "hero_key": "slardar",
+      "opendota_localized_name": "Slardar"
+    },
+    {
+      "hero_id": 93,
+      "hero_key": "slark",
+      "opendota_localized_name": "Slark"
+    },
+    {
+      "hero_id": 128,
+      "hero_key": "snapfire",
+      "opendota_localized_name": "Snapfire"
+    },
+    {
+      "hero_id": 35,
+      "hero_key": "sniper",
+      "opendota_localized_name": "Sniper"
+    },
+    {
+      "hero_id": 67,
+      "hero_key": "spectre",
+      "opendota_localized_name": "Spectre"
+    },
+    {
+      "hero_id": 71,
+      "hero_key": "spirit-breaker",
+      "opendota_localized_name": "Spirit Breaker"
+    },
+    {
+      "hero_id": 17,
+      "hero_key": "storm-spirit",
+      "opendota_localized_name": "Storm Spirit"
+    },
+    {
+      "hero_id": 18,
+      "hero_key": "sven",
+      "opendota_localized_name": "Sven"
+    },
+    {
+      "hero_id": 105,
+      "hero_key": "techies",
+      "opendota_localized_name": "Techies"
+    },
+    {
+      "hero_id": 46,
+      "hero_key": "templar-assassin",
+      "opendota_localized_name": "Templar Assassin"
+    },
+    {
+      "hero_id": 109,
+      "hero_key": "terrorblade",
+      "opendota_localized_name": "Terrorblade"
+    },
+    {
+      "hero_id": 29,
+      "hero_key": "tidehunter",
+      "opendota_localized_name": "Tidehunter"
+    },
+    {
+      "hero_id": 98,
+      "hero_key": "timbersaw",
+      "opendota_localized_name": "Timbersaw"
+    },
+    {
+      "hero_id": 34,
+      "hero_key": "tinker",
+      "opendota_localized_name": "Tinker"
+    },
+    {
+      "hero_id": 19,
+      "hero_key": "tiny",
+      "opendota_localized_name": "Tiny"
+    },
+    {
+      "hero_id": 83,
+      "hero_key": "treant-protector",
+      "opendota_localized_name": "Treant Protector"
+    },
+    {
+      "hero_id": 95,
+      "hero_key": "troll-warlord",
+      "opendota_localized_name": "Troll Warlord"
+    },
+    {
+      "hero_id": 100,
+      "hero_key": "tusk",
+      "opendota_localized_name": "Tusk"
+    },
+    {
+      "hero_id": 108,
+      "hero_key": "underlord",
+      "opendota_localized_name": "Underlord"
+    },
+    {
+      "hero_id": 85,
+      "hero_key": "undying",
+      "opendota_localized_name": "Undying"
+    },
+    {
+      "hero_id": 70,
+      "hero_key": "ursa",
+      "opendota_localized_name": "Ursa"
+    },
+    {
+      "hero_id": 20,
+      "hero_key": "vengeful-spirit",
+      "opendota_localized_name": "Vengeful Spirit"
+    },
+    {
+      "hero_id": 40,
+      "hero_key": "venomancer",
+      "opendota_localized_name": "Venomancer"
+    },
+    {
+      "hero_id": 47,
+      "hero_key": "viper",
+      "opendota_localized_name": "Viper"
+    },
+    {
+      "hero_id": 92,
+      "hero_key": "visage",
+      "opendota_localized_name": "Visage"
+    },
+    {
+      "hero_id": 126,
+      "hero_key": "void-spirit",
+      "opendota_localized_name": "Void Spirit"
+    },
+    {
+      "hero_id": 37,
+      "hero_key": "warlock",
+      "opendota_localized_name": "Warlock"
+    },
+    {
+      "hero_id": 63,
+      "hero_key": "weaver",
+      "opendota_localized_name": "Weaver"
+    },
+    {
+      "hero_id": 21,
+      "hero_key": "windranger",
+      "opendota_localized_name": "Windranger"
+    },
+    {
+      "hero_id": 112,
+      "hero_key": "winter-wyvern",
+      "opendota_localized_name": "Winter Wyvern"
+    },
+    {
+      "hero_id": 30,
+      "hero_key": "witch-doctor",
+      "opendota_localized_name": "Witch Doctor"
+    },
+    {
+      "hero_id": 42,
+      "hero_key": "wraith-king",
+      "opendota_localized_name": "Wraith King"
+    },
+    {
+      "hero_id": 22,
+      "hero_key": "zeus",
+      "opendota_localized_name": "Zeus"
+    }
+  ],
+  "schema_version": "dota2-ml-portfolio-hero-id-mapping-v1",
+  "source": "https://api.opendota.com/api/heroes",
+  "unmatched_vocabulary_count": 0,
+  "vocabulary_size": 125,
+  "vocabulary_source": "src/draft_ai_assistant/resources/development_candidate_v0.json"
+}

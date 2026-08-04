@@ -1,0 +1,366 @@
+{
+  "failures": [
+    {
+      "reason": "7.4: response did not report success=true (got False).",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.4&language=english",
+      "version": "7.4"
+    }
+  ],
+  "generated_at_utc": "2026-08-04T10:48:51.159077+00:00",
+  "schema_version": "dota2-ml-portfolio-patch-notes-manifest-v1",
+  "source_endpoint": "https://www.dota2.com/datafeed/patchnotes?version={version}&language=english",
+  "versions": [
+    {
+      "byte_count": 13040,
+      "fetched_at_utc": "2026-08-04T10:46:36.144409+00:00",
+      "raw_file": "7.30e.json",
+      "sha256": "729a1e4268ecfa37d0773a6044b8d854dc3d19c3415b531efc8d18b36e152718",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.30e&language=english",
+      "version": "7.30e"
+    },
+    {
+      "byte_count": 6559,
+      "fetched_at_utc": "2026-08-04T10:46:40.952488+00:00",
+      "raw_file": "7.31b.json",
+      "sha256": "4eb9039f4bb4619b5a63562e4d7a64e9696393c442d53230f29cbf06ceebf969",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.31b&language=english",
+      "version": "7.31b"
+    },
+    {
+      "byte_count": 13891,
+      "fetched_at_utc": "2026-08-04T10:46:43.935802+00:00",
+      "raw_file": "7.31c.json",
+      "sha256": "a466b0d430266f86d5aec3b2c8e437e9dff994bbc57bc654c3451c37fbfeeab3",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.31c&language=english",
+      "version": "7.31c"
+    },
+    {
+      "byte_count": 16153,
+      "fetched_at_utc": "2026-08-04T10:46:46.607045+00:00",
+      "raw_file": "7.31d.json",
+      "sha256": "7e1c74ba750f211d1305c5deeb475e40ac597e423974ec2e898e162f7d5b074c",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.31d&language=english",
+      "version": "7.31d"
+    },
+    {
+      "byte_count": 92953,
+      "fetched_at_utc": "2026-08-04T10:46:49.373316+00:00",
+      "raw_file": "7.32.json",
+      "sha256": "ed1e0611aaf132a4f870209250781ca31e57178c1a56b20373c3ed0404006c0d",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.32&language=english",
+      "version": "7.32"
+    },
+    {
+      "byte_count": 16337,
+      "fetched_at_utc": "2026-08-04T10:46:53.381339+00:00",
+      "raw_file": "7.32b.json",
+      "sha256": "a06712aafc17af006ba552ab51ac74a72486e58d5399d66824badedd371bd2cf",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.32b&language=english",
+      "version": "7.32b"
+    },
+    {
+      "byte_count": 17449,
+      "fetched_at_utc": "2026-08-04T10:46:56.026864+00:00",
+      "raw_file": "7.32c.json",
+      "sha256": "6a3f0c1764f32be9b85eb4ec0ee924df8c49956c8da56f9caa0cf0a3aded56b2",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.32c&language=english",
+      "version": "7.32c"
+    },
+    {
+      "byte_count": 18128,
+      "fetched_at_utc": "2026-08-04T10:46:59.055064+00:00",
+      "raw_file": "7.32d.json",
+      "sha256": "9b3948885779b76185d02df7212bf9c7ae468a21e5948a3408ee874e5d044c01",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.32d&language=english",
+      "version": "7.32d"
+    },
+    {
+      "byte_count": 21867,
+      "fetched_at_utc": "2026-08-04T10:47:01.753124+00:00",
+      "raw_file": "7.32e.json",
+      "sha256": "cc3280d7c1469938d44f44b7095c8a8f64b3928ed63b97ebc57928152cb4a001",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.32e&language=english",
+      "version": "7.32e"
+    },
+    {
+      "byte_count": 15922,
+      "fetched_at_utc": "2026-08-04T10:47:04.595018+00:00",
+      "raw_file": "7.33b.json",
+      "sha256": "2138e3f1ad32a6710dff69f324b1521a9f8ca93db4dccdad437843f421a03c2e",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.33b&language=english",
+      "version": "7.33b"
+    },
+    {
+      "byte_count": 24166,
+      "fetched_at_utc": "2026-08-04T10:47:07.097443+00:00",
+      "raw_file": "7.33c.json",
+      "sha256": "4d10d57e6413e6d854f394005e2e40c8c116dedf1a60f3402993fa8b52684cc1",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.33c&language=english",
+      "version": "7.33c"
+    },
+    {
+      "byte_count": 16264,
+      "fetched_at_utc": "2026-08-04T10:47:09.973680+00:00",
+      "raw_file": "7.33d.json",
+      "sha256": "ab3894bb32e297d156ba3efc275fcb9852e32ec53e3d491f055a4754f7dc6152",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.33d&language=english",
+      "version": "7.33d"
+    },
+    {
+      "byte_count": 4018,
+      "fetched_at_utc": "2026-08-04T10:47:12.802708+00:00",
+      "raw_file": "7.33e.json",
+      "sha256": "ce7881f512d98316512603e3546ed0439d773964865bef69f3214d33ac8fb437",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.33e&language=english",
+      "version": "7.33e"
+    },
+    {
+      "byte_count": 82566,
+      "fetched_at_utc": "2026-08-04T10:47:15.565975+00:00",
+      "raw_file": "7.34.json",
+      "sha256": "6b314a1c829f67f28bdcfda3572d8a4df801e41ec761a11945c425e378671740",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.34&language=english",
+      "version": "7.34"
+    },
+    {
+      "byte_count": 11736,
+      "fetched_at_utc": "2026-08-04T10:47:19.049590+00:00",
+      "raw_file": "7.34b.json",
+      "sha256": "9f4b8f6efad3e0e97f6dca63884bc223f6e3314009f4518d8d59fea39f191c54",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.34b&language=english",
+      "version": "7.34b"
+    },
+    {
+      "byte_count": 18483,
+      "fetched_at_utc": "2026-08-04T10:47:22.032547+00:00",
+      "raw_file": "7.34c.json",
+      "sha256": "0542f75c22292664b23100224b7a7faa5c70f4393027602222d471c5fa4c795f",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.34c&language=english",
+      "version": "7.34c"
+    },
+    {
+      "byte_count": 13611,
+      "fetched_at_utc": "2026-08-04T10:47:24.653304+00:00",
+      "raw_file": "7.34d.json",
+      "sha256": "8e853acf3905d256de83d83f0c6cda49f90d8af8eba409e628d6f7511f0bee7d",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.34d&language=english",
+      "version": "7.34d"
+    },
+    {
+      "byte_count": 7374,
+      "fetched_at_utc": "2026-08-04T10:47:27.041200+00:00",
+      "raw_file": "7.34e.json",
+      "sha256": "fb1bd65f0127db19668726f667613c7333c5be03264f365aa38a5b98d239c733",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.34e&language=english",
+      "version": "7.34e"
+    },
+    {
+      "byte_count": 76898,
+      "fetched_at_utc": "2026-08-04T10:47:30.095135+00:00",
+      "raw_file": "7.35.json",
+      "sha256": "591e1c3e0e2a8638574a7b1da806aed7e3b0f09874dfd9bbcefe82ab038ac33f",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.35&language=english",
+      "version": "7.35"
+    },
+    {
+      "byte_count": 10759,
+      "fetched_at_utc": "2026-08-04T10:47:32.516890+00:00",
+      "raw_file": "7.35b.json",
+      "sha256": "5506ae35c7dd3d4fff86a46f660bd463abb4964ac367e95880dfb2cb4f1e687b",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.35b&language=english",
+      "version": "7.35b"
+    },
+    {
+      "byte_count": 17419,
+      "fetched_at_utc": "2026-08-04T10:47:35.492379+00:00",
+      "raw_file": "7.35c.json",
+      "sha256": "72b92e4342505539f6b13aed94af3e5f7a6685d1666c3458168f111255de474e",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.35c&language=english",
+      "version": "7.35c"
+    },
+    {
+      "byte_count": 14626,
+      "fetched_at_utc": "2026-08-04T10:47:39.000102+00:00",
+      "raw_file": "7.35d.json",
+      "sha256": "28979b379359a14030a9e5344ffd30f0baf459fb691a17a22e889aa419fc3317",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.35d&language=english",
+      "version": "7.35d"
+    },
+    {
+      "byte_count": 273900,
+      "fetched_at_utc": "2026-08-04T10:47:42.697855+00:00",
+      "raw_file": "7.36.json",
+      "sha256": "553f3b825b4989aa25263a91796822ec849715eb8792eaeb13f2e662c3780845",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.36&language=english",
+      "version": "7.36"
+    },
+    {
+      "byte_count": 27120,
+      "fetched_at_utc": "2026-08-04T10:47:45.790551+00:00",
+      "raw_file": "7.36a.json",
+      "sha256": "2714073a2670a3e5ebbaf0e287f7f53d55b713fdcc24ad5af056606d1dba44a1",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.36a&language=english",
+      "version": "7.36a"
+    },
+    {
+      "byte_count": 46687,
+      "fetched_at_utc": "2026-08-04T10:47:49.107203+00:00",
+      "raw_file": "7.36b.json",
+      "sha256": "d0e2043ca26bf64b66086b6ad653fcda4b459c01914ca536f1602e94e37f4de6",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.36b&language=english",
+      "version": "7.36b"
+    },
+    {
+      "byte_count": 24070,
+      "fetched_at_utc": "2026-08-04T10:47:52.270787+00:00",
+      "raw_file": "7.36c.json",
+      "sha256": "610d12f8c63a5622d43ed2dc9c4e0a2ed65635241fa81f56c6247a00a8d845dc",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.36c&language=english",
+      "version": "7.36c"
+    },
+    {
+      "byte_count": 90933,
+      "fetched_at_utc": "2026-08-04T10:47:56.635669+00:00",
+      "raw_file": "7.37.json",
+      "sha256": "aee84631cda37ef608b02844bd50fac0ff90527e43a2cb7c834fff3f28315804",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.37&language=english",
+      "version": "7.37"
+    },
+    {
+      "byte_count": 22122,
+      "fetched_at_utc": "2026-08-04T10:48:00.304275+00:00",
+      "raw_file": "7.37b.json",
+      "sha256": "5ffc8ce266912a19d5c1e2d99f8916599119da42d6cfe15ad532c53404cc257d",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.37b&language=english",
+      "version": "7.37b"
+    },
+    {
+      "byte_count": 12207,
+      "fetched_at_utc": "2026-08-04T10:48:02.738314+00:00",
+      "raw_file": "7.37c.json",
+      "sha256": "852549904a6a1261d0c4027ab4d83b7d09ca53c47dfa604ac3e98d76f7db84db",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.37c&language=english",
+      "version": "7.37c"
+    },
+    {
+      "byte_count": 22031,
+      "fetched_at_utc": "2026-08-04T10:48:05.336170+00:00",
+      "raw_file": "7.37d.json",
+      "sha256": "c545e1134889ea62bfa78785ce264e30eb289a655a76fffb6d5ece030416885a",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.37d&language=english",
+      "version": "7.37d"
+    },
+    {
+      "byte_count": 16776,
+      "fetched_at_utc": "2026-08-04T10:48:08.221818+00:00",
+      "raw_file": "7.37e.json",
+      "sha256": "d46896b1c16b9b8898927cd63dd92b76f2bc960e2456f6b44d635102ee0bc94f",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.37e&language=english",
+      "version": "7.37e"
+    },
+    {
+      "byte_count": 219245,
+      "fetched_at_utc": "2026-08-04T10:48:11.740349+00:00",
+      "raw_file": "7.38.json",
+      "sha256": "24231525f0516890a5eba9472660445512578379f7080d51bfa8e10d96d98934",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.38&language=english",
+      "version": "7.38"
+    },
+    {
+      "byte_count": 23173,
+      "fetched_at_utc": "2026-08-04T10:48:14.814216+00:00",
+      "raw_file": "7.38b.json",
+      "sha256": "6ca62d2d593430d07bfc17c22442ed0808175a597a557e44dfe0ba5de7311f87",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.38b&language=english",
+      "version": "7.38b"
+    },
+    {
+      "byte_count": 25338,
+      "fetched_at_utc": "2026-08-04T10:48:18.128677+00:00",
+      "raw_file": "7.38c.json",
+      "sha256": "b1f3f7344dca0b2ac89801b68b654d9e828cb4b4d81fafdf8901d432a95c6c2f",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.38c&language=english",
+      "version": "7.38c"
+    },
+    {
+      "byte_count": 109172,
+      "fetched_at_utc": "2026-08-04T10:48:22.494577+00:00",
+      "raw_file": "7.39.json",
+      "sha256": "9eb8254a8695e5069f1a708bacef961e76180ab218f05d3606fff07d13557832",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.39&language=english",
+      "version": "7.39"
+    },
+    {
+      "byte_count": 12461,
+      "fetched_at_utc": "2026-08-04T10:48:25.992991+00:00",
+      "raw_file": "7.39b.json",
+      "sha256": "160c284267fc8c16f2524ea1d31fc88277e67f81087cedcb021636e4e0cb20ee",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.39b&language=english",
+      "version": "7.39b"
+    },
+    {
+      "byte_count": 14986,
+      "fetched_at_utc": "2026-08-04T10:48:28.616120+00:00",
+      "raw_file": "7.39c.json",
+      "sha256": "2c875faccd470e156f4a7cf8a5c762a178354afadd07fc2ec2a6e9f273890863",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.39c&language=english",
+      "version": "7.39c"
+    },
+    {
+      "byte_count": 15106,
+      "fetched_at_utc": "2026-08-04T10:48:31.056867+00:00",
+      "raw_file": "7.39d.json",
+      "sha256": "03ef828bf3bd0ab8fa2474ad5a6fbd32d7c23caa3a8a9b3641da4c6e8cbdc5e5",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.39d&language=english",
+      "version": "7.39d"
+    },
+    {
+      "byte_count": 15099,
+      "fetched_at_utc": "2026-08-04T10:48:33.636310+00:00",
+      "raw_file": "7.39e.json",
+      "sha256": "1566ebfba906bad4d1580ca94c13e217cf1c4ffeffd3ff8c1adda192ccdbd973",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.39e&language=english",
+      "version": "7.39e"
+    },
+    {
+      "byte_count": 124257,
+      "fetched_at_utc": "2026-08-04T10:48:37.366150+00:00",
+      "raw_file": "7.40.json",
+      "sha256": "4f831b14d41981f8f9cfc96e2decd9016c9033768ca6a8fc01c468a067fecd46",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.40&language=english",
+      "version": "7.40"
+    },
+    {
+      "byte_count": 24346,
+      "fetched_at_utc": "2026-08-04T10:48:41.597025+00:00",
+      "raw_file": "7.40b.json",
+      "sha256": "2f0f110f0c4858f04b607c0dc605a45671f5bdb2af504feb9047f9f9818ddfdb",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.40b&language=english",
+      "version": "7.40b"
+    },
+    {
+      "byte_count": 12103,
+      "fetched_at_utc": "2026-08-04T10:48:44.685132+00:00",
+      "raw_file": "7.40c.json",
+      "sha256": "a9b9f04b6415e9208b093b8822600ca6ec5949dea3bba425f2cccc5260fa7092",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.40c&language=english",
+      "version": "7.40c"
+    },
+    {
+      "byte_count": 210054,
+      "fetched_at_utc": "2026-08-04T10:48:48.066852+00:00",
+      "raw_file": "7.41.json",
+      "sha256": "c9451b8250c43b5f292259d039a2af2cfc13d7638693e5fa82dde906d22cca41",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.41&language=english",
+      "version": "7.41"
+    },
+    {
+      "byte_count": 10978,
+      "fetched_at_utc": "2026-08-04T10:48:51.155925+00:00",
+      "raw_file": "7.41a.json",
+      "sha256": "9feb22076c60e2eeeb8ba82208ccc3ae89c0b9e53009e793ef96f8407648e2d8",
+      "url": "https://www.dota2.com/datafeed/patchnotes?version=7.41a&language=english",
+      "version": "7.41a"
+    }
+  ]
+}
