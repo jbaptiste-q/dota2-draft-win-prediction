@@ -775,26 +775,53 @@ summary:focus-visible,
 .opening-hero-frame {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
 
-.opening-hero-frame img {
-  width: 128px;
-  height: 128px;
-  max-width: 100%;
-  object-fit: contain;
-  filter: saturate(1.1) contrast(1.12);
+.opening-hero-frame::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+  opacity: 0.4;
+  background:
+    repeating-linear-gradient(
+      60deg,
+      transparent 0 25px,
+      rgba(224, 184, 117, 0.09) 25px 26px
+    ),
+    repeating-linear-gradient(
+      120deg,
+      transparent 0 25px,
+      rgba(224, 184, 117, 0.09) 25px 26px
+    );
+}
+
+.opening-hero-frame::after {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  content: "";
+  background: linear-gradient(
+    135deg,
+    transparent 0 49.5%,
+    rgba(224, 184, 117, 0.32) 49.8% 50.2%,
+    transparent 50.5%
+  );
 }
 
 .opening-hero--radiant .opening-hero-frame {
   clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(145, 198, 90, 0.42), transparent 58%),
+    linear-gradient(135deg, rgba(91, 138, 58, 0.3), transparent 70%);
 }
 
 .opening-hero--dire .opening-hero-frame {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 18% 100%);
+  background:
+    radial-gradient(circle at 70% 30%, rgba(223, 98, 87, 0.38), transparent 58%),
+    linear-gradient(225deg, rgba(150, 58, 52, 0.28), transparent 70%);
 }
 
 .opening-hero > span {
@@ -1245,17 +1272,23 @@ summary:focus-visible,
 
 .radiant-panel .faction-showcase {
   clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
+  background:
+    radial-gradient(circle at 24% 50%, rgba(145, 198, 90, 0.24), transparent 62%),
+    #090b09;
   border-left: 2px solid rgba(145, 198, 90, 0.72);
 }
 
 .dire-panel .faction-showcase {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 18px 100%);
+  background:
+    radial-gradient(circle at 76% 50%, rgba(223, 98, 87, 0.22), transparent 62%),
+    #090b09;
   border-right: 2px solid rgba(223, 98, 87, 0.72);
 }
 
 .faction-showcase .hero-art-img {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   width: 128px;
   height: 128px;
   max-width: 100%;
@@ -1975,9 +2008,46 @@ summary:focus-visible,
   overflow: hidden;
 }
 
+.outcome-hero--radiant {
+  background: radial-gradient(
+    circle at 32% 42%,
+    rgba(145, 198, 90, 0.32),
+    transparent 62%
+  );
+}
+
+.outcome-hero--dire {
+  background: radial-gradient(
+    circle at 68% 42%,
+    rgba(223, 98, 87, 0.3),
+    transparent 62%
+  );
+}
+
+.outcome-hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  content: "";
+  opacity: 0.4;
+  background:
+    repeating-linear-gradient(
+      60deg,
+      transparent 0 25px,
+      rgba(224, 184, 117, 0.09) 25px 26px
+    ),
+    repeating-linear-gradient(
+      120deg,
+      transparent 0 25px,
+      rgba(224, 184, 117, 0.09) 25px 26px
+    );
+}
+
 .outcome-hero::after {
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
   content: "";
 }
@@ -1996,7 +2066,7 @@ summary:focus-visible,
 
 .outcome-hero .hero-art-img {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   width: 128px;
   height: 128px;
   max-width: 100%;
