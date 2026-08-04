@@ -13,8 +13,10 @@ import pandas as pd
 import pytest
 
 from src.draft_ai_modeling.embedding_config import (
+    EmbeddingConfigError,
     load_embedding_experiment_config,
 )
+from src.draft_ai_modeling.embedding_experiment import EmbeddingExperimentError
 from src.draft_ai_modeling.embeddings import (
     DraftEmbeddingError,
     draft_index_arrays,
@@ -282,6 +284,56 @@ def test_reserved_targets_are_masked_before_window_selection() -> None:
         joined["split_role"].isin({"train", "tuning"}),
         "radiant_win",
     ].notna().all()
+
+
+def test_window_rows_rejects_a_fold_that_reads_a_reserved_role() -> None:
+    from src.draft_ai_modeling.embedding_experiment import (
+        _joined_development_frame,
+        _window_rows,
+    )
+
+    config = load_embedding_experiment_config(
+        CONFIG,
+        repository_root=ROOT,
+        verify_local_artifacts=False,
+    )
+    frame = _synthetic_frame()
+    joined = _joined_development_frame(frame, _split(frame).manifest)
+    unsafe_fold = SimpleNamespace(
+        fold_id="unsafe",
+        train_start_utc=pd.Timestamp("2022-01-01", tz="UTC"),
+        train_end_utc=pd.Timestamp("2025-07-01", tz="UTC"),
+        evaluation_start_utc=pd.Timestamp("2025-10-01", tz="UTC"),
+        evaluation_end_utc=pd.Timestamp("2026-01-01", tz="UTC"),
+    )
+
+    with pytest.raises(EmbeddingConfigError, match="prohibited"):
+        _window_rows(joined, unsafe_fold, config)
+
+
+def test_window_rows_rejects_a_fold_that_crosses_source_matches() -> None:
+    from src.draft_ai_modeling.embedding_experiment import (
+        _joined_development_frame,
+        _window_rows,
+    )
+
+    config = load_embedding_experiment_config(
+        CONFIG,
+        repository_root=ROOT,
+        verify_local_artifacts=False,
+    )
+    frame = _synthetic_frame()
+    joined = _joined_development_frame(frame, _split(frame).manifest)
+    overlapping_fold = SimpleNamespace(
+        fold_id="overlapping",
+        train_start_utc=pd.Timestamp("2022-01-01", tz="UTC"),
+        train_end_utc=pd.Timestamp("2024-03-01", tz="UTC"),
+        evaluation_start_utc=pd.Timestamp("2024-01-01", tz="UTC"),
+        evaluation_end_utc=pd.Timestamp("2024-06-01", tz="UTC"),
+    )
+
+    with pytest.raises(EmbeddingExperimentError, match="crosses"):
+        _window_rows(joined, overlapping_fold, config)
 
 
 def test_synthetic_runner_never_predicts_reserved_rows(
