@@ -61,3 +61,8 @@ data/backfill/campaigns/*
 # Training and experiment model builds are local-only. The one reviewed,
 # JSON-only product snapshot lives under src/draft_ai_assistant/resources/.
 models/
+
+# Milestone 9: raw Dota 2 patch note payloads are Valve's content and stay
+# local; only the fetch manifest (URLs, timestamps, hashes) is committed.
+data/raw/patch_notes/*
+!data/raw/patch_notes/manifest.json
