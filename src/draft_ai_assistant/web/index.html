@@ -73,7 +73,6 @@
             <div class="scope-strip" aria-label="Analysis scope">
               <span>Completed drafts only · 5v5</span>
               <span>Hero-level explanations</span>
-              <span>No hero recommendations</span>
             </div>
 
             <div class="example-cta">
@@ -91,7 +90,6 @@
               </button>
               <p>
                 Fixed workflow example for demonstrating the interface.
-                <strong>It is not a hero recommendation.</strong>
               </p>
             </div>
           </div>
@@ -287,9 +285,6 @@
                   Battle forecast
                 </h2>
               </div>
-              <span class="badge badge--warning">
-                Experimental · not readiness-approved
-              </span>
             </div>
 
             <div class="result-grid">
@@ -332,10 +327,6 @@
                     <span>Estimated win probability</span>
                     <strong id="dire-probability">—</strong>
                   </div>
-                  <p class="probability-note">
-                    This is a raw development-model estimate, not a promise,
-                    betting signal, or readiness-approved forecast.
-                  </p>
                 </div>
 
                 <span class="outcome-clash" aria-hidden="true"></span>
@@ -392,9 +383,6 @@
                   <span class="card-index">User-directed comparison</span>
                   <h3 id="replacement-title">What-if replacement</h3>
                 </div>
-                <span class="badge badge--warning badge--sm">
-                  Not a recommendation
-                </span>
               </div>
               <p class="replacement-intro">
                 Choose one current hero and one supported, unselected hero to
@@ -461,16 +449,6 @@
                   </div>
                 </dl>
               </div>
-
-              <aside class="replacement-guardrail" aria-label="Comparison limits">
-                <strong>User-directed completed-draft comparison only.</strong>
-                <p>
-                  This is an associative model comparison, not a causal claim.
-                  The additive model ignores synergy, counters, roles, lanes,
-                  bans, order, patch, teams, and players. Q4 readiness failed;
-                  the locked Q1 test remains sealed and unevaluated.
-                </p>
-              </aside>
             </section>
 
             <div class="evidence-grid">
@@ -502,6 +480,10 @@
                   </div>
                 </div>
                 <ul id="limitations-list" class="limitations-list"></ul>
+                <p class="card-intro">
+                  Replacement comparisons additionally ignore hero synergy,
+                  counters, roles, and lanes.
+                </p>
               </aside>
             </div>
           </div>

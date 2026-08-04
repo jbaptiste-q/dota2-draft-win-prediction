@@ -128,7 +128,6 @@ def test_frontend_example_is_fixed_one_click_workflow_not_recommendation() -> No
     assert 'id="try-example"' in html
     assert "Enter example battle" in html
     assert "Fixed workflow example for demonstrating the interface." in html
-    assert "It is not a hero recommendation." in html
     assert (
         'radiant: Object.freeze(["axe", "puck", "lina", "tusk", "luna"])'
         in script
@@ -194,12 +193,20 @@ def test_frontend_makes_the_product_boundary_visible() -> None:
         "Experimental model",
         "Completed drafts only · 5v5",
         "Completed drafts only",
-        "No hero recommendations",
-        "not readiness-approved",
         "Association is not causation",
         "no authenticated or live data requests",
     ):
         assert disclosure in normalized_html
+
+    # The experimental/not-a-recommendation warning is deliberately stated in
+    # exactly two static placements: the header badge above, and the "Known
+    # limitations" block, whose content is rendered from the fetched model
+    # disclosure rather than duplicated as static markup. The model-evidence
+    # card's status chip is a separate, dynamic field (it becomes "Development
+    # Candidate" once JS renders the real model status) and is not a copy of
+    # the header warning, so it is left alone.
+    assert normalized_html.count("Experimental") == 2
+    assert 'id="limitations-list"' in normalized_html
 
 
 def test_frontend_uses_dota_faction_vocabulary_without_new_product_scope() -> None:
@@ -230,6 +237,7 @@ def test_frontend_uses_dota_faction_vocabulary_without_new_product_scope() -> No
 def test_frontend_has_user_directed_replacement_comparison_not_ranking() -> None:
     html = _read("index.html")
     script = _read("app.js")
+    normalized_html = " ".join(html.split())
 
     result_grid = html.index('<div class="result-grid">')
     replacement_panel = html.index('id="replacement-explorer"')
@@ -250,18 +258,26 @@ def test_frontend_has_user_directed_replacement_comparison_not_ranking() -> None
         assert f'id="{element_id}"' in html
         assert f'"#{element_id}"' in script
 
+    # "Not a recommendation" and the Q4/locked-test/causal-claim framing are
+    # deliberately not repeated inline here; they are already stated once by
+    # the header badge and the "Known limitations" block. Only the fact that
+    # is unique to the what-if comparison (it also ignores synergy, counters,
+    # roles, and lanes) is merged into that block rather than dropped.
     for disclosure in (
         "What-if replacement",
-        "Not a recommendation",
-        "user-directed completed-draft comparison",
         "does not rank heroes",
+        "ignore hero synergy, counters, roles, and lanes",
+    ):
+        assert disclosure.casefold() in normalized_html.casefold()
+
+    for removed in (
+        "Not a recommendation",
         "associative model comparison, not a causal claim",
-        "ignores synergy, counters, roles, lanes",
         "bans, order, patch, teams, and players",
         "Q4 readiness failed",
         "locked Q1 test remains sealed and unevaluated",
     ):
-        assert disclosure.casefold() in html.casefold()
+        assert removed.casefold() not in normalized_html.casefold()
 
     assert "hero_to_replace" in script
     assert "replacement_hero" in script
