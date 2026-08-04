@@ -1,0 +1,36 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Deploy config for this repo's own Cloudflare account. Independent of
+  // vite.config.ts's inline Cloudflare plugin config, which only governs
+  // `vite dev` / `vite build` (and points `main` at the *source* worker
+  // file for on-the-fly dev transforms). This file governs `wrangler
+  // deploy`, and points `main` at the already-bundled *build output*.
+  //
+  // `main`/`assets.directory` assume `npm run build` has already produced
+  // `dist/server/index.js` and `dist/client/`.
+  "name": "dota2-draft-lab",
+  "main": "./dist/server/index.js",
+  "compatibility_date": "2026-05-15",
+  // compatibility_flags is intentionally NOT set here. It's declared once,
+  // in vite.config.ts's `localBindingConfig` (the Cloudflare Vite plugin's
+  // inline config), which is authoritative for both `vite dev`/`vite build`
+  // and gets merged into this file when generating the deploy config. The
+  // Cloudflare Vite plugin concatenates array fields rather than
+  // deduplicating them, so declaring the same flag in both places produced
+  // error 10021 ("Compatibility flag specified multiple times").
+  // The Vite build output is already bundled; do not let Wrangler re-bundle it.
+  "no_bundle": true,
+  "rules": [
+    {
+      "type": "ESModule",
+      "globs": ["**/*.js", "**/*.mjs"]
+    }
+  ],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist/client"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

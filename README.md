@@ -8,7 +8,7 @@ documents exactly why.
 [![data](https://img.shields.io/badge/games-23%2C123-blue)]()
 [![locked test](https://img.shields.io/badge/2026--Q1-sealed-lightgrey)]()
 
-**[Live demo →](YOUR_URL_HERE)**
+**[Live demo →](https://dota2-draft-lab.jbaptiste-q.workers.dev)**
 
 ---
 

@@ -54,6 +54,11 @@ state. They must not be inferred from local plans.
 | Inference snapshot SHA-256 | `bfb7fc8d907e77057cafaef8109a4aec8085915c9215f0dc43cc15ff61dc1a61` |
 | Inference artifact fingerprint | `69730a62f42cda234337e8cbf152fb50fcb7ae02faf38367955c267fbe714442` |
 
+> **Update:** the deployment has since moved off OpenAI Sites hosting to this
+> repository's own Cloudflare account. The current live URL is
+> `https://dota2-draft-lab.jbaptiste-q.workers.dev`. This table is left
+> unchanged as the historical record of the M6 deployment it verified.
+
 The recorded Sites deployment reached terminal status `succeeded` with public
 access. The URL was then opened in the in-app browser and reported the expected
 `Draft Lab — Completed Draft Analysis` title.

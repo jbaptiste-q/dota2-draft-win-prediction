@@ -65,6 +65,11 @@ Values in this table must come from the exact reviewed and deployed revision.
 | Snapshot SHA-256 | `bfb7fc8d907e77057cafaef8109a4aec8085915c9215f0dc43cc15ff61dc1a61` |
 | Artifact fingerprint | `69730a62f42cda234337e8cbf152fb50fcb7ae02faf38367955c267fbe714442` |
 
+> **Update:** the deployment has since moved off OpenAI Sites hosting to this
+> repository's own Cloudflare account. The current live URL is
+> `https://dota2-draft-lab.jbaptiste-q.workers.dev`. This table is left
+> unchanged as the historical record of the v1.0.0 release identity.
+
 API schema versions identify interface compatibility; they are not a
 substitute for the product release tag.
 
