@@ -1,193 +1,152 @@
-# Dota 2 Draft AI
+# Dota 2 Draft Analysis
 
-An end-to-end Applied AI portfolio product built from professional Dota 2
-matches obtained through the official Liquipedia API.
+Can a professional Dota 2 draft predict who wins? Four pre-registered
+experiments on 23,123 tier-1/tier-2 games say no — and this repository
+documents exactly why.
 
-Draft Lab lets a user assemble a completed 5v5 draft, inspect the model's
-Radiant and Dire win-probability estimates, trace every hero's exact additive
-contribution, and compare one user-selected hero replacement. The current
-model is published as an **experimental development candidate**, with its
-failed readiness result shown directly in the product.
+[![tests](https://img.shields.io/badge/tests-463%20passing-brightgreen)]()
+[![data](https://img.shields.io/badge/games-23%2C123-blue)]()
+[![locked test](https://img.shields.io/badge/2026--Q1-sealed-lightgrey)]()
 
-![Draft Lab product preview](site/public/og.png)
+**[Live demo →](YOUR_URL_HERE)**
 
-## Try the product
+---
 
-| Experience | Location |
-| --- | --- |
-| Public Draft Lab | **[Open the live product](https://dota2-draft-ai.qinxuwwi.chatgpt.site/)** |
-| Local application | `python scripts/run_draft_assistant.py` |
-| Local OpenAPI documentation | `http://127.0.0.1:8000/docs` |
+## The question
 
-The one-click **Try example draft** control produces a real response from the
-same inference service used for manually assembled drafts. It is not a mocked
-demo and requires no API credential, training dataset, or live Liquipedia
-connection.
+In professional Dota 2, both teams draft ten heroes before the game starts.
+The draft is widely believed to decide a large share of the outcome — hero
+synergies, counters, and composition are the entire subject of professional
+analysis.
 
-## What the product does
+That belief is testable. If draft composition carries predictive signal, a
+model given only the ten picks should beat a model given nothing at all.
 
-- Validates exactly five unique supported Radiant picks and five unique
-  supported Dire picks.
-- Returns complementary Radiant and Dire model-estimated probabilities.
-- Explains the result with all ten exact signed hero log-odds contributions.
-- Compares an original completed draft with one completed draft after the user
-  chooses both the outgoing and incoming hero.
-- Publishes the model cutoff, lineage, failed 2025-Q4 readiness gate, and
-  unevaluated 2026-Q1 locked-test status before the result is trusted.
+It doesn't.
 
-Draft Assistant v1 does **not** rank heroes, recommend a next pick, analyze
-partial drafts, or claim causal effects. It does not model bans, draft order,
-first pick, roles, lanes, synergy, counters, patch, team, player, or tournament
-context. These are frozen product boundaries, not hidden future capabilities.
+## The answer
 
-## Product walkthrough
+![Milestone comparison](docs/assets/milestone_comparison.png)
 
-1. Select **Try example draft**, or choose ten heroes manually.
-2. Select **Analyze completed draft** to see the probability, exact
-   contributions, model evidence, and limitations.
-3. In **What-if replacement**, choose one selected hero and one unselected
-   supported hero. Draft Lab runs the same analyzer on both completed drafts
-   and reports the change in model output.
+Three of four modeling attempts improved on their empirical-prior reference
+during development. None survived the final readiness gate on a period that
+had never influenced any modeling decision.
 
-The replacement result is explicitly marked
-`associative_model_comparison_not_causal` and `recommendation: false`.
+*The y-axis is zoomed: the total spread is roughly 2% in log loss. That
+small scale is itself part of the finding.*
 
-## As-built architecture
+## What I found
 
-```mermaid
-flowchart LR
-    LP["Official Liquipedia API"] -->|"guarded offline acquisition"| RAW["Immutable local responses<br/>request ledger + provenance"]
-    RAW --> NORM["Typed parsing and normalization<br/>versioned relational Parquet"]
-    NORM --> SUP["Canonical supervised dataset<br/>dota-draft-supervised-v1"]
-    SUP --> EXP["Closed temporal modeling experiments<br/>leakage-safe evaluation"]
-    EXP --> SNAP["Reviewed JSON inference snapshot<br/>coefficients + lineage + model evidence"]
-    SNAP --> SERVICE["Framework-independent<br/>DraftAssistantService"]
-    SERVICE --> API["Canonical FastAPI adapter<br/>local + contract reference"]
-    API --> PARITY["Cross-runtime golden parity tests"]
-    SNAP --> WORKER["Deployment Worker<br/>same frozen contracts"]
-    PARITY --> WORKER
-    WORKER --> WEB["Interactive Draft Lab"]
-```
+**1. Pick presence carries real but unstable signal.**
+A logistic regression on side-relative hero presence beat the empirical prior
+on tuning data (0.685971 vs 0.692682 log loss), but regressed in all four 2024
+rolling folds. The signal existed; it did not generalize across time.
 
-The runtime boundary begins at the tracked JSON snapshot. The deployed product
-does not read the Liquipedia credential, call Liquipedia, load authenticated
-responses, access ignored training data, or deserialize an executable model
-binary.
+**2. Stronger regularization fixed the instability, not the ceiling.**
+Shrinking to `C=0.01` beat the prior in six of seven quarters and resolved the
+temporal instability — without discarding old matches. Full history under
+strong shrinkage outperformed both exponential decay and a hard one-year
+window. The problem had been coefficient variance, not the age of the data.
 
-## Evidence, not just a demo
+**3. Calibration cannot recover ranking signal that isn't there.**
+On the reserved 2025-Q4 period, the frozen candidate scored 0.698246 against
+the prior's 0.693115. Sigmoid and isotonic calibration were both tested; raw
+probability was selected, and all three remained worse than the prior.
+This is the pivot: development gains did not survive an evaluation period
+that had never been used for selection.
 
-The working corpus contains **23,123 eligible professional games** grouped into
-**11,664 matches**, with contiguous validated coverage from 2022-Q1 through
-2026-Q1. The frozen model was fit on 20,087 games before
-`2025-10-01T00:00:00Z`.
+**4. Hero interactions collapse to zero under any regularization strong
+enough to generalize.**
+I fit a low-rank interaction model — an embedding per hero, synergy as
+within-side dot products, counters as cross-side. Across all nine
+pre-registered candidates the embeddings converged to *exactly* zero.
 
-The candidate did not beat the empirical-prior reference on the 2025-Q4
-readiness period:
+![Hero embedding projection](docs/assets/hero_projection.png)
 
-| 2025-Q4 metric | Draft candidate | Empirical prior | Better |
-| --- | ---: | ---: | --- |
-| Log loss | 0.69825 | 0.69311 | Empirical prior |
-| Brier score | 0.25245 | 0.24998 | Empirical prior |
+This is not premature stopping: `v = 0` is a stationary point of the
+interaction gradient, and remains optimal whenever the interaction curvature
+is weaker than the penalty. Verified at 20,000 iterations with 1e-9 tolerance.
+Sweeping the penalty downward, embeddings first escape zero between
+`L2 = 0.01` and `L2 ≈ 0.00316` — half an order of magnitude below the weakest
+pre-registered setting.
 
-Lower is better for both metrics. The candidate was therefore not promoted and
-the sealed 2026-Q1 evaluation was not opened. The portfolio deployment is a
-transparent engineering demonstration, not a production-quality forecasting,
-betting, coaching, or recommendation service.
+Forcing the embeddings to survive produces no role structure. The great
+majority of the 125 heroes sit within a tight radius, with only two exceeding
+0.2 (Tiny at 0.297, Pangolier at 0.263), and those outliers share no
+functional property. The interaction signal is real but weaker than the
+regularization needed to generalize at this sample size.
 
-## Why this is an Applied AI engineering project
+## Why this is the interesting answer
 
-- **Official-data integration:** guarded, rate-safe acquisition with immutable
-  caching, checkpoints, request accounting, and no HTML scraping.
-- **Reproducible data contracts:** raw responses, typed normalization,
-  versioned Parquet, a canonical supervised schema, fingerprints, and lineage.
-- **Leakage-aware modeling:** grouped temporal evaluation, train-only feature
-  fitting, locked periods, fixed readiness gates, and documented negative
-  results.
-- **Faithful inference:** the product snapshot reproduces the selected
-  estimator with deterministic prediction identities and exact explanation
-  reconstruction.
-- **Product delivery:** strict Pydantic contracts, framework-independent
-  service logic, FastAPI reference endpoints, a parity-tested deployment
-  adapter, an accessible browser workflow, offline tests, and repository
-  hygiene safeguards.
+The 2026-Q1 test period has never been opened. Not once, across four
+milestones — no transforms, no predictions, no target reads. Opening it would
+have spent a single-use evaluation on a candidate that had already failed the
+development gate.
 
-## Run locally
+Every experiment was pre-registered before fitting: the candidate matrix,
+the folds, the metrics, and the qualification rules. No model was promoted
+after failing its gate, and no gate was revised after seeing results.
 
-Python 3.12 is the validated runtime.
+The honest conclusion is narrower and more useful than a headline accuracy
+number would have been:
+
+> At 23,123 professional games with hero identity alone, the learnable signal
+> in draft composition is weaker than the estimation noise. This is a limit of
+> the data's information content, not of model capacity.
+
+## Data
+
+23,123 games from 11,664 professional series, tier 1 and tier 2, spanning
+`[2022-01-01, 2026-04-01)`. Sourced from the official Liquipedia API with a
+full provenance chain: immutable byte-level cache, SHA-256 request ledger, and
+content-addressed builds from raw response through normalized tables to the
+supervised dataset.
+
+2026-Q2 acquisition was deliberately stopped. A partial quarter introduces
+selection bias, and completing it would not change the conclusion — the
+bottleneck is what the data contains, not how much of it there is.
+
+Liquipedia's match API exposes picks, bans, sides, and outcomes. It does not
+expose draft order, hero roles, positions, lanes, or itemization. That
+absence is the most likely explanation for finding (4), and the natural next
+direction for this work.
+
+[Data architecture and field contract →](docs/)
+
+## Method
+
+- Grouped chronological splits; every game from one series stays in one role
+- Feature transformers refit on past-only rows within each fold
+- 1,000 paired bootstrap replicates grouped by series for all comparisons
+- Pre-registered candidate matrices and qualification gates
+- Forbidden-column enforcement: no post-game information reaches any feature
+- Full offline test suite; no network access during any experiment
+
+**Why no deep learning.** At 23k rows over 125 heroes, the binding constraint
+is estimation variance, not model capacity. A higher-capacity model would fit
+the training window better and generalize worse — which is precisely what the
+slot-aware 3,024-column baseline demonstrated. The low-rank interaction model
+in finding (4) is the appropriate way to add interaction capacity at this
+sample size, and it still collapsed.
+
+## Run it
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
-python scripts/run_draft_assistant.py
-```
+pip install -r requirements.txt
 
-Open `http://127.0.0.1:8000`.
-
-Run the complete active offline validation suite:
-
-```bash
+# Reproduce the modeling pipeline offline
 env LIQUIPEDIA_API_KEY= NO_NETWORK_TESTS=1 python -m pytest -q
-python -m compileall -q src scripts tests
-python -m pip check
-python scripts/check_repository_hygiene.py
-node --check src/draft_ai_assistant/web/app.js
-cd site
-npm ci
-npm test
+
+python scripts/prepare_draft_modeling.py
+python scripts/run_draft_baselines.py
+python scripts/run_draft_embeddings.py
 ```
 
-Tests block outbound sockets and DNS resolution. They neither require nor read
-Liquipedia credentials.
+All experiments run offline against local build artifacts. No API key is read.
 
-## Repository map
+## Engineering log
 
-| Path | Responsibility |
-| --- | --- |
-| `src/liquipedia_pipeline/` | Typed parsing, deterministic normalization, quality observations, and Parquet export |
-| `src/liquipedia_backfill/` | Request planning, guarded acquisition, cache, checkpoints, ledger, deduplication, coverage, and publication |
-| `src/draft_training_dataset/` | Independent canonical supervised-dataset contract and builder |
-| `src/draft_ai_modeling/` | Temporal splits, feature transforms, fixed experiments, evaluation gates, and artifact lineage |
-| `src/draft_ai_assistant/` | Frozen product contracts, JSON snapshot, inference service, FastAPI adapter, and Draft Lab |
-| `site/` | Public portfolio deployment package |
-| `tests/` | Active offline contract, lineage, service, API, frontend, and no-network tests |
-| `archive/kaggle_baseline/` | Preserved historical experiment; excluded from the official pipeline and active CI |
-
-## Data and security boundary
-
-The repository versions credential-free request plans, fingerprints, compact
-coverage summaries, schemas, source code, tests, and the reviewed 22 KB
-inference snapshot. API keys, authenticated responses, raw caches, SQLite
-state, checkpoints, generated datasets, model binaries, and local environments
-remain ignored.
-
-See [Data Boundaries](data/README.md) for the exact public/local split and the
-[validated field contract](docs/MILESTONE_1_LIQUIPEDIA_FIELD_CONTRACT.md) for
-which official draft fields are available and unavailable.
-
-## Release roadmap
-
-| Milestone | Status | Outcome |
-| --- | --- | --- |
-| M5.3 — Product Contract Freeze | **Complete** | Completed-draft probability, exact explanations, and user-directed replacement comparison are the frozen v1 scope. |
-| M6 — Production Release and Deployment | **Complete** | The frozen experimental product is public and its static assets and five API contracts match the reviewed local service. |
-| M7 — Portfolio Release and Final Acceptance | **In progress** | The repository release is prepared; GitHub publication remains. |
-
-Modeling research is closed. A context-sensitive recommendation engine is
-optional, outside v1, and will not be added without explicit approval.
-
-## Selected documentation
-
-- [Product contract freeze](docs/milestones/MILESTONE_5_3_PRODUCT_CONTRACT_FREEZE.md)
-- [Draft Assistant vertical slice](docs/milestones/MILESTONE_5_DRAFT_ASSISTANT_VERTICAL_SLICE.md)
-- [Completed-draft replacement explorer](docs/milestones/MILESTONE_5_2_COMPLETED_DRAFT_REPLACEMENT_EXPLORER.md)
-- [Modeling infrastructure](docs/milestones/MILESTONE_4A_MODELING_INFRASTRUCTURE.md)
-- [Historical data publication](docs/milestones/MILESTONE_3_5_BOUNDED_HISTORICAL_DATASET_PUBLICATION.md)
-- [Product and data architecture](docs/MILESTONE_1_PRODUCT_DATA_ARCHITECTURE.md)
-- [M6 production deployment record](docs/milestones/MILESTONE_6_PRODUCTION_DEPLOYMENT.md)
-- [M7 portfolio release record](docs/milestones/MILESTONE_7_PORTFOLIO_RELEASE.md)
-- [v1.0.0 release notes](docs/releases/v1.0.0.md)
-
-Historical milestone reports preserve the decision context that existed when
-they were written. This README and the M5.3 contract define the active product
-scope.
+Milestone reports documenting acquisition, normalization, dataset
+construction, and each modeling stage are under [`docs/milestones/`](docs/milestones/).
+They are a contemporaneous record of decisions, including the ones that
+turned out to be wrong.
