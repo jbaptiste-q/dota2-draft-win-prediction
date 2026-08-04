@@ -18,14 +18,11 @@
   // Cloudflare Vite plugin concatenates array fields rather than
   // deduplicating them, so declaring the same flag in both places produced
   // error 10021 ("Compatibility flag specified multiple times").
-  // The Vite build output is already bundled; do not let Wrangler re-bundle it.
-  "no_bundle": true,
-  "rules": [
-    {
-      "type": "ESModule",
-      "globs": ["**/*.js", "**/*.mjs"]
-    }
-  ],
+  // no_bundle/rules are deliberately NOT set here: the Cloudflare Vite
+  // plugin already emits them into the generated deploy config (see
+  // dist/server/wrangler.json after a build) regardless of this file, and
+  // `vite dev`/`vite build` warn that they're "not applicable" when present
+  // in the source config, since Vite does its own bundling.
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist/client"

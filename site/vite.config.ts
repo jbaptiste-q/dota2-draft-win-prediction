@@ -47,9 +47,20 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
-    server: isCodexSeatbeltSandbox
-      ? { watch: { useFsEvents: false, usePolling: true } }
-      : undefined,
+    server: {
+      // worker/index.ts imports the canonical frontend and inference
+      // snapshot from ../src/draft_ai_assistant/ via `?raw` imports. There is
+      // no package.json above site/, so Vite's auto-detected workspace root
+      // (and therefore its default server.fs.allow boundary) stops at
+      // site/ itself; without this, the dev server serves 403 "Denied ID"
+      // for anything outside it. `vite build` is unaffected because it
+      // resolves imports through Rollup directly, not this dev-only,
+      // HTTP-layer file-serving allowlist.
+      fs: { allow: [".."] },
+      ...(isCodexSeatbeltSandbox
+        ? { watch: { useFsEvents: false, usePolling: true } }
+        : {}),
+    },
     plugins: [
       vinext(),
       sites(),
