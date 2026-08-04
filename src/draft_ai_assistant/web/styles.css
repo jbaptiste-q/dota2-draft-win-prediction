@@ -564,7 +564,7 @@ summary:focus-visible,
       0.8fr
     );
   align-items: stretch;
-  min-height: 470px;
+  min-height: 400px;
   margin-top: var(--space-5);
   overflow: hidden;
   background:
@@ -776,6 +776,117 @@ summary:focus-visible,
   position: absolute;
   inset: 0;
   overflow: hidden;
+}
+
+/* A dense mosaic built only from the 128px hero icons already shipped for
+   the pick cards/contribution list — never enlarged, never shown as
+   recognizable single artwork. `background-blend-mode: color` recolors
+   every icon to the single tint layer's hue while keeping each icon's own
+   light/dark shape, so the grid reads as green/red ambient texture, not
+   as hero content. The radial mask fades it out toward every edge,
+   including the center-facing edge, so it dissolves into the surrounding
+   panel rather than ending in a hard rectangle. */
+.opening-hero-mosaic {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.24;
+  background-repeat: no-repeat;
+  background-blend-mode: color;
+  background-image:
+    linear-gradient(var(--mosaic-tint), var(--mosaic-tint)),
+    url("/static/heroes/abaddon.webp"),
+    url("/static/heroes/bane.webp"),
+    url("/static/heroes/bristleback.webp"),
+    url("/static/heroes/clockwerk.webp"),
+    url("/static/heroes/disruptor.webp"),
+    url("/static/heroes/elder-titan.webp"),
+    url("/static/heroes/gyrocopter.webp"),
+    url("/static/heroes/juggernaut.webp"),
+    url("/static/heroes/lina.webp"),
+    url("/static/heroes/marci.webp"),
+    url("/static/heroes/morphling.webp"),
+    url("/static/heroes/nyx-assassin.webp"),
+    url("/static/heroes/phantom-lancer.webp"),
+    url("/static/heroes/queen-of-pain.webp"),
+    url("/static/heroes/shadow-demon.webp"),
+    url("/static/heroes/slark.webp"),
+    url("/static/heroes/techies.webp"),
+    url("/static/heroes/tiny.webp"),
+    url("/static/heroes/ursa.webp"),
+    url("/static/heroes/warlock.webp");
+  background-position:
+    0 0,
+    12.5% 10%,
+    37.5% 10%,
+    62.5% 10%,
+    87.5% 10%,
+    12.5% 30%,
+    37.5% 30%,
+    62.5% 30%,
+    87.5% 30%,
+    12.5% 50%,
+    37.5% 50%,
+    62.5% 50%,
+    87.5% 50%,
+    12.5% 70%,
+    37.5% 70%,
+    62.5% 70%,
+    87.5% 70%,
+    12.5% 90%,
+    37.5% 90%,
+    62.5% 90%,
+    87.5% 90%;
+  background-size:
+    100% 100%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%,
+    20% 18%;
+}
+
+.opening-hero--radiant .opening-hero-mosaic {
+  --mosaic-tint: rgba(120, 190, 80, 1);
+  mask-image: radial-gradient(
+    ellipse 90% 85% at 20% 50%,
+    black 20%,
+    transparent 80%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 85% at 20% 50%,
+    black 20%,
+    transparent 80%
+  );
+}
+
+.opening-hero--dire .opening-hero-mosaic {
+  --mosaic-tint: rgba(210, 90, 80, 1);
+  mask-image: radial-gradient(
+    ellipse 90% 85% at 80% 50%,
+    black 20%,
+    transparent 80%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 85% at 80% 50%,
+    black 20%,
+    transparent 80%
+  );
 }
 
 .opening-hero-frame::before {
@@ -1260,7 +1371,7 @@ summary:focus-visible,
   display: flex;
   align-items: center;
   justify-content: center;
-  height: clamp(150px, 15vw, 220px);
+  height: clamp(148px, 9vw, 184px);
   margin-top: var(--space-4);
   overflow: hidden;
   background: #090b09;
