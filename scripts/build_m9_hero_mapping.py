@@ -17,8 +17,10 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from src.patch_alignment.hero_mapping import (  # noqa: E402
+    CORPUS_CONFIRMED_ADDITIONS,
     DEFAULT_MAPPING_OUTPUT_PATH,
     DEFAULT_VOCABULARY_PATH,
+    apply_corpus_confirmed_additions,
     build_hero_id_mapping,
     fetch_opendota_heroes,
     load_vocabulary_hero_keys,
@@ -36,11 +38,24 @@ def main() -> int:
 
     result = build_hero_id_mapping(opendota_heroes, vocabulary)
     print()
-    print(f"Mapped cleanly: {len(result.mapped)} / {result.vocabulary_size}")
+    print(f"Mapped cleanly from vocabulary: {len(result.mapped)} / {result.vocabulary_size}")
     print(f"Unmatched vocabulary hero_key values: {len(result.unmatched_vocabulary)}")
     for hero_key in result.unmatched_vocabulary:
         print(f"  vocabulary side: {hero_key!r}")
-    print(f"Unmatched OpenDota heroes: {len(result.unmatched_opendota)}")
+    print(f"Unmatched OpenDota heroes (pre-addition): {len(result.unmatched_opendota)}")
+    for entry in result.unmatched_opendota:
+        print(
+            f"  opendota side: hero_id={entry['hero_id']} "
+            f"localized_name={entry['localized_name']!r} "
+            f"normalized={entry['normalized_key']!r}"
+        )
+
+    result, additions_applied = apply_corpus_confirmed_additions(result, opendota_heroes)
+    print()
+    print(f"Corpus-confirmed additions applied: {additions_applied} "
+          f"(of {len(CORPUS_CONFIRMED_ADDITIONS)} defined)")
+    print(f"Final mapped count: {len(result.mapped)}")
+    print(f"Unmatched OpenDota heroes (post-addition): {len(result.unmatched_opendota)}")
     for entry in result.unmatched_opendota:
         print(
             f"  opendota side: hero_id={entry['hero_id']} "
@@ -52,6 +67,7 @@ def main() -> int:
         result,
         output_path=DEFAULT_MAPPING_OUTPUT_PATH,
         generated_at_utc=datetime.now(UTC).isoformat(),
+        corpus_confirmed_additions_count=additions_applied,
     )
     print()
     print(f"Mapping written: {DEFAULT_MAPPING_OUTPUT_PATH}")

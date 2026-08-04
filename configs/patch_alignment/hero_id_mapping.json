@@ -1,6 +1,7 @@
 {
-  "generated_at_utc": "2026-08-04T10:49:13.446506+00:00",
-  "mapped_count": 125,
+  "corpus_confirmed_additions_count": 1,
+  "generated_at_utc": "2026-08-04T12:18:52.944713+00:00",
+  "mapped_count": 126,
   "mapping": [
     {
       "hero_id": 102,
@@ -226,6 +227,11 @@
       "hero_id": 90,
       "hero_key": "keeper-of-the-light",
       "opendota_localized_name": "Keeper of the Light"
+    },
+    {
+      "hero_id": 145,
+      "hero_key": "kez",
+      "opendota_localized_name": "Kez"
     },
     {
       "hero_id": 23,
@@ -631,6 +637,6 @@
   "schema_version": "dota2-ml-portfolio-hero-id-mapping-v1",
   "source": "https://api.opendota.com/api/heroes",
   "unmatched_vocabulary_count": 0,
-  "vocabulary_size": 125,
+  "vocabulary_size": 126,
   "vocabulary_source": "src/draft_ai_assistant/resources/development_candidate_v0.json"
 }

@@ -36,6 +36,28 @@ DEFAULT_VOCABULARY_PATH = Path(
 )
 DEFAULT_MAPPING_OUTPUT_PATH = Path("configs/patch_alignment/hero_id_mapping.json")
 
+# Heroes confirmed present in the M4A working corpus's pick/ban columns
+# (via a sealed-window-compliant, non-sealed-rows-only check performed
+# 2026-08-04) but absent from the frozen 125-hero product vocabulary
+# catalog -- the catalog predates these heroes' addition to the corpus.
+# The frozen catalog (DEFAULT_VOCABULARY_PATH) is never edited; these
+# are added directly to the M9 mapping instead, with hero_id sourced
+# from OpenDota. 'largo' (hero_id=155) was checked the same way and did
+# not appear in the non-sealed portion of the corpus, so it is not
+# added here -- its status in the sealed portion is unknown and
+# unknowable under the locked test policy.
+CORPUS_CONFIRMED_ADDITIONS: tuple[dict[str, object], ...] = (
+    {
+        "hero_key": "kez",
+        "hero_id": 145,
+        "opendota_localized_name": "Kez",
+        "justification": (
+            "Present as a pick/ban value in the M4A working corpus's "
+            "non-sealed rows; absent from the frozen 125-hero vocabulary."
+        ),
+    },
+)
+
 
 class HeroMappingError(RuntimeError):
     """Raised when the OpenDota hero list cannot be fetched, parsed, or joined."""
@@ -197,11 +219,70 @@ def build_hero_id_mapping(
     )
 
 
+def apply_corpus_confirmed_additions(
+    result: HeroMappingResult,
+    opendota_heroes: list[OpenDotaHero],
+    *,
+    additions: tuple[dict[str, object], ...] = CORPUS_CONFIRMED_ADDITIONS,
+) -> tuple[HeroMappingResult, int]:
+    """Fold CORPUS_CONFIRMED_ADDITIONS into a HeroMappingResult.
+
+    Each addition is validated against the live OpenDota fetch (its
+    hero_id must exist and its localized_name must still match) rather
+    than trusted blindly, so a stale hardcoded entry cannot silently
+    drift from what OpenDota actually reports. Returns the updated
+    result plus how many additions were actually applied (already-mapped
+    hero_keys are skipped, not double-added).
+    """
+
+    by_id = {hero.hero_id: hero for hero in opendota_heroes}
+    already_mapped_keys = {str(item["hero_key"]) for item in result.mapped}
+
+    extra_mapped: list[dict[str, object]] = []
+    for addition in additions:
+        hero_key = str(addition["hero_key"])
+        hero_id = int(addition["hero_id"])
+        if hero_key in already_mapped_keys:
+            continue
+        hero = by_id.get(hero_id)
+        if hero is None:
+            raise HeroMappingError(
+                f"Corpus-confirmed addition {hero_key!r} (hero_id={hero_id}) "
+                "is no longer present in the OpenDota hero list."
+            )
+        if hero.localized_name != addition["opendota_localized_name"]:
+            raise HeroMappingError(
+                f"Corpus-confirmed addition {hero_key!r} (hero_id={hero_id}) "
+                f"expected OpenDota localized_name "
+                f"{addition['opendota_localized_name']!r}, got {hero.localized_name!r}."
+            )
+        extra_mapped.append(
+            {
+                "hero_key": hero_key,
+                "hero_id": hero.hero_id,
+                "opendota_localized_name": hero.localized_name,
+            }
+        )
+
+    added_ids = {int(item["hero_id"]) for item in extra_mapped}
+    remaining_unmatched_opendota = tuple(
+        entry for entry in result.unmatched_opendota if entry["hero_id"] not in added_ids
+    )
+
+    updated = HeroMappingResult(
+        mapped=tuple(result.mapped) + tuple(extra_mapped),
+        unmatched_vocabulary=result.unmatched_vocabulary,
+        unmatched_opendota=remaining_unmatched_opendota,
+    )
+    return updated, len(extra_mapped)
+
+
 def write_mapping(
     result: HeroMappingResult,
     *,
     output_path: Path = DEFAULT_MAPPING_OUTPUT_PATH,
     generated_at_utc: str,
+    corpus_confirmed_additions_count: int = 0,
 ) -> None:
     """Write the committed hero_id -> hero_key mapping.
 
@@ -218,6 +299,7 @@ def write_mapping(
         "vocabulary_size": result.vocabulary_size,
         "mapped_count": len(result.mapped),
         "unmatched_vocabulary_count": len(result.unmatched_vocabulary),
+        "corpus_confirmed_additions_count": corpus_confirmed_additions_count,
         "mapping": sorted(
             result.mapped, key=lambda item: str(item["hero_key"])
         ),
@@ -230,11 +312,13 @@ def write_mapping(
 
 
 __all__ = [
+    "CORPUS_CONFIRMED_ADDITIONS",
     "DEFAULT_MAPPING_OUTPUT_PATH",
     "DEFAULT_VOCABULARY_PATH",
     "HeroMappingError",
     "HeroMappingResult",
     "OpenDotaHero",
+    "apply_corpus_confirmed_additions",
     "build_hero_id_mapping",
     "fetch_opendota_heroes",
     "load_vocabulary_hero_keys",
