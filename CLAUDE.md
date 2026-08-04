@@ -23,6 +23,33 @@ calibration and must not be used for model selection.
 Violating either boundary invalidates the project. Treat these as hard
 constraints, not preferences.
 
+### Sealed-window boundary (added after incident 2026-08-04)
+
+The sealed interval may be referenced only as an exclusion predicate.
+No sealed row may contribute a value to any output, count, aggregate,
+statistic, or artifact. Reading a column to decide what to exclude is
+permitted; reading it to learn something is not.
+
+A WHERE clause on a timestamp column, used solely to exclude the
+sealed interval before any other read touches the result, is exempt
+from the seal — without it, no query against a corpus that mixes
+sealed and unsealed rows would be possible at all:
+
+    match_start_utc < 2026-01-01T00:00:00Z
+    or match_start_utc >= 2026-04-01T00:00:00Z
+
+Everything past that predicate stays hard-blocked. Reading a
+timestamp, a label, a target, or a feature value FOR a sealed row —
+even metadata-only, even for provenance, even if the value never
+lands in a committed artifact — is a violation on its own. There is
+no "it wasn't the target column" exception and no "I didn't save it"
+exception.
+
+If a task appears to require reading anything about a sealed row —
+including just its date or a label — stop and ask before running the
+query, not after. See docs/incidents/2026-08-04_sealed_window_metadata_query.md
+for the incident that prompted this addition.
+
 ## Testing
 
 Baseline before any change:
