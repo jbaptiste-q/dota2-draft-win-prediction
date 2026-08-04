@@ -66,3 +66,9 @@ models/
 # local; only the fetch manifest (URLs, timestamps, hashes) is committed.
 data/raw/patch_notes/*
 !data/raw/patch_notes/manifest.json
+
+# Milestone 9 Phase 2: the LLM label cache and any review sheet that joins
+# labels back to raw_text stay local (raw_text is Valve's content). Only
+# the enumerated labels.json (no raw_text) is committed.
+data/derived/patch_labels/*
+!data/derived/patch_labels/labels.json
