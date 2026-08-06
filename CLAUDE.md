@@ -66,9 +66,13 @@ Also available:
 
 ## Dependencies
 
-Current direct dependencies are duckdb, pandas, pytest, joblib. Do not
-add PyTorch, TensorFlow, JAX, or any deep-learning framework. Implement
-gradient-based fitting with numpy and hand-derived gradients.
+Current direct dependencies (see requirements.txt): duckdb, pandas, numpy,
+scipy, scikit-learn, joblib, lightgbm, fastapi, httpx, pydantic, uvicorn,
+pytest. Do not add PyTorch, TensorFlow, JAX, or any deep-learning
+framework. New custom model-fitting code — anything beyond a library
+estimator such as scikit-learn's LogisticRegression or LightGBM's
+gradient-boosted trees — must use hand-derived gradients in numpy, not
+an autodiff framework.
 
 ## Documentation
 
