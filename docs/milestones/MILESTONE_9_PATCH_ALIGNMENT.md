@@ -1,142 +1,113 @@
 # Milestone 9: Patch Note Semantic Alignment
 
-Status: **Phase 2 complete, model confirmed (claude-haiku-4-5-20251001) — Phase 3 full pass next**
+Status: **complete — labeling pipeline and evaluation delivered; Phase 4 not run**
 
-Milestone 9 assigns semantic labels (direction, magnitude, change_type,
-confidence) to individual hero changes pulled from Dota 2 patch notes, as
-a precursor to Phase 4 alignment analysis against the M4A working corpus.
-Phase 1 (acquisition: 44/45 corpus-observed patch versions fetched,
-hero_id → hero_key mapping) is complete and committed. This document is
-being written incrementally so decisions are recorded when they happen
-rather than reconstructed after the fact.
+## 1. What this milestone produced
 
-## Headline: the pass-2/pass-3 ranking reversal is an annotation-boundary
-## effect, not a model property
+M9 set out to align Dota 2 patch notes with the M4A match corpus, to test
+whether patch-driven hero changes explain shifts in professional pick
+rates. It produced a working acquisition → flattening → LLM-labeling
+pipeline, a blind model-selection evaluation of that pipeline, and a full
+label set over the corpus's entire observed patch history. It did not
+produce an alignment result — Phase 4 is not run; see §5 for why.
 
-Direction accuracy against the 120-item hand-annotated sample was
-recomputed after a relabeling pass on the `rework` category (see
-"Rework — three annotation passes" below). The model ranking changed:
+**Phase note:** the evaluation originally planned as a separate Phase 3
+was folded into Phase 2 as its model-selection step, since evaluating
+label quality has to happen before committing to a full labeling run, not
+after. "Full pass" below is what was Phase 2 Step 3.
 
-| Model | Pass-2 acc. | Pass-3 acc. | Δ | Pass-2 κ | Pass-3 κ | Δ |
-| --- | --- | --- | --- | --- | --- | --- |
-| claude-haiku-4-5-20251001 | 0.658 | 0.658 | +0.000 | 0.528 | 0.504 | −0.025 |
-| claude-sonnet-5 | 0.617 | 0.667 | +0.050 | 0.476 | 0.512 | +0.036 |
-| claude-fable-5 | 0.700 | 0.633 | −0.067 | 0.575 | 0.462 | −0.112 |
+## 2. Pipeline: acquisition → flatten → labeling
 
-**No model's predictions changed between pass 2 and pass 3.** The three
+| Stage | Result |
+| --- | --- |
+| Acquisition | 44/45 corpus-observed patch versions fetched; `'7.4'` does not exist upstream |
+| Hero mapping | 126 mapped (125 frozen vocabulary + 1 corpus-confirmed addition, Kez); 1 unmatched (Largo) |
+| Flatten | 10,713 atomic hero changes: ability 6,904, talent 1,970, hero 1,521, general 318 |
+| Unmapped-hero changes | 70: hero_id 1961 (Valve feed placeholder, not a real hero) 48, hero_id 155 (Largo) 22 |
+
+Labeling setup: temperature=0, four-field JSON schema (direction,
+magnitude, change_type, confidence), one call per change, cached on
+`(change_uid, model_id, prompt_version)`.
+
+## 3. Model selection
+
+120 changes, stratified by scope plus 9 targeted additions (to guarantee
+at least 10 `rework` and 10 `neutral` examples), hand-annotated blind —
+model outputs withheld until annotation was committed. Annotated twice:
+pass 2 applied `rework` without an operational rule; pass 3 re-reviewed
+every pass-2 `rework` label against an explicit rule adopted after
+comparing pass-2 labels to independent model output:
+
+> Keep `rework` only if the change alters HOW the ability or hero works —
+> i.e. it cannot be fully described as "the same thing, stronger or
+> weaker." Downgrade to buff/nerf/neutral if it is: a pure numeric
+> adjustment, a UI or display change, the addition or removal of an
+> effect of a kind that already existed, or the extension of an existing
+> effect to another unit.
+
+| Direction accuracy | Pass 2 | Pass 3 | Δ |
+| --- | --- | --- | --- |
+| Haiku 4.5 | 0.658 | 0.658 | +0.000 |
+| Sonnet 5 | 0.617 | 0.667 | +0.050 |
+| Fable 5 | **0.700** | 0.633 | −0.067 |
+
+**No model's predictions changed between pass 2 and pass 3.** All three
 models were called once per change and cached; every pass-3 number above
-is the same frozen set of model outputs re-scored against a revised human
-label. The entire ranking change — Fable going from best to worst, Sonnet
-improving, Haiku unmoved — is a property of where the annotator drew the
-`rework` boundary, not of anything the models did differently. Fable's
-pass-2 lead came from agreeing with the annotator's original, broader,
-later-rejected sense of `rework`; when the boundary narrowed (see rule
-below), Fable's `rework` calls on the reclassified items became wrong far
-more often than they became right (net −8 of 22 relabeled items: 3 newly
-correct, 11 newly wrong). Supporting evidence — Fable's pass-3 confusion
-matrix (rows = revised human label, columns = Fable's frozen prediction),
-where the `rework` column still catches items the revised labels call
-`buff` (6) or `neutral` (7):
+is that same frozen set of model outputs re-scored against a revised
+human label. The entire ranking change — Fable going from best to worst,
+Sonnet improving, Haiku unmoved — is a property of where the annotator
+drew the `rework` boundary, not of anything the models did differently.
+That is the whole finding. Neither ranking is significant at n=120
+(McNemar p=0.267, p=0.508; bootstrap CI spans zero both times).
+**Magnitude was dropped**: all three models scored 22.5–29.2% against a
+72.5% baseline, κ≈0 — see
+[`docs/findings/2026-08-05_m9_magnitude_dropped.md`](../findings/2026-08-05_m9_magnitude_dropped.md).
 
-```
-            buff     nerf  neutral   rework  unclear
-    buff       44        1        0        6        1
-    nerf        6       29        1        2        2
- neutral        3        4        1        7        5
-  rework        4        1        0        2        0
- unclear        1        0        0        0        0
-```
+Haiku was chosen for the full pass on determinism and cost, not measured
+quality. Determinism was verified against the API and the published docs
+rather than assumed: Sonnet 5 and Fable 5 reject non-default
+`temperature`, `top_p`, and `top_k` unconditionally (confirmed both by
+direct API error text and by Anthropic's documentation), so Haiku's
+`temperature=0` is the only one of the three actually honored. Haiku also
+used markedly fewer output tokens per call in this comparison — 4,131
+across 120 calls versus Fable's 17,190, a 4.2x difference — from Fable's
+adaptive-thinking overhead.
 
-Fable is still calling many `buff`/`neutral` items `rework` under the
-narrow definition — consistent with pattern-matching on structural-sounding
-language rather than tracking the annotator's actual (now narrower)
-boundary.
+## 4. Full pass
 
-## Annotation protocol under-specification
+10,708 of 10,713 changes labeled (99.95%) with `claude-haiku-4-5-20251001`,
+direction only. 5 permanent failures: the same malformed response on
+repeated identical calls, a genuine model formatting quirk rather than a
+transient error.
 
-Two of the four label fields turned out to be under-specified in the
-original annotation guide used for the Step 2A model-selection
-experiment (120 hand-annotated changes, `claude-haiku-4-5-20251001`,
-`claude-sonnet-5`, `claude-fable-5`). Both failures share the same root
-cause: the guide gave a category definition but no anchoring examples,
-so the human annotator's and the models' implicit scales never aligned.
+The first full run surfaced a parser bug: the model sometimes
+self-corrects mid-response ("wait, let me reconsider" plus a second JSON
+block), and the parser treated the whole response as one document and
+failed instead of recovering the corrected answer — 22 of that run's 81
+initial failures were this pattern. Fixed to try every JSON candidate in
+the response, last to first, before this final pass.
 
-### Magnitude
+Direction distribution: buff 4,830, nerf 3,643, unclear 1,435, neutral
+410, rework 390.
 
-All three models scored 22.5–29.2% against a 72.5% majority-class
-baseline, κ ≈ 0 for all three. Dropped from Milestone 9; Phase 4 uses
-direction only. Full writeup: `docs/findings/2026-08-05_m9_magnitude_dropped.md`.
+## 5. Scope and known gaps
 
-### Rework — three annotation passes
+**Phase 4 (alignment analysis) is not run.** A hero's pick rate moves
+because it was changed, because a counter was nerfed, because a partner
+was buffed, or because team preferences drifted — these are not
+separable in this data. This milestone's output is the labeling pipeline
+and its evaluation, not an alignment result.
 
-The `rework` direction category went through three passes on the same
-120-item sample before it stabilized:
+Patches `7.40`, `7.40b`, `7.40c`, `7.41`, `7.41a` are below the
+sample-size threshold outside the sealed window (31 rows or fewer) and
+would be excluded from any Phase 4 analysis on those grounds — see
+[`docs/incidents/2026-08-04_sealed_window_metadata_query.md`](../incidents/2026-08-04_sealed_window_metadata_query.md).
 
-1. **Pass 1** (initial annotation): `rework` was not applied at all —
-   every change was forced into buff/nerf/neutral/unclear, with no
-   category available for structural changes.
-2. **Pass 2** (correction pass): `rework` was introduced and applied
-   over the raw text, but without an operational definition of what
-   qualified. Produced 29 `rework` labels (24.2% of the sample).
-3. **Pass 3** (recount, completed 2026-08-05): re-reviewed all 29
-   pass-2 `rework` labels against an explicit rule adopted after
-   comparing pass-2 labels to independent model output:
+Largo (hero_id 155) is unmapped: its first patch-notes appearance is
+`7.40b` (2025-12-23), 9 days before the sealed window opens, and that
+patch has 0 corpus rows outside the seal — effectively no readable match
+data regardless of the mapping gap.
 
-   > Keep `rework` only if the change alters HOW the ability or hero
-   > works — i.e. it cannot be fully described as "the same thing,
-   > stronger or weaker." Downgrade to buff/nerf/neutral if it is: a
-   > pure numeric adjustment, a UI or display change, the addition or
-   > removal of an effect of a kind that already existed, or the
-   > extension of an existing effect to another unit.
-
-   Motivated by a review of the 10 pass-2 `rework` items with the most
-   consistent model disagreement, where several items had all three
-   models independently converge on the same non-rework label (e.g. a
-   minimap icon addition unanimously called `neutral`) — a stronger
-   signal than any single model's disagreement, suggesting the pass-2
-   category boundary was too broad rather than the models being wrong.
-   22 of 29 items were downgraded (7 remained `rework`); the submitted
-   file initially used `remake` as a typo for `rework` on 7 rows,
-   confirmed and corrected before merging.
-
-**Model outputs were withheld throughout all three passes** — the
-annotator did not see any model's answer before submitting each pass.
-
-Majority-class baseline shifted with the relabeling: pass-2 `buff`
-35.8% (43/120) → pass-3 `buff` 43.3% (52/120). All three models remain
-comfortably above baseline in both passes.
-
-## Model selection: claude-haiku-4-5-20251001
-
-Haiku vs. Fable direction accuracy was tested both passes:
-
-| | Pass-2 | Pass-3 |
-| --- | --- | --- |
-| acc(haiku) vs acc(fable) | 0.658 vs 0.700 | 0.658 vs 0.633 |
-| diff (fable − haiku) | +0.042 | −0.025 |
-| McNemar exact p | 0.267 | 0.508 |
-| Bootstrap 95% CI on diff | [−0.017, 0.100] | [−0.075, 0.025] |
-
-The three models are statistically indistinguishable on direction: the
-point estimate flips sign between passes and neither McNemar test reaches
-significance. With model quality not separating them, the choice for the
-Phase 3 full pass fell to determinism, cost, and latency:
-
-- **Determinism**: Haiku is the only one of the three whose sampling is
-  actually controllable. `claude-sonnet-5` and `claude-fable-5` reject
-  non-default `temperature`/`top_p`/`top_k` unconditionally (confirmed
-  against the Anthropic API directly and against published docs, not
-  assumed) — their outputs come from undocumented default sampling with
-  no reproducibility guarantee outside the on-disk label cache. Haiku's
-  `temperature=0` is honored.
-- **Cost and latency**: Haiku used ~3x fewer output tokens per call than
-  Fable in the Step 2A comparison (adaptive-thinking overhead on Fable),
-  and needed no `max_tokens` workarounds.
-- Haiku also happens to be the only model whose accuracy was unmoved by
-  the pass-2→pass-3 relabeling (0.658 → 0.658) — not part of the
-  decision basis above, but consistent with it not being especially
-  sensitive to where this particular category boundary sits.
-
-**Decision: `claude-haiku-4-5-20251001`, temperature=0, for the Phase 3
-full labeling pass over all 10,713 flattened changes. Direction only —
-magnitude is dropped (see above).**
+1,435 of 10,708 labels (13.4%) are `unclear` — the model's own
+lowest-confidence bucket, not a defect to resolve before any future
+Phase 4 work.
