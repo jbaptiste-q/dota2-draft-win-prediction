@@ -215,36 +215,62 @@ def build_prompt(change: FlattenedChange) -> tuple[str, str]:
     return SYSTEM_PROMPT, user
 
 
-_CODE_FENCE_RE = re.compile(r"^```(?:json)?\s*|\s*```$", re.MULTILINE)
+# Flat, non-nested JSON objects only -- matches our schema, and lets this
+# find every top-level {...} candidate in a response even when the model
+# self-corrects (writes a malformed attempt, notices, and writes a second,
+# valid one after some prose) rather than requiring the whole response to
+# be exactly one JSON document.
+_JSON_OBJECT_RE = re.compile(r"\{[^{}]*\}", re.DOTALL)
+
+_REQUIRED_FIELDS = {
+    "direction": DIRECTIONS,
+    "magnitude": MAGNITUDES,
+    "change_type": CHANGE_TYPES,
+    "confidence": CONFIDENCES,
+}
+
+
+def _validate_label_fields(parsed: object) -> dict[str, str]:
+    if not isinstance(parsed, dict):
+        raise LabelParseError(f"Response JSON is not an object: {parsed!r}")
+    result: dict[str, str] = {}
+    for key, allowed in _REQUIRED_FIELDS.items():
+        value = parsed.get(key)
+        if value not in allowed:
+            raise LabelParseError(f"Field {key!r} is {value!r}, expected one of {allowed}")
+        result[key] = value
+    return result
 
 
 def parse_label_text(text: str) -> dict[str, str]:
-    """Parse and validate a model's raw text into the four-field label schema."""
+    """Parse and validate a model's raw text into the four-field label schema.
 
-    cleaned = _CODE_FENCE_RE.sub("", text).strip()
-    try:
-        parsed = json.loads(cleaned)
-    except json.JSONDecodeError as error:
-        raise LabelParseError(f"Response is not valid JSON: {text!r}") from error
+    Tries every {...} candidate found in the text, last to first: a model
+    that self-corrects (writes an invalid attempt, then "Wait, let me
+    reconsider" and a corrected block) puts its intended answer last, and
+    this recovers it instead of failing on the discarded first attempt.
+    """
 
-    if not isinstance(parsed, dict):
-        raise LabelParseError(f"Response JSON is not an object: {text!r}")
+    candidates = _JSON_OBJECT_RE.findall(text)
+    if not candidates:
+        raise LabelParseError(f"No JSON object found in response: {text!r}")
 
-    required = {
-        "direction": DIRECTIONS,
-        "magnitude": MAGNITUDES,
-        "change_type": CHANGE_TYPES,
-        "confidence": CONFIDENCES,
-    }
-    result: dict[str, str] = {}
-    for key, allowed in required.items():
-        value = parsed.get(key)
-        if value not in allowed:
-            raise LabelParseError(
-                f"Field {key!r} is {value!r}, expected one of {allowed}: {text!r}"
-            )
-        result[key] = value
-    return result
+    last_error: Exception | None = None
+    for candidate in reversed(candidates):
+        try:
+            parsed = json.loads(candidate)
+        except json.JSONDecodeError as error:
+            last_error = error
+            continue
+        try:
+            return _validate_label_fields(parsed)
+        except LabelParseError as error:
+            last_error = error
+            continue
+
+    raise LabelParseError(
+        f"No candidate JSON object validated (tried {len(candidates)}): {text!r}"
+    ) from last_error
 
 
 class LabelCache:

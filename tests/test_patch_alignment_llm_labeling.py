@@ -94,6 +94,39 @@ def test_parse_label_text_accepts_valid_json(text: str) -> None:
     assert set(result) == {"direction", "magnitude", "change_type", "confidence"}
 
 
+def test_parse_label_text_recovers_self_correction_pattern() -> None:
+    # Observed in production: the model writes an invalid first attempt
+    # (duplicate key / extra key / bad enum value), notices, and writes a
+    # corrected block afterward. The corrected, later block should win.
+    text = (
+        '```json\n{"direction": "unclear", "magnitude": "unclear", '
+        '"change_type": "ability", "scaling": "stat"}\n```\n\n'
+        "Wait, let me reconsider. The change_type should be one of the "
+        "specified options only.\n\n"
+        '```json\n{"direction": "unclear", "magnitude": "unclear", '
+        '"change_type": "ability", "confidence": "low"}\n```'
+    )
+    result = parse_label_text(text)
+    assert result == {
+        "direction": "unclear", "magnitude": "unclear",
+        "change_type": "ability", "confidence": "low",
+    }
+
+
+def test_parse_label_text_rejects_when_no_candidate_validates() -> None:
+    # Both attempts are broken (missing confidence both times) -- there is
+    # no valid answer to recover, so this must still fail loudly.
+    text = (
+        '```json\n{"direction": "buff", "magnitude": "minor", '
+        '"change_type": "ability", "change_type": "other"}\n```\n\n'
+        "Wait, that still is not right.\n\n"
+        '```json\n{"direction": "buff", "magnitude": "minor", '
+        '"change_type": "stat", "change_type": "other"}\n```'
+    )
+    with pytest.raises(LabelParseError):
+        parse_label_text(text)
+
+
 def test_parse_label_text_tolerates_extra_keys() -> None:
     text = json.dumps(
         {

@@ -30,7 +30,7 @@ DEFAULT_OUTPUT_PATH = Path("data/derived/patch_labels/review/labels_with_text.cs
 
 REVIEW_FIELDNAMES = [
     "change_uid", "patch", "hero_key", "scope", "json_path", "raw_text",
-    "direction", "magnitude", "change_type", "confidence",
+    "direction", "change_type", "confidence",
     "model_id", "prompt_version",
 ]
 
@@ -62,7 +62,6 @@ def build_review_rows(labels: list[dict]) -> tuple[list[dict], list[str]]:
                 "json_path": change.json_path,
                 "raw_text": change.raw_text,
                 "direction": label["direction"],
-                "magnitude": label["magnitude"],
                 "change_type": label["change_type"],
                 "confidence": label["confidence"],
                 "model_id": label["model_id"],

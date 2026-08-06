@@ -10,15 +10,16 @@ Milestone 9 Phase 2 requires the model be confirmed by hand (via the
 Step 2A experiment) before this runs.
 
 Writes data/derived/patch_labels/labels.json: change_uid, patch,
-hero_key, scope, the four label fields, model_id (as returned by the
-API), and prompt_version. raw_text is never included -- it is Valve's
-content and stays in the gitignored local cache
-(data/derived/patch_labels/cache.json).
+hero_key, scope, direction, change_type, confidence, model_id (as
+returned by the API), and prompt_version. magnitude is still requested
+from the model (the prompt/schema is unchanged, so the existing label
+cache stays valid) but is dropped from the committed output -- see
+docs/findings/2026-08-05_m9_magnitude_dropped.md for why Phase 4 uses
+direction only. raw_text is never included -- it is Valve's content and
+stays in the gitignored local cache (data/derived/patch_labels/cache.json).
 
 Usage:
-    .venv/bin/python scripts/run_m9_full_labeling_pass.py --model-id claude-sonnet-5
-    .venv/bin/python scripts/run_m9_full_labeling_pass.py --model-id claude-sonnet-5 \\
-        --input-price-per-million 3.00 --output-price-per-million 15.00
+    .venv/bin/python scripts/run_m9_full_labeling_pass.py --model-id claude-haiku-4-5-20251001
 """
 
 from __future__ import annotations
@@ -105,7 +106,6 @@ def main() -> int:
                 "hero_key": change.hero_key,
                 "scope": change.scope,
                 "direction": result.direction,
-                "magnitude": result.magnitude,
                 "change_type": result.change_type,
                 "confidence": result.confidence,
                 "model_id": result.model_id_returned,
@@ -128,7 +128,6 @@ def main() -> int:
     )
 
     direction_counts = Counter(item["direction"] for item in labeled)
-    magnitude_counts = Counter(item["magnitude"] for item in labeled)
     unmapped_by_hero = Counter(change.hero_id for change in unmapped)
 
     print(f"Total changes: {len(changes)}")
@@ -145,7 +144,6 @@ def main() -> int:
         print("Estimated cost: not computed (pass --input-price-per-million and "
               "--output-price-per-million to compute).")
     print("Direction distribution:", dict(direction_counts))
-    print("Magnitude distribution:", dict(magnitude_counts))
     print(f"Unmapped-hero changes: {len(unmapped)} across hero_ids {dict(unmapped_by_hero)}")
     if failures:
         print("Failures (change_uid, error):")
