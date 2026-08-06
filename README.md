@@ -26,10 +26,12 @@ Fit on 20,087 games before 2025-10-01, evaluated on the reserved 2025-Q4 window:
 
 The candidate was not promoted and the sealed 2026-Q1 test was never opened.
 
-This is close to the realistic ceiling rather than a failure of technique.
-Between elite teams, both sides draft competently by definition, so hero
-composition carries little of the outcome signal — team strength does, and team
-identity is deliberately excluded from the feature set.
+Under this dataset, feature contract, and temporal evaluation design, the
+draft-only signal was too weak and unstable to support deployment — not a
+proven ceiling on draft prediction in general. The likely reason: between
+elite teams, both sides draft competently by definition, so hero composition
+carries little of the outcome signal — team strength does, and team identity
+is deliberately excluded from the feature set.
 
 ### 2. Hero embeddings collapse to zero — forced open, they show no role structure
 
@@ -103,6 +105,8 @@ sampling parameters outright.
 
 Full pass: 10,708 of 10,713 changes labelled (99.95%), five permanent parse
 failures traced to a reproducible formatting quirk rather than transient error.
+
+Full evaluation: [M9 patch alignment](docs/milestones/MILESTONE_9_PATCH_ALIGNMENT.md)
 
 ---
 
@@ -205,6 +209,6 @@ sealed window opened and therefore has effectively no readable match data.
 
 ## How this was built
 
-Implementation was done with Claude Code. The experiment design, constraints,
-scope decisions, and result review are mine, as are the 120 hand-annotated
-labels the LLM evaluation is measured against.
+Implementation was done with Claude Code; I designed the experiments and
+constraints, reviewed the generated code, and made every promotion decision —
+including the ones that killed a candidate.

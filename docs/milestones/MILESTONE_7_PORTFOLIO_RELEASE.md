@@ -1,10 +1,18 @@
 # Milestone 7: Portfolio Release and Final Acceptance
 
-Status: **in progress — GitHub publication pending**
+Status: **complete — published 2026-08-06 as part of `v1.0.0`**
 
 Milestone 7 turns the verified deployment and repository into one finished,
 recruiter-readable Applied AI case study. It adds no product capability and
 does not reopen modeling research.
+
+**Note (2026-08-06):** M8 (hero embeddings) and M9 (patch-note semantic
+alignment) followed this milestone and did reopen modeling research, each
+on its own separately-scoped question. Both are complete. `v1.0.0` covers
+all three milestones together, not M7 alone — see
+[`docs/releases/v1.0.0.md`](../releases/v1.0.0.md). The scope statement
+above describes M7's own remit at the time it was written, not a
+constraint on the repository's later work.
 
 ## Objective
 
@@ -36,11 +44,11 @@ production-quality forecasting and does not rank or recommend heroes.
 | Concise product walkthrough | **Prepared in README** |
 | Product preview image | **Verified 1200×630 `site/public/og.png`** |
 | Public deployment record | **Complete in M6** |
-| Final acceptance evidence | **Complete except GitHub publication identity** |
+| Final acceptance evidence | **Complete** |
 | Deployed source commit | `831b0e2e60f44f7fc993665f72dc1c54a49ce913` |
-| Portfolio release/evidence commit | **Pending reviewed GitHub publication commit** |
-| Git tag | **Pending reviewed release commit** |
-| GitHub release notes | **Prepared at `docs/releases/v1.0.0.md`; publication pending** |
+| Portfolio release/evidence commit | `64cbd5c1664e3af6489cfa023ae873cd9bc6c21f` |
+| Git tag | `v1.0.0` |
+| GitHub release notes | **Published at `docs/releases/v1.0.0.md`** |
 
 Historical milestone reports remain chronological engineering records. The
 README, M5.3 contract, M6 deployment record, and this report define the final
@@ -53,11 +61,11 @@ Values in this table must come from the exact reviewed and deployed revision.
 | Field | Final value |
 | --- | --- |
 | Product version | `v1.0.0` |
-| Git tag | **Pending successful tag creation** |
-| Release commit SHA | **Pending reviewed release commit** |
-| Public Draft Lab URL | `https://dota2-draft-ai.qinxuwwi.chatgpt.site/` |
+| Git tag | `v1.0.0` |
+| Release commit SHA | `64cbd5c1664e3af6489cfa023ae873cd9bc6c21f` |
+| Public Draft Lab URL | `https://dota2-draft-lab.jbaptiste-q.workers.dev` |
 | Deployment version ID | `appgprj_6a6dcba596ec819185d607d19b7ea658~appgver_d7737cc3032081918da9c8522432aa5a` |
-| Release date | **Pending release publication** |
+| Release date | 2026-08-06 |
 | API version | `0.3.0` |
 | Analysis schema | `draft-assistant-analysis-v1` |
 | Model-card schema | `draft-assistant-model-card-v1` |
@@ -65,10 +73,10 @@ Values in this table must come from the exact reviewed and deployed revision.
 | Snapshot SHA-256 | `bfb7fc8d907e77057cafaef8109a4aec8085915c9215f0dc43cc15ff61dc1a61` |
 | Artifact fingerprint | `69730a62f42cda234337e8cbf152fb50fcb7ae02faf38367955c267fbe714442` |
 
-> **Update:** the deployment has since moved off OpenAI Sites hosting to this
-> repository's own Cloudflare account. The current live URL is
-> `https://dota2-draft-lab.jbaptiste-q.workers.dev`. This table is left
-> unchanged as the historical record of the v1.0.0 release identity.
+The deployment version ID and snapshot/artifact fingerprints identify the
+frozen product snapshot deployed at `831b0e2e60f44f7fc993665f72dc1c54a49ce913`
+(unchanged by M8/M9, which touched no product code); the git tag and release
+commit identify the whole-repository `v1.0.0` release point, which is later.
 
 API schema versions identify interface compatibility; they are not a
 substitute for the product release tag.
@@ -83,7 +91,7 @@ substitute for the product release tag.
 | Example completed-draft API response verified | **Passed — exact Python parity** |
 | User-directed replacement API response verified | **Passed — exact Python parity** |
 | Product limitations and failed readiness evidence visible | **Passed** |
-| Full offline suite | **410 passed; 16 known deprecation warnings** |
+| Full offline suite | **506 passed (410 at M7 acceptance; grew with M8/M9); 16 known deprecation warnings** |
 | Site build, golden parity, type, and lint checks | **Passed — 10/10 parity tests** |
 | Canonical frontend interaction and accessibility assertions | **Passed in active offline suite** |
 | Repository hygiene and credential checks | **Passed** |

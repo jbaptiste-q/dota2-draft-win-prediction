@@ -44,7 +44,7 @@ none are edited after the fact. For the current state of the product, see
 - [5.2: Completed-Draft Replacement Explorer](milestones/MILESTONE_5_2_COMPLETED_DRAFT_REPLACEMENT_EXPLORER.md) — complete
 - [5.3: Product Contract Freeze](milestones/MILESTONE_5_3_PRODUCT_CONTRACT_FREEZE.md) — Draft Assistant v1 scope frozen
 - [6: Production Release and Deployment](milestones/MILESTONE_6_PRODUCTION_DEPLOYMENT.md) — public deployment verified
-- [7: Portfolio Release and Final Acceptance](milestones/MILESTONE_7_PORTFOLIO_RELEASE.md) — in progress; GitHub publication pending
+- [7: Portfolio Release and Final Acceptance](milestones/MILESTONE_7_PORTFOLIO_RELEASE.md) — complete; published as part of `v1.0.0`
 
 ## Other logs
 
