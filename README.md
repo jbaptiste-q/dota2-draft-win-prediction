@@ -32,11 +32,12 @@ Under this dataset, feature contract, and temporal evaluation design, the
 draft-only signal was too weak and unstable to support deployment — not a
 proven ceiling on draft prediction in general. The instability replicates
 across model families: both the linear candidate and a pre-registered GBDT
-baseline beat the prior on pooled development folds (2025-Q1–Q3) and lost to
-it on Q4. The likely reason: between
-elite teams, both sides draft competently by definition, so hero composition
-carries little of the outcome signal — team strength does, and team identity
-is deliberately excluded from the feature set.
+baseline beat the prior pooled over the three most recent development folds
+(2025-Q1–Q3, the pre-registered ranking window) and lost to it on Q4. The
+likely reason: between elite teams, both sides draft competently by
+definition, so hero composition carries little of the outcome signal — team
+strength does, and team identity is deliberately excluded from the feature
+set.
 
 ### 2. Hero embeddings collapse to zero — forced open, they show no role structure
 
