@@ -2,6 +2,7 @@ duckdb==1.5.4
 fastapi==0.116.1
 httpx==0.28.1
 joblib==1.5.3
+lightgbm==4.7.0
 numpy==2.5.1
 pandas==3.0.3
 pydantic==2.11.7

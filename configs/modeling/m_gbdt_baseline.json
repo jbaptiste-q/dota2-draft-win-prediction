@@ -1,0 +1,188 @@
+{
+  "schema_version": "draft-ai-gbdt-baseline-experiment-v1",
+  "experiment_id": "gbdt-baseline-recovery-check-v1",
+  "source": {
+    "corpus_config_path": "configs/modeling/m4a_working_corpus.json",
+    "corpus_config_sha256": "2c287af2668bd88e02db1fac3a3363d7b1a6f5f12b04c795741832c6bc81030a",
+    "corpus_id": "m4a-tier1-tier2-2022q1-2026q1-working-v1",
+    "m4b5": {
+      "build_fingerprint": "d90302404883e5ba7283c00e88d7d922f2b76e771630013acf9632ac20639e8b",
+      "manifest_path": "models/m4b5/build_d90302404883e5ba7283c00e88d7d922f2b76e771630013acf9632ac20639e8b/experiment_manifest.json",
+      "manifest_sha256": "21c743f973d7ab50006fd22531cf890d7754b7e7111a1b00d8ee57ec41e9ce84",
+      "development_predictions_path": "models/m4b5/build_d90302404883e5ba7283c00e88d7d922f2b76e771630013acf9632ac20639e8b/development_predictions.parquet",
+      "development_predictions_sha256": "26d1a46673d8b183255166889c82748d60f500cebcbe6c4fc68626edfdd69805",
+      "q4_predictions_path": "models/m4b5/build_d90302404883e5ba7283c00e88d7d922f2b76e771630013acf9632ac20639e8b/q4_predictions.parquet",
+      "q4_predictions_sha256": "476552017fddd84bd2732c333ecaa77c6380572c2128cb64a120dea5a63eecd2"
+    }
+  },
+  "data_boundaries": {
+    "history_start_utc": "2022-01-01T00:00:00Z",
+    "development_end_utc_exclusive": "2025-10-01T00:00:00Z",
+    "q4_end_utc_exclusive": "2026-01-01T00:00:00Z",
+    "locked_test_start_utc": "2026-01-01T00:00:00Z",
+    "expected": {
+      "development_source_rows": 20087,
+      "q4_rows": 1089,
+      "q4_source_matches": 523,
+      "locked_component_rows_opened": 0
+    }
+  },
+  "feature_contract": {
+    "variant": "b1-pick-presence",
+    "representation": "hero_one_hot_pick_presence_radiant_dire",
+    "includes_bans": false,
+    "includes_team_context": false,
+    "includes_patch_context": false,
+    "includes_player_context": false
+  },
+  "candidate_grid": [
+    {
+      "candidate_id": "gbdt_leaves15_lr0p05",
+      "num_leaves": 15,
+      "learning_rate": 0.05
+    },
+    {
+      "candidate_id": "gbdt_leaves15_lr0p1",
+      "num_leaves": 15,
+      "learning_rate": 0.1
+    },
+    {
+      "candidate_id": "gbdt_leaves31_lr0p05",
+      "num_leaves": 31,
+      "learning_rate": 0.05
+    },
+    {
+      "candidate_id": "gbdt_leaves31_lr0p1",
+      "num_leaves": 31,
+      "learning_rate": 0.1
+    }
+  ],
+  "estimator": {
+    "family": "lightgbm_gbdt",
+    "boosting_type": "gbdt",
+    "objective": "binary",
+    "metric": "binary_logloss",
+    "num_boost_round": 1000,
+    "early_stopping_rounds": 50,
+    "num_leaves": "see candidate_grid",
+    "learning_rate": "see candidate_grid",
+    "min_child_samples": 20,
+    "feature_fraction": 1.0,
+    "bagging_fraction": 1.0,
+    "bagging_freq": 0,
+    "lambda_l1": 0.0,
+    "lambda_l2": 0.0,
+    "max_depth": -1,
+    "verbosity": -1,
+    "random_seed": 42,
+    "deterministic": true,
+    "force_row_wise": true,
+    "hyperparameter_search": false,
+    "note": "All values other than num_leaves/learning_rate are LightGBM's own library defaults; this is a baseline check, not a tuning exercise."
+  },
+  "early_stopping_policy": {
+    "applies_within_every_fit": true,
+    "applies_to_selection_stage_fold_fits": true,
+    "applies_to_q4_gate_final_refit": true,
+    "validation_split": "chronological_tail_of_fit_rows",
+    "validation_fraction": 0.10,
+    "validation_selection": "last_10_percent_of_fit_window_rows_by_match_start_utc",
+    "monitored_metric": "binary_logloss",
+    "never_uses_q4_or_locked_window": true
+  },
+  "rolling_origin_folds": [
+    {
+      "fold_id": "2024-Q1",
+      "train_end_utc": "2024-01-01T00:00:00Z",
+      "evaluation_end_utc": "2024-04-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q2",
+      "train_end_utc": "2024-04-01T00:00:00Z",
+      "evaluation_end_utc": "2024-07-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q3",
+      "train_end_utc": "2024-07-01T00:00:00Z",
+      "evaluation_end_utc": "2024-10-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2024-Q4",
+      "train_end_utc": "2024-10-01T00:00:00Z",
+      "evaluation_end_utc": "2025-01-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q1",
+      "train_end_utc": "2025-01-01T00:00:00Z",
+      "evaluation_end_utc": "2025-04-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q2",
+      "train_end_utc": "2025-04-01T00:00:00Z",
+      "evaluation_end_utc": "2025-07-01T00:00:00Z"
+    },
+    {
+      "fold_id": "2025-Q3",
+      "train_end_utc": "2025-07-01T00:00:00Z",
+      "evaluation_end_utc": "2025-10-01T00:00:00Z"
+    }
+  ],
+  "selection": {
+    "recent_fold_ids": [
+      "2025-Q1",
+      "2025-Q2",
+      "2025-Q3"
+    ],
+    "ranking_metric": "pooled_log_loss_recent_folds",
+    "ranking_direction": "minimize",
+    "ranking_scope": "recent_fold_ids_only",
+    "tie_break": "lowest_candidate_id_lexicographic",
+    "selects_exactly_one_candidate": true,
+    "post_hoc_grid_changes_after_viewing_results": false
+  },
+  "q4_readiness": {
+    "references": [
+      "canonical_b0",
+      "frozen_b1"
+    ],
+    "metrics": [
+      "log_loss",
+      "brier_score"
+    ],
+    "require_candidate_minus_reference_point_below": 0.0,
+    "require_candidate_minus_reference_upper_bound_below": 0.0,
+    "opened_only_after_selection_stage_completes": true,
+    "promotion_on_pass": false
+  },
+  "evaluation": {
+    "reliability_bins": 10,
+    "paired_group_bootstrap": {
+      "group_column": "source_match_id",
+      "replicates": 1000,
+      "confidence_level": 0.95,
+      "random_seed": 42
+    }
+  },
+  "safety": {
+    "api_dependency": false,
+    "acquisition_dependency": false,
+    "raw_cache_dependency": false,
+    "authenticated_api_requests": 0,
+    "open_ended_hyperparameter_search": false,
+    "pre_registered_candidates_only": true,
+    "raw_team_identity_features": false,
+    "roster_inference": false,
+    "tournament_features": false,
+    "patch_features": false,
+    "ban_features": false,
+    "q4_open_only_after_selection_stage_completes": true,
+    "locked_component_open": false,
+    "locked_test_target_use": false,
+    "locked_test_transform": false,
+    "locked_test_predictions": false,
+    "model_promotion": false,
+    "model_bundle_serialization": false,
+    "frozen_inference_snapshot_modified": false,
+    "existing_experiment_modules_modified": false
+  }
+}
