@@ -128,3 +128,40 @@ development candidate; hero embeddings are documented as an evaluated,
 not-promoted direction, with descriptive interpretability artifacts
 preserved for future reference. No further modeling stage is opened by
 this milestone.
+
+---
+
+## Appendix: descriptive artifacts (added 2026-08-06)
+
+This appendix surfaces specific values from `descriptive_hero_neighbours.json`
+and `descriptive_learned_pairs.json` — artifacts already listed under
+"Artifacts" above and already covered by "Part B: descriptive-only refit"
+— for readers of the top-level README's Finding 2. It changes no
+conclusion, gate result, or number recorded elsewhere in this document.
+
+### Nearest neighbours (cosine similarity)
+
+The two heroes with non-negligible embedding norm have nearest neighbours
+with no shared functional role:
+
+- **Tiny** (norm 0.297): Chen (1.000), Shadow Shaman (1.000), Omniknight
+  (1.000) — all supports, none resembling a strength core.
+- **Pangolier** (norm 0.263): Skywrath Mage (1.000), Broodmother (0.999),
+  Sand King (0.998) — a ranged intelligence hero, an agility carry, and an
+  initiator.
+
+### Top synergy and counter pairs (training support counts)
+
+| Rank | Pair | Dot product | Same-side games | Opposing-side games |
+| --- | --- | ---: | ---: | ---: |
+| Synergy 1 | Puck – Tiny | 0.051 | 273 | 364 |
+| Synergy 2 | Mirana – Tiny | 0.048 | 262 | 252 |
+| Synergy 3 | Dawnbreaker – Tiny | 0.048 | 198 | 268 |
+| Counter 1 | Pangolier – Tiny | −0.039 | 310 | 603 |
+| Counter 2 | Magnus – Tiny | −0.035 | 222 | 270 |
+| Counter 3 | Muerta – Pangolier | −0.035 | 199 | 189 |
+
+Every row in both the synergy and counter tables involves Tiny or
+Pangolier — the same two heroes that dominate the embedding-norm ranking.
+The recoverable "structure" is concentrated on the two most-picked heroes
+in the corpus, not distributed across the roster.

@@ -2,10 +2,10 @@
 
 **How much of a professional Dota 2 match is decided by the draft?**
 
-Less than you would expect. A leakage-controlled model trained on 20,087
-professional games fails to beat a constant prior on held-out data. That result
-is published inside the product rather than hidden behind it — Draft Lab ships
-labelled as an experimental candidate that did not pass its readiness gate.
+Less than this model could detect — and that non-result is what the product
+publishes. A leakage-controlled model trained on 20,087 professional games
+fails to beat a constant prior on held-out data. Draft Lab ships labelled as
+an experimental candidate that did not pass its readiness gate.
 
 [**Open Draft Lab →**](https://dota2-draft-lab.jbaptiste-q.workers.dev)
 
@@ -24,6 +24,8 @@ Fit on 20,087 games before 2025-10-01, evaluated on the reserved 2025-Q4 window:
 | Log loss    | 0.69825     | 0.69312          | prior  |
 | Brier score | 0.25245     | 0.24998          | prior  |
 
+![Calibration on the 2025-Q4 readiness gate](docs/assets/calibration_2025q4.png)
+
 The candidate was not promoted and the sealed 2026-Q1 test was never opened.
 
 Under this dataset, feature contract, and temporal evaluation design, the
@@ -39,34 +41,32 @@ A low-rank interaction model — one embedding vector per hero, pairwise dot
 products as within-side synergy and cross-side counters — was pre-registered as
 nine candidates (`embedding_dim ∈ {4, 8, 16} × L2 ∈ {0.01, 0.1, 1.0}`). None
 qualified: every candidate's embeddings converged to within `5.6e-5` of zero,
-and the best of the nine still lost to the frozen draft-only candidate
-(+0.000397 log loss, 95% CI `[-0.001164, +0.001880]`, inside the fail region).
-`v = 0` is a stationary point of the interaction gradient at every
+and the best of the nine failed the gate against the frozen draft-only
+candidate — +0.000397 log loss, 95% CI `[-0.001164, +0.001880]`, an interval
+that spans zero. The gate required a significant improvement; this wasn't
+one. `v = 0` is a stationary point of the interaction gradient at every
 pre-registered penalty; the signal only escapes zero roughly 3x below the
 weakest setting tested.
 
 ![Hero embedding projection](docs/assets/hero_projection.png)
 
 A descriptive-only refit at that escape point (never gated, never promoted)
-produces this 2D projection. Role clusters do not emerge. 123 of 125 heroes
-sit at embedding norm under 0.2; the two that don't — Tiny (0.297) and
+produces this 2D projection. Role clusters do not emerge: 123 of 125 heroes
+sit at embedding norm under 0.2, and the two that don't — Tiny (0.297) and
 Pangolier (0.263) — have nearest neighbours with nothing in common
-functionally. Tiny's three closest vectors are Chen, Shadow Shaman, and
-Omniknight, all supports, none resembling a strength core. The strongest
-recovered synergy pair is Puck–Tiny (dot product 0.051, 273 training games on
-the same side, 364 opposing); the strongest counter is Pangolier–Tiny (−0.039,
-603 opposing-side games). Both top pairs involve the same two outlier heroes —
-what structure is recoverable is dominated by whichever embeddings happened to
-escape zero, not by a broad interaction signal across the roster. Tiny and
-Pangolier are also the two most-picked heroes in the corpus (5,736 and 4,655
-picks against a median of 1,662) — the residual signal that survives
-regularization concentrates on the two heroes with the most training exposure,
-not on two functionally distinct roles. It reads less like emergent structure
-and more like a frequency artifact: enough games to pull an embedding off
-zero, not enough interaction signal for the result to mean anything
-role-specific.
+functionally. They're also the corpus's two most-picked heroes (5,736 and
+4,655 picks against a median of 1,662) — the residual signal that survives
+regularization concentrates on training exposure, not on functionally
+distinct roles. It reads less like emergent structure and more like a
+frequency artifact. Full neighbour and synergy/counter-pair detail is in the
+[M8 milestone report](docs/milestones/MILESTONE_8_HERO_EMBEDDINGS.md).
 
 ### 3. A model ranking can be an artifact of where you draw a category line
+
+This pipeline was built as a prerequisite for patch-aware modeling features —
+matching hero changes to shifts in pick rates. It stopped at labelling: the
+labels never fed back into the draft-only model, and what this milestone
+actually produced is the evaluation methodology below, not a model feature.
 
 10,713 hero changes were extracted from official patch notes and labelled by an
 LLM. Before the full pass, three candidate models were compared against 120
@@ -131,11 +131,16 @@ locked test window that has never been opened. A sealed-window boundary rule is
 enforced at the repository level; two violations were caught, recorded, and are
 documented in `docs/incidents/`.
 
-**Why not deep learning.** 23k games and 125 heroes is far too little for a
-transformer to beat a regularized linear model with low-rank interactions, and
-the linear form is what makes the per-hero contribution breakdown in Draft Lab
-exact rather than approximate. Gradients are hand-derived in numpy; there is no
-deep-learning framework in the dependency tree.
+**Why not deep learning or gradient boosting.** 23k games and 125 heroes is far
+too little for a transformer to beat a regularized linear model with low-rank
+interactions. On 125-dimensional one-hot hero input, a GBDT's edge over a
+linear model would have to come from feature interactions — and Finding 2
+measured that interaction signal directly: it survives only below `L2 ≈
+0.003`, a penalty far weaker than a GBDT's default regularization would leave
+standing. The linear form is also what makes the per-hero contribution
+breakdown in Draft Lab exact rather than approximate. Gradients are
+hand-derived in numpy; there is no deep-learning framework in the dependency
+tree.
 
 **Reproducibility.** Immutable raw cache, SHA-256 fingerprints chaining raw →
 normalized → supervised → model, content-addressed build directories, and an
