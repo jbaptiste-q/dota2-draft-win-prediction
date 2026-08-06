@@ -102,3 +102,7 @@ wait for my confirmation before proceeding.
 
 If a phase runs into a problem the current model cannot resolve after
 two attempts, stop and suggest escalating rather than continuing.
+
+## Commit attribution
+
+Do not add Co-Authored-By trailers or any AI attribution to commit messages.
