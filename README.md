@@ -30,7 +30,10 @@ The candidate was not promoted and the sealed 2026-Q1 test was never opened.
 
 Under this dataset, feature contract, and temporal evaluation design, the
 draft-only signal was too weak and unstable to support deployment — not a
-proven ceiling on draft prediction in general. The likely reason: between
+proven ceiling on draft prediction in general. The instability replicates
+across model families: both the linear candidate and a pre-registered GBDT
+baseline beat the prior on pooled development folds (2025-Q1–Q3) and lost to
+it on Q4. The likely reason: between
 elite teams, both sides draft competently by definition, so hero composition
 carries little of the outcome signal — team strength does, and team identity
 is deliberately excluded from the feature set.
@@ -131,16 +134,20 @@ locked test window that has never been opened. A sealed-window boundary rule is
 enforced at the repository level; two violations were caught, recorded, and are
 documented in `docs/incidents/`.
 
-**Why not deep learning or gradient boosting.** 23k games and 125 heroes is far
-too little for a transformer to beat a regularized linear model with low-rank
-interactions. On 125-dimensional one-hot hero input, a GBDT's edge over a
-linear model would have to come from feature interactions — and Finding 2
-measured that interaction signal directly: it survives only below `L2 ≈
-0.003`, a penalty far weaker than a GBDT's default regularization would leave
-standing. The linear form is also what makes the per-hero contribution
-breakdown in Draft Lab exact rather than approximate. Gradients are
+**Why not deep learning — and what a GBDT actually found.** 23k games and 125
+heroes is far too little for a transformer to beat a regularized linear
+model, and the linear form is what makes Draft Lab's per-hero contribution
+breakdown exact rather than approximate. Gradient boosting was measured
+rather than argued away: a pre-registered LightGBM baseline, selected on
+development folds without touching Q4, landed within a half-thousandth of
+the frozen linear candidate's log loss on the readiness window (−0.000541,
+95% CI `[−0.005983, +0.004677]`) and failed the same gate against the prior.
+Tree capacity recovered nothing beyond additive hero effects — an
+independent replication, in a second model family, of Finding 2's collapsed
+interaction signal. Gradients for the project's own models remain
 hand-derived in numpy; there is no deep-learning framework in the dependency
-tree.
+tree. Full grid, gate, and artifact detail: [M10 milestone
+report](docs/milestones/MILESTONE_10_GBDT_BASELINE.md).
 
 **Reproducibility.** Immutable raw cache, SHA-256 fingerprints chaining raw →
 normalized → supervised → model, content-addressed build directories, and an
