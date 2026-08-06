@@ -31,6 +31,8 @@ SNAPSHOT_PATH = (
 
 ATTRIBUTE_TOKENS = ("str", "agi", "int", "universal")
 
+LIQUIPEDIA_ATTRIBUTION_HREF = "https://liquipedia.net/commons/Liquipedia:Copyrights"
+
 
 def _read(name: str) -> str:
     return (WEB_ROOT / name).read_text(encoding="utf-8")
@@ -82,8 +84,18 @@ def test_frontend_uses_only_same_origin_local_assets() -> None:
         for name in ("index.html", "styles.css", "app.js")
     )
 
-    assert "http://" not in combined
-    assert "https://" not in combined
+    # The one deliberate exception: a plain-text attribution hyperlink
+    # required by the Liquipedia API terms. It is a navigation target, not
+    # a loaded asset or a runtime dependency, so it is stripped before the
+    # blanket same-origin assertion below rather than weakening that
+    # assertion generally.
+    assert combined.count(LIQUIPEDIA_ATTRIBUTION_HREF) == 1
+    combined_without_attribution = combined.replace(
+        f'href="{LIQUIPEDIA_ATTRIBUTION_HREF}"', "", 1
+    )
+
+    assert "http://" not in combined_without_attribution
+    assert "https://" not in combined_without_attribution
     assert 'href="/static/styles.css?v=20260802-dota-stage-4"' in combined
     assert 'src="/static/app.js?v=20260802-dota-stage-4"' in combined
     # Portraits remain a same-origin, replaceable presentation layer with no

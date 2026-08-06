@@ -2729,6 +2729,25 @@ summary:focus-visible,
   text-align: right;
 }
 
+.site-footer-attribution {
+  grid-column: 1 / -1;
+  max-width: none !important;
+  margin: var(--space-4) 0 0 !important;
+  padding-top: var(--space-4);
+  text-align: left !important;
+  border-top: 1px solid var(--line);
+  font-size: 0.68rem;
+}
+
+.site-footer-attribution a {
+  color: var(--muted-strong);
+  text-decoration: underline;
+}
+
+.site-footer-attribution a:hover {
+  color: var(--text);
+}
+
 /* ------------------------------- Hero picker -------------------------------- */
 
 .hero-picker {

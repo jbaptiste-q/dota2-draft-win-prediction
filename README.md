@@ -161,6 +161,10 @@ offline test suite that blocks sockets and DNS.
 2026-Q1, from the official Liquipedia API — no HTML scraping, rate-limited
 acquisition, immutable caching, and a request ledger.
 
+Match data © Liquipedia and its contributors, licensed under [CC-BY-SA
+3.0](https://liquipedia.net/commons/Liquipedia:Copyrights), obtained via the
+official Liquipedia API.
+
 Patch notes come from Valve's `datafeed/patchnotes` endpoint. Raw text is never
 committed; only derived labels are.
 
