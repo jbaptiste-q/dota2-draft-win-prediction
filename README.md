@@ -1,152 +1,210 @@
-# Dota 2 Draft Analysis
+# Dota 2 Draft AI
 
-Can a professional Dota 2 draft predict who wins? Four pre-registered
-experiments on 23,123 tier-1/tier-2 games say no — and this repository
-documents exactly why.
+**How much of a professional Dota 2 match is decided by the draft?**
 
-[![tests](https://img.shields.io/badge/tests-463%20passing-brightgreen)]()
-[![data](https://img.shields.io/badge/games-23%2C123-blue)]()
-[![locked test](https://img.shields.io/badge/2026--Q1-sealed-lightgrey)]()
+Less than you would expect. A leakage-controlled model trained on 20,087
+professional games fails to beat a constant prior on held-out data. That result
+is published inside the product rather than hidden behind it — Draft Lab ships
+labelled as an experimental candidate that did not pass its readiness gate.
 
-**[Live demo →](https://dota2-draft-lab.jbaptiste-q.workers.dev)**
+[**Open Draft Lab →**](https://dota2-draft-lab.jbaptiste-q.workers.dev)
+
+![Draft Lab](site/public/og.png)
 
 ---
 
-## The question
+## Three findings
 
-In professional Dota 2, both teams draft ten heroes before the game starts.
-The draft is widely believed to decide a large share of the outcome — hero
-synergies, counters, and composition are the entire subject of professional
-analysis.
+### 1. Draft-only win prediction sits at the noise floor
 
-That belief is testable. If draft composition carries predictive signal, a
-model given only the ten picks should beat a model given nothing at all.
+Fit on 20,087 games before 2025-10-01, evaluated on the reserved 2025-Q4 window:
 
-It doesn't.
+| 2025-Q4     | Draft model | Empirical prior | Better |
+| ----------- | ----------- | ---------------- | ------ |
+| Log loss    | 0.69825     | 0.69312          | prior  |
+| Brier score | 0.25245     | 0.24998          | prior  |
 
-## The answer
+The candidate was not promoted and the sealed 2026-Q1 test was never opened.
 
-![Milestone comparison](docs/assets/milestone_comparison.png)
+This is close to the realistic ceiling rather than a failure of technique.
+Between elite teams, both sides draft competently by definition, so hero
+composition carries little of the outcome signal — team strength does, and team
+identity is deliberately excluded from the feature set.
 
-Three of four modeling attempts improved on their empirical-prior reference
-during development. None survived the final readiness gate on a period that
-had never influenced any modeling decision.
+### 2. Hero embeddings collapse to zero — forced open, they show no role structure
 
-*The y-axis is zoomed: the total spread is roughly 2% in log loss. That
-small scale is itself part of the finding.*
-
-## What I found
-
-**1. Pick presence carries real but unstable signal.**
-A logistic regression on side-relative hero presence beat the empirical prior
-on tuning data (0.685971 vs 0.692682 log loss), but regressed in all four 2024
-rolling folds. The signal existed; it did not generalize across time.
-
-**2. Stronger regularization fixed the instability, not the ceiling.**
-Shrinking to `C=0.01` beat the prior in six of seven quarters and resolved the
-temporal instability — without discarding old matches. Full history under
-strong shrinkage outperformed both exponential decay and a hard one-year
-window. The problem had been coefficient variance, not the age of the data.
-
-**3. Calibration cannot recover ranking signal that isn't there.**
-On the reserved 2025-Q4 period, the frozen candidate scored 0.698246 against
-the prior's 0.693115. Sigmoid and isotonic calibration were both tested; raw
-probability was selected, and all three remained worse than the prior.
-This is the pivot: development gains did not survive an evaluation period
-that had never been used for selection.
-
-**4. Hero interactions collapse to zero under any regularization strong
-enough to generalize.**
-I fit a low-rank interaction model — an embedding per hero, synergy as
-within-side dot products, counters as cross-side. Across all nine
-pre-registered candidates the embeddings converged to *exactly* zero.
+A low-rank interaction model — one embedding vector per hero, pairwise dot
+products as within-side synergy and cross-side counters — was pre-registered as
+nine candidates (`embedding_dim ∈ {4, 8, 16} × L2 ∈ {0.01, 0.1, 1.0}`). None
+qualified: every candidate's embeddings converged to within `5.6e-5` of zero,
+and the best of the nine still lost to the frozen draft-only candidate
+(+0.000397 log loss, 95% CI `[-0.001164, +0.001880]`, inside the fail region).
+`v = 0` is a stationary point of the interaction gradient at every
+pre-registered penalty; the signal only escapes zero roughly 3x below the
+weakest setting tested.
 
 ![Hero embedding projection](docs/assets/hero_projection.png)
 
-This is not premature stopping: `v = 0` is a stationary point of the
-interaction gradient, and remains optimal whenever the interaction curvature
-is weaker than the penalty. Verified at 20,000 iterations with 1e-9 tolerance.
-Sweeping the penalty downward, embeddings first escape zero between
-`L2 = 0.01` and `L2 ≈ 0.00316` — half an order of magnitude below the weakest
-pre-registered setting.
+A descriptive-only refit at that escape point (never gated, never promoted)
+produces this 2D projection. Role clusters do not emerge. 123 of 125 heroes
+sit at embedding norm under 0.2; the two that don't — Tiny (0.297) and
+Pangolier (0.263) — have nearest neighbours with nothing in common
+functionally. Tiny's three closest vectors are Chen, Shadow Shaman, and
+Omniknight, all supports, none resembling a strength core. The strongest
+recovered synergy pair is Puck–Tiny (dot product 0.051, 273 training games on
+the same side, 364 opposing); the strongest counter is Pangolier–Tiny (−0.039,
+603 opposing-side games). Both top pairs involve the same two outlier heroes —
+what structure is recoverable is dominated by whichever embeddings happened to
+escape zero, not by a broad interaction signal across the roster. Tiny and
+Pangolier are also the two most-picked heroes in the corpus (5,736 and 4,655
+picks against a median of 1,662) — the residual signal that survives
+regularization concentrates on the two heroes with the most training exposure,
+not on two functionally distinct roles. It reads less like emergent structure
+and more like a frequency artifact: enough games to pull an embedding off
+zero, not enough interaction signal for the result to mean anything
+role-specific.
 
-Forcing the embeddings to survive produces no role structure. The great
-majority of the 125 heroes sit within a tight radius, with only two exceeding
-0.2 (Tiny at 0.297, Pangolier at 0.263), and those outliers share no
-functional property. The interaction signal is real but weaker than the
-regularization needed to generalize at this sample size.
+### 3. A model ranking can be an artifact of where you draw a category line
 
-## Why this is the interesting answer
+10,713 hero changes were extracted from official patch notes and labelled by an
+LLM. Before the full pass, three candidate models were compared against 120
+hand-annotated examples, with model outputs withheld until annotation was
+complete.
 
-The 2026-Q1 test period has never been opened. Not once, across four
-milestones — no transforms, no predictions, no target reads. Opening it would
-have spent a single-use evaluation on a candidate that had already failed the
-development gate.
+Two things came out of it.
 
-Every experiment was pre-registered before fitting: the candidate matrix,
-the folds, the metrics, and the qualification rules. No model was promoted
-after failing its gate, and no gate was revised after seeing results.
+**The magnitude dimension was dropped.** All three models scored 22.5–29.2%
+against a 72.5% majority-class baseline, with Cohen's κ indistinguishable from
+zero. The annotation guide gave concrete rules for direction but no anchoring
+for minor versus major, so the annotator's scale and the models' scales never
+aligned. The label was removed rather than repaired.
 
-The honest conclusion is narrower and more useful than a headline accuracy
-number would have been:
+**The ranking reversed when one category definition was tightened.** The
+`rework` category was initially applied without an operational rule. After
+adopting an explicit one — retain `rework` only where the change alters *how*
+an ability works, not where it can be described as the same mechanic being
+stronger or weaker — 22 of 29 labels moved.
 
-> At 23,123 professional games with hero identity alone, the learnable signal
-> in draft composition is weaker than the estimation noise. This is a limit of
-> the data's information content, not of model capacity.
+| Direction accuracy | Broad definition | Narrow definition |
+| ------------------- | ------------------ | -------------------- |
+| Haiku 4.5           | 0.658               | 0.658                 |
+| Sonnet 5             | 0.617               | 0.667                 |
+| Fable 5              | **0.700**           | 0.633                 |
 
-## Data
+Model predictions were frozen across both passes. The best model became the
+worst without a single prediction changing. What looked like a capability
+difference was a moving measurement.
 
-23,123 games from 11,664 professional series, tier 1 and tier 2, spanning
-`[2022-01-01, 2026-04-01)`. Sourced from the official Liquipedia API with a
-full provenance chain: immutable byte-level cache, SHA-256 request ledger, and
-content-addressed builds from raw response through normalized tables to the
-supervised dataset.
+Neither ranking is significant at n=120 — McNemar p=0.267 and p=0.508, with the
+bootstrap interval spanning zero in both directions. Haiku was chosen for the
+full pass on determinism and cost instead: it is the only one of the three that
+accepts `temperature=0` at all, since Sonnet 5 and Fable 5 reject non-default
+sampling parameters outright.
 
-2026-Q2 acquisition was deliberately stopped. A partial quarter introduces
-selection bias, and completing it would not change the conclusion — the
-bottleneck is what the data contains, not how much of it there is.
+Full pass: 10,708 of 10,713 changes labelled (99.95%), five permanent parse
+failures traced to a reproducible formatting quirk rather than transient error.
 
-Liquipedia's match API exposes picks, bans, sides, and outcomes. It does not
-expose draft order, hero roles, positions, lanes, or itemization. That
-absence is the most likely explanation for finding (4), and the natural next
-direction for this work.
+---
 
-[Data architecture and field contract →](docs/)
+## What Draft Lab does
+
+Assemble a completed 5v5 draft and the service returns complementary Radiant and
+Dire probabilities, the exact signed log-odds contribution of all ten heroes, and
+a comparison against one user-chosen hero replacement. Every response carries the
+model cutoff, its lineage, and its failed readiness gate.
+
+It does not rank heroes, suggest a next pick, read partial drafts, or claim
+causation. Bans, draft order, roles, lanes, patch, team, and player context are
+all outside v1.
+
+---
 
 ## Method
 
-- Grouped chronological splits; every game from one series stays in one role
-- Feature transformers refit on past-only rows within each fold
-- 1,000 paired bootstrap replicates grouped by series for all comparisons
-- Pre-registered candidate matrices and qualification gates
-- Forbidden-column enforcement: no post-game information reaches any feature
-- Full offline test suite; no network access during any experiment
+**Leakage control.** Grouped chronological splits by `source_match_id`,
+transformers refit inside each fold, forbidden columns enforced in code, and a
+locked test window that has never been opened. A sealed-window boundary rule is
+enforced at the repository level; two violations were caught, recorded, and are
+documented in `docs/incidents/`.
 
-**Why no deep learning.** At 23k rows over 125 heroes, the binding constraint
-is estimation variance, not model capacity. A higher-capacity model would fit
-the training window better and generalize worse — which is precisely what the
-slot-aware 3,024-column baseline demonstrated. The low-rank interaction model
-in finding (4) is the appropriate way to add interaction capacity at this
-sample size, and it still collapsed.
+**Why not deep learning.** 23k games and 125 heroes is far too little for a
+transformer to beat a regularized linear model with low-rank interactions, and
+the linear form is what makes the per-hero contribution breakdown in Draft Lab
+exact rather than approximate. Gradients are hand-derived in numpy; there is no
+deep-learning framework in the dependency tree.
 
-## Run it
+**Reproducibility.** Immutable raw cache, SHA-256 fingerprints chaining raw →
+normalized → supervised → model, content-addressed build directories, and an
+offline test suite that blocks sockets and DNS.
+
+---
+
+## Data
+
+23,123 eligible professional games across 11,664 matches, 2022-Q1 through
+2026-Q1, from the official Liquipedia API — no HTML scraping, rate-limited
+acquisition, immutable caching, and a request ledger.
+
+Patch notes come from Valve's `datafeed/patchnotes` endpoint. Raw text is never
+committed; only derived labels are.
+
+See [Data Boundaries](data/README.md) for the exact public/local split.
+
+---
+
+## Run locally
+
+Python 3.12.
 
 ```bash
-pip install -r requirements.txt
-
-# Reproduce the modeling pipeline offline
-env LIQUIPEDIA_API_KEY= NO_NETWORK_TESTS=1 python -m pytest -q
-
-python scripts/prepare_draft_modeling.py
-python scripts/run_draft_baselines.py
-python scripts/run_draft_embeddings.py
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python scripts/run_draft_assistant.py   # http://127.0.0.1:8000
 ```
 
-All experiments run offline against local build artifacts. No API key is read.
+Full offline validation:
 
-## Engineering log
+```bash
+env LIQUIPEDIA_API_KEY= NO_NETWORK_TESTS=1 python -m pytest -q
+python scripts/check_repository_hygiene.py
+```
 
-Milestone reports documenting acquisition, normalization, dataset
-construction, and each modeling stage are under [`docs/milestones/`](docs/milestones/).
-They are a contemporaneous record of decisions, including the ones that
-turned out to be wrong.
+---
+
+## Repository map
+
+| Path                          | Responsibility                                            |
+| ----------------------------- | ----------------------------------------------------------- |
+| `src/liquipedia_backfill/`    | Guarded acquisition, cache, ledger, coverage              |
+| `src/liquipedia_pipeline/`    | Typed parsing, normalization, Parquet export              |
+| `src/draft_training_dataset/` | Canonical supervised-dataset contract                     |
+| `src/draft_ai_modeling/`      | Temporal splits, experiments, gates, lineage              |
+| `src/draft_ai_assistant/`     | Frozen contracts, inference service, FastAPI, Draft Lab   |
+| `src/patch_alignment/`        | Patch-note acquisition and LLM labelling                  |
+| `docs/`                       | Engineering log — see the index, not written to be read straight through |
+
+---
+
+## Scope and limitations
+
+The model is an experimental candidate that failed its readiness gate. It is not
+a forecasting, betting, or coaching service. Replacement comparisons are
+associative, not causal.
+
+Patch alignment covers only versions observed in the working corpus. Patches
+7.40 and later have 31 games or fewer outside the sealed window and are excluded
+on sample-size grounds — the data exists but is not readable under the sealed
+window policy.
+
+Two heroes are unmapped in the patch-note join: one placeholder entry in Valve's
+feed that is not a real hero, and Largo, which debuted nine days before the
+sealed window opened and therefore has effectively no readable match data.
+
+---
+
+## How this was built
+
+Implementation was done with Claude Code. The experiment design, constraints,
+scope decisions, and result review are mine, as are the 120 hand-annotated
+labels the LLM evaluation is measured against.
