@@ -124,6 +124,8 @@ It does not rank heroes, suggest a next pick, read partial drafts, or claim
 causation. Bans, draft order, roles, lanes, patch, team, and player context are
 all outside v1.
 
+![Hero contribution breakdown and known-limitations panel in Draft Lab](docs/assets/draft_lab_contributions.png)
+
 ---
 
 ## Method
