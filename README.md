@@ -150,10 +150,12 @@ locked test window that has never been opened. A sealed-window boundary rule is
 enforced at the repository level; two violations were caught, recorded, and are
 documented in `docs/incidents/`.
 
-**Why not deep learning — and what a GBDT actually found.** 23k games and 125
-heroes is far too little for a transformer to beat a regularized linear
-model, and the linear form is what makes Draft Lab's per-hero contribution
-breakdown exact rather than approximate. Gradient boosting was measured
+**Why not deep learning — and what a GBDT actually found.** Given the
+sample size, the low-cardinality draft representation, and the weak
+out-of-time signal observed in development, a regularized linear model was
+the right capacity class — and its linear form is what makes Draft Lab's
+per-hero contribution breakdown exact rather than approximate. Gradient
+boosting was measured
 rather than argued away: a pre-registered LightGBM baseline, selected on
 development folds without touching Q4, landed within a half-thousandth of
 the frozen linear candidate's log loss on the readiness window (−0.000541,
