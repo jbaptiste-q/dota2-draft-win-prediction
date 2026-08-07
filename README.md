@@ -266,6 +266,6 @@ sealed window opened and therefore has effectively no readable match data.
 
 ## How this was built
 
-Implementation was done with Claude Code; I designed the experiments and
-constraints, reviewed the generated code, and made every promotion decision —
+Implementation was carried out with Claude Code as the coding agent; I designed the experiments and
+constraints, reviewed the generated code, and made every promotion decision
 including the ones that killed a candidate.
