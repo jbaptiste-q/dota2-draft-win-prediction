@@ -160,9 +160,10 @@ rather than argued away: a pre-registered LightGBM baseline, selected on
 development folds without touching Q4, landed within a half-thousandth of
 the frozen linear candidate's log loss on the readiness window (−0.000541,
 95% CI `[−0.005983, +0.004677]`) and failed the same gate against the prior.
-Tree capacity recovered nothing beyond additive hero effects — an
-independent replication, in a second model family, of Finding 2's collapsed
-interaction signal. Gradients for the project's own models remain
+Tree capacity recovered nothing beyond additive hero effects under this
+feature contract — a converging null result in a second model family,
+consistent with Finding 2's collapsed interaction signal. Gradients for
+the project's own models remain
 hand-derived in numpy; there is no deep-learning framework in the dependency
 tree. Full grid, gate, and artifact detail: [M10 milestone
 report](docs/milestones/MILESTONE_10_GBDT_BASELINE.md).
