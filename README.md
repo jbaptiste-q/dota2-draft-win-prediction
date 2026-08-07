@@ -75,7 +75,10 @@ functionally. They're also the corpus's two most-picked heroes (5,736 and
 4,655 picks against a median of 1,662) — the residual signal that survives
 regularization concentrates on training exposure, not on functionally
 distinct roles. It reads less like emergent structure and more like a
-frequency artifact. Full neighbour and synergy/counter-pair detail is in the
+frequency artifact. Absence of clusters in a 2D projection of near-zero
+vectors says nothing about whether Dota roles exist — only that this
+objective and regularization grid did not recover them. Full neighbour and
+synergy/counter-pair detail is in the
 [M8 milestone report](docs/milestones/MILESTONE_8_HERO_EMBEDDINGS.md).
 
 ### 3. A model ranking can be an artifact of where you draw a category line
