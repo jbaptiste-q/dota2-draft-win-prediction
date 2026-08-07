@@ -37,6 +37,9 @@ reserved 2025-Q4 window:
 ![Calibration on the 2025-Q4 readiness gate](docs/assets/calibration_2025q4.png)
 
 The candidate was not promoted and the sealed 2026-Q1 test was never opened.
+This was the pre-registered stopping rule, not an unfinished evaluation:
+with the readiness gate failed, opening 2026-Q1 would have spent the sealed
+test without a promotable candidate.
 
 Under this dataset, feature contract, and temporal evaluation design, the
 draft-only signal was too weak and unstable to support deployment — not a
