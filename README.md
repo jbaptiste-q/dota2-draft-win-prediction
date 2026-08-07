@@ -116,7 +116,7 @@ difference was a moving measurement.
 
 Neither ranking is significant at n=120 — McNemar p=0.267 and p=0.508, with the
 bootstrap interval spanning zero in both directions. Haiku was chosen for the
-full pass on determinism and cost instead: it is the only one of the three that
+full pass on repeatability and cost instead: it is the only one of the three that
 accepts `temperature=0` at all, since Sonnet 5 and Fable 5 reject non-default
 sampling parameters outright.
 
