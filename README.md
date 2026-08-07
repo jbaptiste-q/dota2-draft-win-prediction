@@ -174,6 +174,12 @@ offline test suite that blocks sockets and DNS.
 2026-Q1, from the official Liquipedia API — no HTML scraping, rate-limited
 acquisition, immutable caching, and a request ledger.
 
+| Window          | Role                  | Games  | Status                |
+| --------------- | --------------------- | -----: | ---------------------- |
+| through 2025-Q3 | development/training  | 20,087 | used                  |
+| 2025-Q4         | readiness gate         | 1,089  | opened, gate failed   |
+| 2026-Q1         | final test             | 1,947  | sealed, never opened  |
+
 Match data © Liquipedia and its contributors, licensed under [CC-BY-SA
 3.0](https://liquipedia.net/commons/Liquipedia:Copyrights), obtained via the
 official Liquipedia API.
