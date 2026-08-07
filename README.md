@@ -205,7 +205,10 @@ See [Data Boundaries](data/README.md) for the exact public/local split.
 
 ## Run locally
 
-Python 3.12.
+Stack: Python 3.12, numpy with hand-derived gradients, scikit-learn,
+LightGBM, pandas, DuckDB for Parquet storage and query, FastAPI, and
+pytest with a socket-blocking offline suite; Draft Lab is deployed on
+Cloudflare Workers.
 
 ```bash
 python3 -m venv .venv
