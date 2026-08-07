@@ -63,7 +63,7 @@ That is the whole finding. Neither ranking is significant at n=120
 72.5% baseline, κ≈0 — see
 [`docs/findings/2026-08-05_m9_magnitude_dropped.md`](../findings/2026-08-05_m9_magnitude_dropped.md).
 
-Haiku was chosen for the full pass on determinism and cost, not measured
+Haiku was chosen for the full pass on repeatability and cost, not measured
 quality. Determinism was verified against the API and the published docs
 rather than assumed: Sonnet 5 and Fable 5 reject non-default
 `temperature`, `top_p`, and `top_k` unconditionally (confirmed both by
