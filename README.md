@@ -1,5 +1,7 @@
 # Dota 2 Draft AI
 
+[![Offline CI](https://github.com/jbaptiste-q/dota2-draft-win-prediction/actions/workflows/offline-ci.yml/badge.svg)](https://github.com/jbaptiste-q/dota2-draft-win-prediction/actions/workflows/offline-ci.yml)
+
 **How much of a professional Dota 2 match can you call from the draft
 alone?** The draft is the pre-game phase where each team picks five heroes
 from a shared pool of 125.
