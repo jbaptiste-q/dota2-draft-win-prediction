@@ -19,9 +19,17 @@ an experimental candidate that did not pass its readiness gate.
 
 ### 1. Draft-only win prediction sits at the noise floor
 
-Fit on 20,087 games before 2025-10-01, evaluated on the reserved 2025-Q4 window:
+Fit on 20,087 games before 2025-10-01. Pooled across the three most recent
+development folds (2025-Q1–Q3, the pre-registered ranking window), the
+candidate beat the empirical prior — then lost to it on the untouched,
+reserved 2025-Q4 window:
 
-| 2025-Q4     | Draft model | Empirical prior | Better |
+| 2025-Q1–Q3 (pooled, development) | Draft model | Empirical prior | Better |
+| --------------------------------- | ----------- | ---------------- | ------------ |
+| Log loss                           | 0.684171    | 0.692793          | draft model  |
+| Brier score                        | 0.245540    | 0.249823          | draft model  |
+
+| 2025-Q4 (readiness gate) | Draft model | Empirical prior | Better |
 | ----------- | ----------- | ---------------- | ------ |
 | Log loss    | 0.69825     | 0.69312          | prior  |
 | Brier score | 0.25245     | 0.24998          | prior  |
