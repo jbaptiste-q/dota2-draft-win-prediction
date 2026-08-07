@@ -11,6 +11,10 @@ This is a completed Dota 2 draft-modeling project. Milestones 1 through
 - Any code path that can issue an authenticated HTTP request
 - Any existing milestone document under docs/
 
+Exception: wording-level calibration of interpretive claims in milestone
+documents is allowed with explicit per-task authorization. Results,
+numbers, tables, and gate outcomes are immutable.
+
 If a task seems to require changing these, stop and ask.
 
 ## Locked test policy
