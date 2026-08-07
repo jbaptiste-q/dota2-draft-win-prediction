@@ -1,6 +1,8 @@
 # Dota 2 Draft AI
 
-**How much of a professional Dota 2 match is decided by the draft?**
+**How much of a professional Dota 2 match can you call from the draft
+alone?** The draft is the pre-game phase where each team picks five heroes
+from a shared pool of 125.
 
 Less than this model could detect — and that non-result is what the product
 publishes. A leakage-controlled model trained on 20,087 professional games
