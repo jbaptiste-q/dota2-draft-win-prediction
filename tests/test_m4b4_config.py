@@ -158,6 +158,10 @@ def test_lineage_pins_include_b1_references_but_not_q4_predictions() -> None:
 
 
 def test_current_local_lineage_verifies_without_opening_q4_predictions() -> None:
+    manifest_path = ROOT / _payload()["source"]["m4a"]["manifest_path"]
+    if not manifest_path.is_file():
+        pytest.skip("Ignored local M4A build is not present.")
+
     config = load_interaction_experiment_config(
         CONFIG,
         repository_root=ROOT,

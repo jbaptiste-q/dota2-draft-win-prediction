@@ -71,6 +71,10 @@ def test_role_guard_seals_the_locked_test() -> None:
 
 
 def test_current_local_lineage_pins_verify() -> None:
+    manifest_path = ROOT / _payload()["source"]["m4a"]["manifest_path"]
+    if not manifest_path.is_file():
+        pytest.skip("Ignored local M4A build is not present.")
+
     config = load_calibration_experiment_config(
         CONFIG,
         repository_root=ROOT,

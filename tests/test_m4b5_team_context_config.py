@@ -18,7 +18,16 @@ ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "configs/modeling/m4b5_team_context.json"
 
 
+def _split_manifest_available() -> bool:
+    payload = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    manifest_path = ROOT / payload["source"]["split_manifest_path"]
+    return manifest_path.is_file()
+
+
 def test_repository_config_is_valid_and_deterministic() -> None:
+    if not _split_manifest_available():
+        pytest.skip("Ignored local M4A build is not present.")
+
     first = load_team_context_experiment_config(CONFIG_PATH)
     second = load_team_context_experiment_config(CONFIG_PATH)
 
@@ -42,6 +51,9 @@ def test_repository_config_is_valid_and_deterministic() -> None:
 def test_q4_prediction_hash_can_be_deferred(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    if not _split_manifest_available():
+        pytest.skip("Ignored local M4A build is not present.")
+
     observed: list[str] = []
     real = team_context_config.sha256_file
 
