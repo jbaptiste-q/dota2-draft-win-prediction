@@ -52,7 +52,12 @@ baseline beat the prior pooled over the three most recent development folds
 plausible explanation: residual variation in team strength and execution
 dominates the additive hero-composition signal available under this
 feature contract — and team identity is deliberately excluded from the
-feature set.
+feature set. A [diagnostic
+experiment](docs/milestones/MILESTONE_4B_5_TEAM_CONTEXT.md#pooled-2025-q1-through-q3)
+supports this: adding a single team-strength feature (Elo) to the frozen
+candidate cut pooled 2025-Q1–Q3 development log loss from 0.684 to 0.657,
+while team identity remains excluded from the product's feature contract
+by design.
 
 ### 2. Hero embeddings collapse to zero — forced open, they show no role structure
 
