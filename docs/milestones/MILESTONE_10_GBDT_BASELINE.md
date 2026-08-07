@@ -93,9 +93,10 @@ should be read.
 The GBDT and the frozen linear candidate land within noise of each other on
 Q4 despite very different model classes. Combined with Finding 2 — where
 pairwise hero-embedding interactions collapsed to zero under every
-pre-registered penalty — this is a second, independent line of evidence
-against recoverable nonlinear or interaction structure in this feature
-contract at this sample size: two structurally different mechanisms for
+pre-registered penalty — this is a second, converging null result
+consistent with the absence of recoverable nonlinear or interaction
+structure in this feature contract at this sample size: two structurally
+different mechanisms for
 capturing interactions (learned low-rank embeddings, tree splits) both
 converge back to the additive fit.
 
