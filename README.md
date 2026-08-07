@@ -129,6 +129,9 @@ Full evaluation: [M9 patch alignment](docs/milestones/MILESTONE_9_PATCH_ALIGNMEN
 
 ## What Draft Lab does
 
+Draft Lab is a model-inspection interface for a rejected experimental
+candidate, not a validated prediction product.
+
 Assemble a completed 5v5 draft and the service returns complementary Radiant and
 Dire probabilities, the exact signed log-odds contribution of all ten heroes, and
 a comparison against one user-chosen hero replacement. Every response carries the
